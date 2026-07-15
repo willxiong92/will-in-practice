@@ -629,3 +629,86 @@ entries:
     public_copy_path: content/global-platform/buyer-tier-playbook.md
     source_project: OKKI WIKI 知识库
     rewrite_direction: L0-L4 经营节奏与升级信号
+
+  - source_id: fde/sales-funnel-review
+    domain: fde
+    proposed_title: 销售漏斗与团队复盘
+    content_type: playbook
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/fde/sales-funnel-review-playbook.md
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/客户成功/playbook-销售过程与团队复盘.md
+    risk_notes:
+      - 不抄写不可外推的转化率百分比当真理
+    rewrite_direction: 阶段漏斗 + 六步复盘
+
+  - source_id: fde/inquiry-reply-five-steps
+    domain: fde
+    proposed_title: 询盘首回五步法
+    content_type: playbook
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/fde/inquiry-reply-five-steps.md
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/客户成功/concept-询盘诊断与转化提升.md
+    rewrite_direction: 流失类型 + 五步首回，去平台口号
+
+  - source_id: fde/consultative-communication
+    domain: fde
+    proposed_title: 顾问式客户沟通
+    content_type: playbook
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/fde/consultative-communication-playbook.md
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/客户成功/concept-顾问式客户沟通.md
+
+  - source_id: fde/customer-health-signals
+    domain: fde
+    proposed_title: 客户健康信号
+    content_type: guide
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/fde/customer-health-signals.md
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/客户成功/concept-客户健康度模型.md
+    risk_notes:
+      - 强调自有数据校准，不照搬外部断约率曲线
+    rewrite_direction: 三阶段 + 五类信号 + 分层
+
+  - source_id: trade/b2b-social-acquisition
+    domain: trade_ops
+    proposed_title: B2B 社媒获客
+    content_type: playbook
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/trade-ops/b2b-social-acquisition-playbook.md
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/外贸业务/concept-B2B社媒获客方法论.md
+    risk_notes:
+      - 不写养号灰产与具体违规群发教程
+    rewrite_direction: 渠道优先级与合规边界
+
+  - source_id: trade/soho-export-checklist
+    domain: trade_ops
+    proposed_title: SOHO 外贸启动检查清单
+    content_type: checklist
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/trade-ops/soho-export-checklist.md
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/外贸业务/concept-SOH外贸创业.md
+
+  - source_id: trade/export-buyer-persona
+    domain: trade_ops
+    proposed_title: 外贸买家画像模板
+    content_type: template
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/trade-ops/export-buyer-persona-template.md
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/外贸业务/concept-外贸客户画像与需求诊断.md
+    risk_notes:
+      - 去掉真实客户公司名与内部产品配置
+    rewrite_direction: 五维模板 + 动态分级

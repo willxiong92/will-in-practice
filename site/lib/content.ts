@@ -153,12 +153,12 @@ export const domainMeta: DomainMeta[] = [
     path: '/fde',
     cardLabel: '经营增长与交付',
     tagline: '一体化服务与经营增长方法',
-    summary: '经营公式 + SHOP / AIReach / CRM / AWB，从线索到转化再到保障与沉淀。',
+    summary: '经营公式、线索转化、销售复盘、顾问沟通、健康信号与交付沉淀。',
     suited: 'FDE、CSM、顾问与对客交付负责人。',
     notSuited: '国际站平台细则（见国际站）；人事绩效材料。',
-    source: '飞书 FDE 知识库',
+    source: '飞书 FDE 知识库 + OKKI WIKI 客户成功',
     hotSlug: 'service-system-map',
-    readingPath: '总图与能力 → 获客线索 / 转化经营 → 交付与沉淀',
+    readingPath: '总图 → 线索/转化 → 销售过程 → 沟通与健康 → 交付',
     shelves: [
       {
         id: 'fde-map',
@@ -175,14 +175,27 @@ export const domainMeta: DomainMeta[] = [
       {
         id: 'fde-conversion',
         title: '转化经营',
-        desc: '资产阵地 · 新客 · 沉睡 · 复购',
+        desc: '资产阵地 · 新客 · 沉睡 · 复购 · 询盘首回',
         slugs: [
           'higher-conversion',
           'crm-asset-base',
           'new-customer-conversion',
           'sleeping-reactivation',
           'partner-repurchase',
+          'inquiry-reply-five-steps',
         ],
+      },
+      {
+        id: 'fde-process',
+        title: '销售过程',
+        desc: '漏斗与团队复盘',
+        slugs: ['sales-funnel-review-playbook'],
+      },
+      {
+        id: 'fde-comms',
+        title: '沟通与健康',
+        desc: '顾问式沟通 · 健康信号',
+        slugs: ['consultative-communication-playbook', 'customer-health-signals'],
       },
       {
         id: 'fde-delivery',
@@ -203,12 +216,12 @@ export const domainMeta: DomainMeta[] = [
     path: '/trade-ops',
     cardLabel: '开发报价履约',
     tagline: '开发、报价、谈判与履约链路',
-    summary: '业务全景、开发跟进、样品、客诉、供应商与付款风险。',
+    summary: '业务全景、开发/社媒/画像、样品跟进、报价、风险、展会与 SOHO。',
     suited: '外贸业务员、销售主管。',
     notSuited: '平台后台细则、独立站 SEO 细节。',
     source: 'OKKI WIKI 外贸业务',
     hotSlug: 'export-process-map',
-    readingPath: '流程 → 开发/跟进 → 样品 → 报价 → 风险/客诉 → 展会',
+    readingPath: '流程 → 开发/社媒/画像 → 样品 → 报价 → 风险 → 展会/SOHO',
     shelves: [
       {
         id: 'trade-process',
@@ -219,8 +232,12 @@ export const domainMeta: DomainMeta[] = [
       {
         id: 'trade-dev',
         title: '客户开发',
-        desc: '渠道、背调与触达节奏',
-        slugs: ['customer-development-playbook'],
+        desc: '渠道、社媒、画像与触达',
+        slugs: [
+          'customer-development-playbook',
+          'b2b-social-acquisition-playbook',
+          'export-buyer-persona-template',
+        ],
       },
       {
         id: 'trade-follow',
@@ -255,6 +272,12 @@ export const domainMeta: DomainMeta[] = [
         title: '展会执行',
         desc: '展前邀约 · 现场记录 · 48 小时跟进',
         slugs: ['exhibition-playbook'],
+      },
+      {
+        id: 'trade-soho',
+        title: '独立经营',
+        desc: 'SOHO 启动检查',
+        slugs: ['soho-export-checklist'],
       },
     ],
   },
