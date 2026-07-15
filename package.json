@@ -17,12 +17,18 @@
     "build:github": "npm run guard:content && astro check && GITHUB_PAGES=true PUBLIC_CONTENT_PREVIEW=false PUBLIC_SITE_URL=https://willxiong92.github.io astro build && GITHUB_PAGES=true npm run guard:dist && GITHUB_PAGES=true npm run guard:links",
     "preview:build": "PUBLIC_CONTENT_PREVIEW=true astro check && PUBLIC_CONTENT_PREVIEW=true astro build",
     "preview:pages": "GITHUB_PAGES=true PUBLIC_CONTENT_PREVIEW=true astro check && GITHUB_PAGES=true PUBLIC_CONTENT_PREVIEW=true astro build",
-    "preview": "astro preview"
+    "preview": "npm run build && wrangler dev",
+    "deploy": "npm run build && wrangler deploy",
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
+    "@astrojs/cloudflare": "12",
     "@astrojs/sitemap": "^3.7.3",
     "astro": "^5.18.2",
     "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "wrangler": "^4.111.0"
   }
 }
