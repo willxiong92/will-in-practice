@@ -783,3 +783,69 @@ entries:
       - 不记录真实员工绩效对话
       - 独立对抗审核 10/10；八宝周非内容来源
     rewrite_direction: 五段式 + 会议/冲突模板 + 知识关联
+
+  # --- batch 2026-07-15 team-mgmt methods (adversarial review pass) ---
+  - source_id: fde/performance-1on1-ten-questions
+    domain: fde
+    proposed_title: 绩效面谈十问：用提问做 1:1，而不是念评分表
+    content_type: template
+    role: template
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/团队管理/playbook-绩效面谈十问工具.md
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/fde/performance-1on1-ten-questions.md
+    maturity: reviewed
+    risk_notes:
+      - 不绑定内部考核制度与薪酬；正式处分/合规排除
+      - 独立对抗审核 10/10
+    rewrite_direction: 五段式 + 十问表 + 1:1 记录卡
+
+  - source_id: fde/grow-coaching
+    domain: fde
+    proposed_title: GROW 教练式引导：目标、现状、选项与行动
+    content_type: playbook
+    role: practice
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/团队管理/concept-GROW模型与客户服务应用.md
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/fde/grow-coaching-playbook.md
+    maturity: reviewed
+    risk_notes:
+      - 已删经营数字案例与内部产品映射
+      - GROW 作常见教练结构，非课程转述
+      - 独立对抗审核 10/10
+    rewrite_direction: 四步 + 会话卡 + 与顾问式/十问分工
+
+  - source_id: fde/manager-growth-loop
+    domain: fde
+    proposed_title: 管理者成长闭环：复盘、刻意练习与角色升级
+    content_type: playbook
+    role: methodology
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/企业经营/concept-管理者成长与自我迭代.md
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/fde/manager-growth-loop.md
+    maturity: reviewed
+    risk_notes:
+      - 读书笔记合成页，只保留可执行结构
+      - 独立对抗审核 9/10；硬比例措辞已软化
+    rewrite_direction: 复盘-练习-认知-时间 + 周成长一页纸
+
+  - source_id: fde/industry-customer-briefing
+    domain: fde
+    proposed_title: 行业背调优先：用一手信息与行业洞察开场
+    content_type: playbook
+    role: practice
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/客户成功/concept-行业背调与客户背调策略.md
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/fde/industry-customer-briefing.md
+    maturity: reviewed
+    risk_notes:
+      - 已去内部工具名与 FY 语境；AI 仅草稿须核验
+      - 独立对抗审核 10/10
+    rewrite_direction: 一手字段 + 行业一页纸 + 会前清单

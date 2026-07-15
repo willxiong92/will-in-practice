@@ -200,17 +200,21 @@ export const domainMeta: DomainMeta[] = [
       {
         id: 'fde-mgmt',
         title: '管理方法',
-        desc: '问题拆解 · 协作沟通',
+        desc: '问题拆解 · 协作 · 1:1 · 成长 · 教练',
         slugs: [
           'problem-decomposition-playbook',
           'management-communication-playbook',
+          'performance-1on1-ten-questions',
+          'grow-coaching-playbook',
+          'manager-growth-loop',
         ],
       },
       {
         id: 'fde-delivery',
         title: '交付与沉淀',
-        desc: '陪跑 · 执行保障 · QBR · 平台化',
+        desc: '背调准备 · 陪跑 · 执行保障 · QBR · 平台化',
         slugs: [
+          'industry-customer-briefing',
           'customer-rollout-plan',
           'customer-execution-diagnosis',
           'qbr-stage-review',
