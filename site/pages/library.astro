@@ -2,15 +2,24 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PracticeCard from '../components/PracticeCard.astro';
-import { domainNames, domains, typeNames, visibleEntries } from '../lib/content';
+import {
+  audienceNames,
+  domainNames,
+  domains,
+  taskNames,
+  tasks,
+  typeNames,
+  visibleEntries,
+} from '../lib/content';
 
 const entries = visibleEntries(await getCollection('practice'));
+const audienceOptions = Object.entries(audienceNames);
 ---
-<BaseLayout title="实践库" description="按任务、领域和内容形式浏览 AI、FDE、外贸业务、国际站与独立站实践。">
+<BaseLayout title="实践库" description="按任务、领域、对象和内容形式浏览 AI、FDE、外贸业务、国际站与独立站实践。">
   <header class="page-head shell">
     <div class="eyebrow">实践库</div>
     <h1>从工作任务进入知识</h1>
-    <p>筛选真实方法、Playbook 和指南。五个主类目共用同一批正文，不复制内容。</p>
+    <p>按领域、任务意图、适用对象和内容形式筛选。五个主类目共用同一批正文。</p>
   </header>
   <section class="shell">
     <div class="filters" aria-label="内容筛选">
@@ -19,6 +28,20 @@ const entries = visibleEntries(await getCollection('practice'));
         <select id="domain-filter">
           <option value="">全部领域</option>
           {domains.map((domain) => <option value={domain}>{domainNames[domain]}</option>)}
+        </select>
+      </div>
+      <div class="field">
+        <label for="task-filter">任务意图</label>
+        <select id="task-filter">
+          <option value="">全部任务</option>
+          {tasks.map((task) => <option value={task}>{taskNames[task]}</option>)}
+        </select>
+      </div>
+      <div class="field">
+        <label for="audience-filter">适用对象</label>
+        <select id="audience-filter">
+          <option value="">全部对象</option>
+          {audienceOptions.map(([value, label]) => <option value={value}>{label}</option>)}
         </select>
       </div>
       <div class="field">
@@ -34,7 +57,7 @@ const entries = visibleEntries(await getCollection('practice'));
       {entries.map((entry) => <PracticeCard entry={entry} />)}
       <div class="empty" id="empty-state">
         <h2>没有匹配的内容</h2>
-        <p>换一个领域或清除筛选后再试。空主线表示内容仍在从 Wiki 编译。</p>
+        <p>换一个筛选条件，或清除筛选后查看全部。</p>
         <button class="button" id="empty-clear" type="button">查看全部</button>
       </div>
     </div>
@@ -42,14 +65,21 @@ const entries = visibleEntries(await getCollection('practice'));
   <script is:inline>
     const domain = document.querySelector('#domain-filter');
     const type = document.querySelector('#type-filter');
+    const task = document.querySelector('#task-filter');
+    const audience = document.querySelector('#audience-filter');
     const cards = [...document.querySelectorAll('.practice-card')];
     const empty = document.querySelector('#empty-state');
     const apply = () => {
       let shown = 0;
       cards.forEach((card) => {
+        const taskOk = !task?.value || (card.dataset.task || '').split(',').includes(task.value);
+        const audienceOk =
+          !audience?.value || (card.dataset.audience || '').split(',').includes(audience.value);
         const visible =
           (!domain?.value || card.dataset.domain === domain.value) &&
-          (!type?.value || card.dataset.type === type.value);
+          (!type?.value || card.dataset.type === type.value) &&
+          taskOk &&
+          audienceOk;
         card.hidden = !visible;
         if (visible) shown++;
       });
@@ -57,18 +87,26 @@ const entries = visibleEntries(await getCollection('practice'));
       const params = new URLSearchParams();
       if (domain?.value) params.set('domain', domain.value);
       if (type?.value) params.set('type', type.value);
+      if (task?.value) params.set('task', task.value);
+      if (audience?.value) params.set('audience', audience.value);
       history.replaceState(null, '', params.size ? `?${params}` : location.pathname);
     };
     const clear = () => {
       if (domain) domain.value = '';
       if (type) type.value = '';
+      if (task) task.value = '';
+      if (audience) audience.value = '';
       apply();
     };
     const params = new URLSearchParams(location.search);
     if (domain) domain.value = params.get('domain') || '';
     if (type) type.value = params.get('type') || '';
+    if (task) task.value = params.get('task') || '';
+    if (audience) audience.value = params.get('audience') || '';
     domain?.addEventListener('change', apply);
     type?.addEventListener('change', apply);
+    task?.addEventListener('change', apply);
+    audience?.addEventListener('change', apply);
     document.querySelector('#clear-filters')?.addEventListener('click', clear);
     document.querySelector('#empty-clear')?.addEventListener('click', clear);
     apply();

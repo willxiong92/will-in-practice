@@ -5,6 +5,7 @@ domain: indie_site
 topics: [growth, seo, ads, analytics, mql]
 content_type: guide
 audience: [export-marketer, website-operator, csm, fde]
+task: [learn, execute]
 maturity: reviewed
 visibility: public
 publication_status: approved

@@ -5,6 +5,7 @@ domain: fde
 topics: [CRM, asset, process]
 content_type: playbook
 audience: [fde, csm, team-lead]
+task: [diagnose, execute]
 maturity: validated
 visibility: public
 publication_status: approved

@@ -5,6 +5,7 @@ domain: fde
 topics: [leads, crm, handoff]
 content_type: playbook
 audience: [fde, csm, team-lead]
+task: [diagnose, execute]
 maturity: validated
 visibility: public
 publication_status: approved

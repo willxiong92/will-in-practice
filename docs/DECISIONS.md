@@ -54,3 +54,15 @@
 - 决策：将外贸拆为 **外贸业务 / 国际站 / 独立站** 三个主类目。
 - 原因：三条工作流的指标、动作和母版来源不同；FDE-KB 也不把国际站细则并入 FDE。
 - 影响：原 `trade` 内容按主题迁入 `trade_ops`、`global_platform` 或 `indie_site`。
+
+## D-010 生产托管
+
+- 决策：个人网站生产环境采用 **Cloudflare Pages** 静态托管，使用固定免费地址 `https://<project-name>.pages.dev`；GitHub Pages 保留为回退入口。
+- 原因：Quick Tunnel 依赖本机且 URL 会变，不适合对外传播；Pages 由 `main` 自动构建，关机仍可访问。
+- 影响：生产 `base` 为 `/`；`PUBLIC_SITE_URL` 必须在 Cloudflare 环境变量中配置真实 pages.dev，代码不硬编码虚构 hostname。
+
+## D-011 生产内容门禁
+
+- 决策：Cloudflare Pages 与 GitHub Pages 正式构建禁止 `PUBLIC_CONTENT_PREVIEW=true`，仅收录 `approved|published` 且 `public` 内容；构建流水线包含 content / dist / links 自动门禁。
+- 原因：防止草稿与非公开内容泄漏到固定生产 URL。
+- 影响：本地 `npm run dev` / `preview:build` 仍可预览草稿；线上 Preview 若看草稿必须另加 Access。

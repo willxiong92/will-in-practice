@@ -5,6 +5,7 @@ domain: ai
 topics: [workbench, coding-agent, collaboration, workflow]
 content_type: guide
 audience: [knowledge-worker, team-lead, fde]
+task: [learn, execute]
 maturity: reviewed
 visibility: public
 publication_status: approved

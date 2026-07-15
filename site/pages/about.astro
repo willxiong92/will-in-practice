@@ -3,62 +3,67 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { domainMeta } from '../lib/content';
 import { withBase } from '../lib/paths';
 ---
-<BaseLayout title="关于" description="Will in Practice 的定位、内容原则与公开边界。">
+<BaseLayout title="关于" description="Will in Practice 的定位、服务对象、内容原则与公开边界。">
   <header class="page-head shell">
     <div class="eyebrow">关于</div>
-    <h1>把工作经验整理成可以复用的实践</h1>
-    <p>这个网站关注 AI 对客实践、FDE 服务方法，以及外贸业务、国际站与独立站一线问题。内容优先回答怎么判断、怎么执行、什么算完成。</p>
+    <h1>Will in Practice</h1>
+    <p>
+      我是 Will。这个网站发布 AI、FDE、外贸业务、国际站与独立站的一线方法与工具，
+      目标是帮助访客在真实工作里完成判断、执行与复用。
+    </p>
   </header>
 
   <section class="section shell">
-    <div class="domain-map">
-      <div class="section-heading">
-        <h2>五个主类目</h2>
-        <p>类目按访客工作场景切分，再从本地 Wiki / 飞书知识库按主线编译公开稿。</p>
+    <div class="about-split">
+      <div>
+        <h2>我是谁，服务谁</h2>
+        <p>
+          长期在外贸 SaaS、客户成功交付与 AI 落地场景工作。网站优先服务：
+        </p>
+        <ul class="about-list">
+          <li>FDE / CSM 与对客交付负责人</li>
+          <li>外贸业务员与销售主管</li>
+          <li>国际站与独立站运营</li>
+          <li>需要把 AI 变成可核验工作方式的知识工作者</li>
+        </ul>
+        <h2>网站价值</h2>
+        <p>
+          不是文章仓库，也不是内部知识库副本。公开内容强调：问题定义、适用边界、执行步骤、完成标准与风险。
+        </p>
       </div>
-      <div class="domain-list">
-        {domainMeta.map((domain) => (
-          <div class="domain-row">
-            <strong>{domain.name}</strong>
-            <div>
-              <h3><a href={withBase(domain.path)}>{domain.tagline}</a></h3>
-              <p>{domain.summary}</p>
-            </div>
-          </div>
-        ))}
+      <div class="boundary-card">
+        <h3>内容边界</h3>
+        <ul>
+          <li>仅 `approved + public` 进入正式构建与线上部署</li>
+          <li>`team` / `private` / `review_required` 不公开</li>
+          <li>不自动同步全量 Wiki / 飞书库</li>
+          <li>本机路径与敏感信息不进入页面</li>
+        </ul>
+        <h3>反馈</h3>
+        <div class="feedback-actions">
+          <a class="button" href="mailto:will@willinpractice.com?subject=事实错误">事实错误</a>
+          <a class="button secondary" href="mailto:will@willinpractice.com?subject=内容过时">内容过时</a>
+          <a class="button secondary" href="mailto:will@willinpractice.com?subject=希望补充">希望补充</a>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="section shell">
-    <div class="domain-map">
-      <div class="section-heading">
-        <h2>内容原则</h2>
-        <p>专业不等于堆概念。每篇内容都应该帮助读者采取下一步行动。</p>
-      </div>
-      <div class="domain-list">
+    <div class="section-heading">
+      <h2>五个领域</h2>
+      <p>按访客工作场景切分，再从飞书 / Wiki 按主线编译公开稿。</p>
+    </div>
+    <div class="domain-list line-list">
+      {domainMeta.map((domain) => (
         <div class="domain-row">
-          <strong>真实</strong>
+          <strong>{domain.name}</strong>
           <div>
-            <h3>来自实际任务</h3>
-            <p>不为了填栏目制造内容，也不使用虚构指标和案例。</p>
+            <h3><a href={withBase(domain.path)}>{domain.tagline}</a></h3>
+            <p>{domain.summary}</p>
           </div>
         </div>
-        <div class="domain-row">
-          <strong>可用</strong>
-          <div>
-            <h3>提供步骤和完成标准</h3>
-            <p>观点必须连接判断方法、执行动作或可复用工具。</p>
-          </div>
-        </div>
-        <div class="domain-row">
-          <strong>安全</strong>
-          <div>
-            <h3>公开稿经过独立审核</h3>
-            <p>团队内容不自动公开。FDE / 飞书 / Wiki 中的 team 与 private 材料默认不进入正式构建。</p>
-          </div>
-        </div>
-      </div>
+      ))}
     </div>
   </section>
 </BaseLayout>

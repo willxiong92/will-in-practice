@@ -6,17 +6,23 @@ import { withBase } from '../lib/paths';
 interface Props {
   entry: CollectionEntry<'practice'>;
   primary?: boolean;
+  'data-task'?: string;
+  'data-audience'?: string;
 }
 
 const { entry, primary = false } = Astro.props;
 const domainLabel = domainNames[entry.data.domain] ?? entry.data.domain;
 const typeLabel = typeNames[entry.data.content_type] ?? entry.data.content_type;
+const taskData = (entry.data.task || []).join(',');
+const audienceData = entry.data.audience.join(',');
 ---
 <a
   class:list={['practice-card', { primary }]}
   href={withBase(`/practice/${entry.data.slug}`)}
   data-domain={entry.data.domain}
   data-type={entry.data.content_type}
+  data-task={taskData}
+  data-audience={audienceData}
 >
   <div class="meta">
     <span>{domainLabel}</span>

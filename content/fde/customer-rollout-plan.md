@@ -5,6 +5,7 @@ domain: fde
 topics: [rollout, enablement, template, execution]
 content_type: template
 audience: [fde, csm, consultant, team-lead]
+task: [reuse, execute]
 maturity: validated
 visibility: public
 publication_status: approved

@@ -5,6 +5,7 @@ domain: ai
 topics: [customer-facing, context, verification, workflow]
 content_type: guide
 audience: [knowledge-worker, fde, csm, team-lead]
+task: [learn, execute]
 maturity: reviewed
 visibility: public
 publication_status: approved

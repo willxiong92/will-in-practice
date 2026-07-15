@@ -3,28 +3,76 @@ import '../styles/global.css';
 import { domainMeta, isContentPreview } from '../lib/content';
 import { withBase } from '../lib/paths';
 
-interface Props { title?: string; description?: string; }
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
+}
+
 const {
   title = 'Will in Practice',
   description = '把 AI、FDE、外贸业务、国际站与独立站一线实践，整理成能看懂、能照做、能复用的方法与工具。',
+  image = '/images/og-default.svg',
+  type = 'website',
+  noindex = false,
 } = Astro.props;
+
 const pageTitle = title === 'Will in Practice' ? title : `${title} | Will in Practice`;
+// pathname already includes base when Astro.site/base are configured
+const pathForCanonical = Astro.url.pathname.replace(/\/$/, '') || '/';
+const canonical = new URL(pathForCanonical, Astro.site).href;
+const imagePath = image.startsWith('/') ? image.slice(1) : image;
+const ogImage = new URL(withBase(imagePath), Astro.site).href;
+const robots = isContentPreview || noindex ? 'noindex, nofollow' : 'index, follow';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': type === 'article' ? 'TechArticle' : 'WebSite',
+  name: pageTitle,
+  description,
+  url: canonical,
+  inLanguage: 'zh-CN',
+  publisher: {
+    '@type': 'Person',
+    name: 'Will',
+    url: new URL(withBase('about'), Astro.site).href,
+  },
+};
 ---
 <!doctype html>
-<html lang="zh-CN" class="dark">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
-    <meta name="robots" content={isContentPreview ? 'noindex, nofollow' : 'index, follow'} />
+    <meta name="robots" content={robots} />
+    <meta name="author" content="Will" />
+    <link rel="canonical" href={canonical} />
     <title>{pageTitle}</title>
     <link rel="icon" href={withBase('favicon.svg')} type="image/svg+xml" />
+
+    <meta property="og:type" content={type === 'article' ? 'article' : 'website'} />
+    <meta property="og:site_name" content="Will in Practice" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="zh_CN" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
     <a class="skip-link" href="#main">跳到正文</a>
     {isContentPreview && (
-      <div class="preview-bar">内部预览：当前为草稿环境，尚未正式公开发布。欢迎小范围试读反馈。</div>
+      <div class="preview-bar">本地预览模式：可含草稿。正式构建不会收录未批准内容。</div>
     )}
     <header class="site-header">
       <nav class="nav shell" aria-label="主导航">
@@ -47,8 +95,15 @@ const pageTitle = title === 'Will in Practice' ? title : `${title} | Will in Pra
     <main id="main"><slot /></main>
     <footer class="site-footer">
       <div class="footer-row shell">
-        <span>Will in Practice</span>
-        <span>AI · FDE · 外贸业务 · 国际站 · 独立站</span>
+        <div>
+          <strong>Will in Practice</strong>
+          <p class="footer-note">个人最佳实践发布站 · 非知识库全量镜像</p>
+        </div>
+        <div class="footer-links">
+          <a href={withBase('/about')}>关于与边界</a>
+          <a href={withBase('/library')}>实践库</a>
+          <a href="mailto:will@willinpractice.com?subject=网站反馈">反馈</a>
+        </div>
       </div>
     </footer>
     <script>

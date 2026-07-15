@@ -5,6 +5,7 @@ domain: ai
 topics: [verification, risk, customer-facing, checklist]
 content_type: checklist
 audience: [fde, csm, knowledge-worker, team-lead]
+task: [reuse, execute]
 maturity: reviewed
 visibility: public
 publication_status: approved

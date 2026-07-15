@@ -5,6 +5,7 @@ domain: fde
 topics: [AIReach, outreach, leads]
 content_type: playbook
 audience: [fde, csm, export-marketer, team-lead]
+task: [diagnose, execute]
 maturity: validated
 visibility: public
 publication_status: approved

@@ -5,6 +5,7 @@ domain: indie_site
 topics: [seo, diagnosis, technical-seo, indexing]
 content_type: playbook
 audience: [export-marketer, website-operator, csm, fde]
+task: [diagnose, execute]
 maturity: reviewed
 visibility: public
 publication_status: approved

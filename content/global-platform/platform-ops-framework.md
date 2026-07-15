@@ -5,6 +5,7 @@ domain: global_platform
 topics: [b2b-platform, operations, advertising, membership]
 content_type: guide
 audience: [platform-operator, export-sales, team-lead]
+task: [learn, execute]
 maturity: reviewed
 visibility: public
 publication_status: approved

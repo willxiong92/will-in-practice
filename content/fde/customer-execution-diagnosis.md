@@ -5,6 +5,7 @@ domain: fde
 topics: [execution, diagnosis, enablement, csm]
 content_type: playbook
 audience: [fde, csm, consultant, team-lead]
+task: [diagnose, execute]
 maturity: validated
 visibility: public
 publication_status: approved

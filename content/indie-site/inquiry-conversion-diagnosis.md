@@ -5,6 +5,7 @@ domain: indie_site
 topics: [conversion, traffic, diagnosis, landing-page]
 content_type: playbook
 audience: [fde, csm, export-marketer, website-operator]
+task: [diagnose, execute]
 maturity: validated
 visibility: public
 publication_status: approved

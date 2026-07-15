@@ -1,6 +1,8 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
+const taskEnum = z.enum(['learn', 'diagnose', 'execute', 'review', 'reuse']);
+
 const practice = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './content' }),
   schema: z.object({
@@ -10,6 +12,7 @@ const practice = defineCollection({
     topics: z.array(z.string()),
     content_type: z.enum(['article', 'guide', 'playbook', 'case', 'template', 'checklist']),
     audience: z.array(z.string()),
+    task: z.array(taskEnum).optional().default([]),
     maturity: z.string(),
     visibility: z.enum(['private', 'team', 'public']),
     publication_status: z

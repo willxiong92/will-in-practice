@@ -5,6 +5,7 @@ domain: fde
 topics: [leads, SHOP, AIReach]
 content_type: guide
 audience: [fde, csm, export-marketer, team-lead]
+task: [learn, execute]
 maturity: validated
 visibility: public
 publication_status: approved

@@ -6,20 +6,17 @@
 
 **AI · FDE · 外贸业务 · 国际站 · 独立站**
 
-- **AI**：对客实践主线（方案 / 工作台 / 场景 Playbook / 核验），不是工具课目录站。
-- **FDE**：保留 FDE 名称；客户成功方法是其下主线，不顶替顶栏。
-- **外贸业务 / 国际站 / 独立站**：三分，避免一个「外贸」桶吞掉三条工作流。
-
-本地知识库与飞书知识库继续作为 canonical 母版；本项目只保存经过筛选、脱敏、重写和复核的公开发布稿。类目细则见 `docs/TAXONOMY.md`。
+本地知识库与飞书知识库是 canonical 母版；本项目只保存经过筛选与复核的公开发布稿。类目细则见 `docs/TAXONOMY.md`。
 
 ## 当前阶段
 
-阶段 1：网站架构第一版已上线。
+阶段 2 推进中：生产安全构建、Cloudflare Pages 配置就绪（待控制台创建）、SEO 与货架式导航已落地。
 
-- 五主类目 + 领域主线地图排版
-- 约 **29 篇**实践正文（`approved + public`）
-- FDE / AI 主线已对齐飞书知识库原文口径（产品名保留：SHOP / AIReach / CRM / AWB 等）
-- 内部预览：GitHub Pages
+- 五主类目 + 首页总览卡 + 领域货架分组
+- **31 篇** `approved + public` 实践正文
+- 正式构建门禁：`guard:content` → build → `guard:dist` → `guard:links`
+- GitHub Pages 作为回退入口（正式构建，不含草稿）
+- Cloudflare Pages 固定 `*.pages.dev`：见 `docs/CLOUDFLARE_PAGES.md`（需 Will 在控制台创建项目）
 
 ## 目录
 
@@ -27,53 +24,57 @@
 个人网站搭建/
 ├── AGENTS.md
 ├── README.md
-├── 网站搭建规划.md
 ├── content-registry.yaml
-├── content/               # 仅放审核后的公开发布稿
+├── content/                 # 公开发布稿
 ├── docs/
+│   ├── CLOUDFLARE_PAGES.md  # CF Pages 操作说明
 │   ├── CONTENT_POLICY.md
 │   ├── DECISIONS.md
 │   ├── DESIGN_SYSTEM.md
 │   ├── ROADMAP.md
-│   └── TAXONOMY.md        # 类目、L2 主线与展示模块
-├── scripts/               # 内容校验脚本（规划中）
-└── site/                  # Astro 静态站原型
+│   └── TAXONOMY.md
+├── scripts/                 # 内容 / dist / 链接门禁
+├── site/                    # Astro 源码
+└── public/
 ```
 
 ## 关键边界
 
-- `share: team` 不等于 `visibility: public`。
-- 网站不直接遍历或同步整个本地知识库 / 飞书库。
-- 公开稿必须有唯一 `source_id`，但公开页面不展示本机路径。
-- 未获批准的候选可以盘点和改写，不得进入正式构建或部署。
-
-## 当前交付物
-
-| 文件 | 用途 | 状态 |
-|---|---|---|
-| `网站搭建规划.md` | 定位、架构、内容模型和技术方案 | active |
-| `content-registry.yaml` | 候选来源、风险、状态和发布映射 | active |
-| `docs/CONTENT_POLICY.md` | 公开分级、脱敏和审核门禁 | active |
-| `docs/DECISIONS.md` | 已批准的稳定决策 | active |
-| `docs/TAXONOMY.md` | 顶层类目、L2 主线、展示与补货 | active |
-| `docs/ROADMAP.md` | 阶段任务、验收和下一步 | active |
-
-## 下一步
-
-1. 小范围试读 16 篇首批稿，收集“看不懂 / 做不了 / 事实过时”反馈。
-2. 按主线补第二批：国际站合规、独立站 Ads 诊断、外贸付款风险、FDE 经营公式深页。
-3. 需要时换自有域名与托管；当前免费预览地址见下。
+- 正式线上构建只收录 `publication_status: approved|published` 且 `visibility: public`。
+- `team` / `private` / `review_required` 不得进入 `dist`。
+- `PUBLIC_CONTENT_PREVIEW=true` 仅用于本地草稿预览，禁止用于 GitHub/Cloudflare 生产构建。
+- 不自动同步全量知识库；不引入登录、数据库、评论或 AI 聊天。
 
 ## 构建命令
 
-- `npm run dev`：本地开发（预览模式，含草稿）。
-- `npm run build`：正式安全构建，只收录 `approved + public` 内容。
-- `npm run preview:build`：本地预览构建，允许草稿，不用于正式发布。
-- `npm run preview:pages`：GitHub Pages 内部预览构建（带 `base` 路径）。
+| 命令 | 用途 |
+|---|---|
+| `npm run dev` | 本地开发（预览模式，可含草稿） |
+| `npm run build` | **正式生产构建**（根路径 `/`，门禁全开） |
+| `npm run build:github` | 正式构建 + GitHub Pages base |
+| `npm run preview:build` | 本地草稿预览构建（不可用于生产） |
+| `npm run guard:content` | frontmatter / 敏感模式检查 |
+| `npm run guard:dist` | 非公开内容与泄漏检查 |
+| `npm run guard:links` | 站内链接检查 |
 
-## 内部预览地址
+生产构建请设置：
 
-- 本地：`npm run dev` → http://localhost:4321
-- 免费域名（GitHub Pages）：推送 `main` 后自动部署  
-  `https://willxiong92.github.io/will-in-practice/`
-- 后续自购域名 / 服务器时，去掉 `GITHUB_PAGES` 环境变量，把 `astro.config.mjs` 的 `site` 换成正式域名即可。
+```bash
+PUBLIC_SITE_URL=https://<project-name>.pages.dev npm run build
+```
+
+未设置时默认 canonical 回退到 GitHub Pages 完整 URL，**不会虚构** Cloudflare 地址。
+
+## 部署地址
+
+| 环境 | 地址 | 状态 |
+|---|---|---|
+| 本地 | http://localhost:4321 | `npm run dev` |
+| GitHub Pages（回退） | https://willxiong92.github.io/will-in-practice/ | 已自动部署正式构建 |
+| Cloudflare Pages | `https://<project-name>.pages.dev` | **待 Will 创建项目**，建议名 `will-in-practice` |
+
+## 下一步
+
+1. Will 在 Cloudflare 控制台创建 Pages 项目并配置 `PUBLIC_SITE_URL`（见 `docs/CLOUDFLARE_PAGES.md`）。
+2. 继续补强国际站 / 外贸业务内容深度。
+3. 可选：Cloudflare Access 保护 Preview 草稿环境。

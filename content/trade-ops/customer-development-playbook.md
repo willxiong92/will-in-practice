@@ -5,6 +5,7 @@ domain: trade_ops
 topics: [lead-gen, outreach, linkedin, research]
 content_type: playbook
 audience: [export-sales, export-marketer, team-lead]
+task: [diagnose, execute]
 maturity: reviewed
 visibility: public
 publication_status: approved

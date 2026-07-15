@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#11151b"/>
+  <rect x="64" y="64" width="1072" height="502" rx="24" fill="#171d25" stroke="#334052"/>
+  <circle cx="140" cy="160" r="18" fill="#769cff"/>
+  <text x="180" y="172" fill="#edf2f8" font-family="system-ui,sans-serif" font-size="42" font-weight="700">Will in Practice</text>
+  <text x="140" y="280" fill="#edf2f8" font-family="system-ui,sans-serif" font-size="56" font-weight="700">能看懂 · 能照做 · 能复用</text>
+  <text x="140" y="360" fill="#aab7c5" font-family="system-ui,sans-serif" font-size="28">AI · FDE · 外贸业务 · 国际站 · 独立站</text>
+</svg>

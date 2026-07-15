@@ -5,6 +5,7 @@ domain: trade_ops
 topics: [sop, process, documentation, handover]
 content_type: guide
 audience: [export-sales, team-lead, csm]
+task: [learn, execute]
 maturity: reviewed
 visibility: public
 publication_status: approved

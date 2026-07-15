@@ -343,3 +343,20 @@ entries:
     visibility: public
     public_copy_path: content/fde/active-outreach-loop.md
     source_project: 飞书 FDE 知识库
+
+  - source_id: trade/payment-risk
+    domain: trade_ops
+    proposed_title: 外贸付款与风险控制检查清单
+    content_type: checklist
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/trade-ops/payment-risk-checklist.md
+    source_project: OKKI WIKI 知识库
+  - source_id: trade/global-platform-compliance
+    domain: global_platform
+    proposed_title: 国际站合规基础
+    content_type: checklist
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/global-platform/compliance-basics.md
+    source_project: OKKI WIKI 知识库

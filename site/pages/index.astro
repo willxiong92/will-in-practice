@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ShelfCard from '../components/ShelfCard.astro';
+import PracticeCard from '../components/PracticeCard.astro';
 import { domainMeta, entriesByDomain, entryBySlug, visibleEntries } from '../lib/content';
 import { withBase } from '../lib/paths';
 
@@ -14,34 +15,87 @@ const boards = domainMeta.map((domain) => {
   return { domain, count, groups, hot };
 });
 
-const hotList = boards
-  .map((board) => board.hot)
-  .filter((entry): entry is NonNullable<typeof entry> => Boolean(entry));
+// Design system featured: 1 large + 2 small, representative across domains
+const featuredSlugs = [
+  'service-system-map',
+  'inquiry-conversion-diagnosis',
+  'platform-ops-framework',
+  'export-process-map',
+  'ai-basics-one-page',
+];
+const featured = featuredSlugs
+  .map((slug) => entryBySlug(all, slug))
+  .filter((e): e is NonNullable<typeof e> => Boolean(e));
+const [lead, sideA, sideB] = featured;
+
+const taskEntries = [
+  {
+    label: '理解问题',
+    title: '先判断卡在哪',
+    desc: '经营象限、有效流量、执行卡点',
+    href: '/library?task=diagnose',
+  },
+  {
+    label: '照着执行',
+    title: '按步骤完成任务',
+    desc: '陪跑计划、SEO 诊断、商机响应',
+    href: '/library?task=execute',
+  },
+  {
+    label: '复制工具',
+    title: '拿走模板与清单',
+    desc: '核验清单、报价检查、合规检查',
+    href: '/library?task=reuse',
+  },
+];
 ---
 <BaseLayout>
-  <section class="hub-hero shell island-shell">
-    <div class="hub-hero-copy">
-      <div class="eyebrow">实践发现</div>
-      <h1>找到下一步<br />可以怎么做</h1>
-      <p>AI、FDE、外贸业务、国际站与独立站。先选板块，再进分组，最后读方法。</p>
-      <form class="hub-search" action={withBase('/search')} role="search">
-        <label class="sr-only" for="hub-search-input">搜索实践库</label>
-        <input id="hub-search-input" name="q" type="search" placeholder="搜索任务或主题，例如：AIReach、资产阵地、落地页" />
-        <button type="submit">搜索</button>
-      </form>
-      <div class="hero-meta">
-        <span>{all.length} 篇实践</span>
-        <span>5 个板块</span>
-        <span>分组货架浏览</span>
+  <!-- 非对称首屏：定位 + 真实工作场景图 -->
+  <section class="home-hero shell">
+    <div class="home-hero-copy">
+      <div class="eyebrow">Will in Practice</div>
+      <h1>把一线实践整理成能看懂、能照做、能复用的方法与工具</h1>
+      <p class="home-lead">
+        我是 Will，长期在外贸 SaaS、客户成功与 AI 落地一线工作。
+        这个网站面向需要交付结果的 FDE / CSM、外贸业务与运营同学，发布可执行的方法，而不是资料堆叠。
+      </p>
+      <div class="home-actions">
+        <a class="button" href={withBase('/library')}>浏览实践</a>
+        <a class="button secondary" href={withBase('/fde')}>按领域查看</a>
       </div>
+      <div class="hero-meta">
+        <span>{all.length} 篇公开实践</span>
+        <span>5 个领域</span>
+        <span>白名单发布</span>
+      </div>
+    </div>
+    <div class="home-hero-media">
+      <img src={withBase('images/hero-workbench.png')} alt="工作台场景：方法、清单与实践材料" width="960" height="720" loading="eager" />
     </div>
   </section>
 
-  <!-- 1. 总览：各板块入口卡（参考工具箱分类大卡） -->
+  <!-- 任务入口 -->
+  <section class="section shell" id="tasks">
+    <div class="section-heading">
+      <h2>按任务进入</h2>
+      <p>不知道读哪篇时，先选你现在要完成的动作。</p>
+    </div>
+    <div class="principle-grid task-grid">
+      {taskEntries.map((task) => (
+        <a class="task-card" href={withBase(task.href)}>
+          <span class="principle-label">{task.label}</span>
+          <h3>{task.title}</h3>
+          <p>{task.desc}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- 板块总览 -->
   <section class="section shell" id="boards">
     <div class="section-heading">
-      <h2>板块总览</h2>
-      <p>进入首页先看各板块核心入口，再下钻到分组与文章。</p>
+      <h2>领域地图</h2>
+      <p>领域回答“属于哪一块”。进入后按分组浏览，不把文章平铺混排。</p>
     </div>
     <div class="board-grid">
       {boards.map(({ domain, count, groups }) => (
@@ -51,68 +105,82 @@ const hotList = boards
           <p class="board-label">{domain.cardLabel}</p>
           <p class="board-desc">{domain.summary}</p>
           <div class="board-meta">
-            <span>{count} 篇内容</span>
-            <span>{groups} 个分组</span>
+            <span>{count} 篇</span>
+            <span>{groups} 组</span>
           </div>
         </a>
       ))}
     </div>
   </section>
 
-  <!-- 2. 各板块热门素材 -->
-  <section class="section shell" id="hot">
+  <!-- 代表性实践：一大两小 -->
+  <section class="section shell" id="featured">
     <div class="section-heading">
-      <h2>各板块热门</h2>
-      <p>每个板块 1 篇核心入口，降低选择成本。</p>
+      <h2>代表性实践</h2>
+      <p>不按发布时间机械排序，优先能代表能力的内容。</p>
     </div>
-    {hotList.length ? (
-      <div class="shelf-grid hot-grid">
-        {boards.map(({ domain, hot }) =>
-          hot ? (
-            <div class="hot-item">
-              <div class="hot-domain">{domain.name}</div>
-              <ShelfCard entry={hot} />
-            </div>
-          ) : null,
-        )}
+    {lead ? (
+      <div class="featured">
+        <PracticeCard entry={lead} primary />
+        <div class="featured-side">
+          {sideA && <PracticeCard entry={sideA} />}
+          {sideB && <PracticeCard entry={sideB} />}
+        </div>
       </div>
     ) : (
-      <div class="empty" style="display:block">
-        <h2>内容接入中</h2>
-        <a class="button" href={withBase('/library')}>进入实践库</a>
-      </div>
+      <div class="empty" style="display:block"><h2>内容接入中</h2></div>
     )}
   </section>
 
-  <section class="section shell">
-    <div class="principle-grid">
-      <div>
-        <span class="principle-label">1</span>
-        <h2>选板块</h2>
-        <p>AI / FDE / 外贸业务 / 国际站 / 独立站</p>
-      </div>
-      <div>
-        <span class="principle-label">2</span>
-        <h2>进分组</h2>
-        <p>领域页按货架拆开，不把文章堆在一起</p>
-      </div>
-      <div>
-        <span class="principle-label">3</span>
-        <h2>读方法</h2>
-        <p>步骤、模板、完成标准，直接带回执行</p>
-      </div>
+  <!-- 各板块热门 -->
+  <section class="section shell" id="hot">
+    <div class="section-heading">
+      <h2>各板块入口</h2>
+      <p>每个领域 1 篇核心入口，降低选择成本。</p>
+    </div>
+    <div class="shelf-grid hot-grid">
+      {boards.map(({ domain, hot }) =>
+        hot ? (
+          <div class="hot-item">
+            <div class="hot-domain">{domain.name}</div>
+            <ShelfCard entry={hot} />
+          </div>
+        ) : null,
+      )}
     </div>
   </section>
 
-  <section class="section shell">
-    <div class="about-band">
+  <!-- 关于 Will + 边界 + 反馈 -->
+  <section class="section shell" id="about-will">
+    <div class="about-split">
       <div>
-        <h2>需要跨板块筛选？</h2>
-        <p>实践库支持按领域和内容形式过滤；搜索支持关键词直达。</p>
+        <div class="eyebrow">关于 Will</div>
+        <h2>服务真实任务，而不是堆文章数量</h2>
+        <p>
+          内容来自本地知识库与飞书实践库的公开派生稿。每篇尽量写清：解决什么问题、适合谁、怎么做、什么叫完成、风险边界在哪。
+        </p>
+        <ul class="about-list">
+          <li><strong>服务对象：</strong>FDE / CSM、外贸业务、独立站与国际站运营</li>
+          <li><strong>内容价值：</strong>方法、Playbook、清单与可复制模板</li>
+          <li><strong>发布原则：</strong>仅 `approved + public` 进入正式构建</li>
+        </ul>
+        <a class="button secondary" href={withBase('/about')}>了解内容原则</a>
       </div>
-      <div class="about-actions">
-        <a class="button" href={withBase('/library')}>打开实践库</a>
-        <a class="button secondary" href={withBase('/fde')}>看 FDE 货架</a>
+      <div class="boundary-card">
+        <h3>内容边界</h3>
+        <p>网站不是知识库全量镜像。以下默认不公开：</p>
+        <ul>
+          <li>客户、员工、合同与账号信息</li>
+          <li>`team` / `private` / 未批准稿</li>
+          <li>本机路径与内部治理记录</li>
+        </ul>
+        <h3>反馈</h3>
+        <p>发现事实错误、内容过时或希望补充，欢迎反馈：</p>
+        <div class="feedback-actions">
+          <a class="button" href="mailto:feedback@willinpractice.local?subject=事实错误">事实错误</a>
+          <a class="button secondary" href="mailto:feedback@willinpractice.local?subject=内容过时">内容过时</a>
+          <a class="button secondary" href="mailto:feedback@willinpractice.local?subject=希望补充">希望补充</a>
+        </div>
       </div>
     </div>
   </section>

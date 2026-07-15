@@ -33,6 +33,16 @@ export const typeNames = {
   checklist: '检查清单',
 } as const;
 
+export const taskNames = {
+  learn: '学习',
+  diagnose: '诊断',
+  execute: '执行',
+  review: '复盘',
+  reuse: '复用',
+} as const;
+
+export const tasks = ['learn', 'diagnose', 'execute', 'review', 'reuse'] as const;
+
 export const audienceNames: Record<string, string> = {
   'knowledge-worker': '知识工作者',
   'team-lead': '团队主管',
@@ -192,6 +202,12 @@ export const domainMeta: DomainMeta[] = [
         desc: '准备、让步、涨价与代理边界',
         slugs: ['quotation-negotiation-checklist'],
       },
+      {
+        id: 'trade-risk',
+        title: '付款与风险',
+        desc: '收款节点与风险控制',
+        slugs: ['payment-risk-checklist'],
+      },
     ],
   },
   {
@@ -200,12 +216,12 @@ export const domainMeta: DomainMeta[] = [
     path: '/global-platform',
     cardLabel: '平台运营商机',
     tagline: 'B2B 平台获客与运营',
-    summary: '运营五层结构与询盘 / RFQ 处理。',
+    summary: '运营五层结构、询盘 / RFQ 与合规闸门。',
     suited: '国际站运营与外贸增长负责人。',
     notSuited: '自有站 SEO、FDE 内部制度原文。',
     source: 'OKKI WIKI B2B平台',
     hotSlug: 'platform-ops-framework',
-    readingPath: '运营框架 → 商机交易',
+    readingPath: '运营框架 → 商机交易 → 合规检查',
     shelves: [
       {
         id: 'gp-ops',
@@ -218,6 +234,12 @@ export const domainMeta: DomainMeta[] = [
         title: '商机交易',
         desc: '询盘分级 · 背调 · RFQ',
         slugs: ['inquiry-rfq-playbook'],
+      },
+      {
+        id: 'gp-compliance',
+        title: '合规基础',
+        desc: '禁限售 · 目标市场 · 上架前检查',
+        slugs: ['compliance-basics'],
       },
     ],
   },

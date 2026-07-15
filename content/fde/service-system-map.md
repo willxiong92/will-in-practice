@@ -5,6 +5,7 @@ domain: fde
 topics: [service-system, operating-formula, FDE]
 content_type: guide
 audience: [fde, csm, team-lead, consultant]
+task: [learn, execute]
 maturity: validated
 visibility: public
 publication_status: approved

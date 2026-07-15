@@ -5,6 +5,7 @@ domain: ai
 topics: [workbench, llm-wiki, WorkBuddy, Obsidian]
 content_type: playbook
 audience: [knowledge-worker, fde, csm, team-lead]
+task: [diagnose, execute]
 maturity: reviewed
 visibility: public
 publication_status: approved

@@ -32,8 +32,11 @@ const related = shelfInfo
   : all
       .filter((item) => item.data.domain === entry.data.domain && item.data.slug !== entry.data.slug)
       .slice(0, 3);
+
+const mailSubject = encodeURIComponent;
+const titleQ = encodeURIComponent(entry.data.title);
 ---
-<BaseLayout title={entry.data.title} description={entry.data.summary}>
+<BaseLayout title={entry.data.title} description={entry.data.summary} type="article">
   <div class="shell page-head article-meta">
     <nav class="crumb" aria-label="面包屑">
       <a href={withBase('/')}>首页</a>
@@ -62,6 +65,17 @@ const related = shelfInfo
         适合：{entry.data.audience.map((item: string) => audienceNames[item] ?? item).join('、')}
       </div>
       <Content />
+
+      <section class="feedback-panel" id="feedback" aria-label="内容反馈">
+        <h2>内容反馈</h2>
+        <p>如果这篇内容有问题，请直接指出。反馈会用于改写母版派生稿，不会自动改知识库原文。</p>
+        <div class="feedback-actions">
+          <a class="button" href={`mailto:will@willinpractice.com?subject=${mailSubject('事实错误：' + entry.data.title)}&body=${titleQ}`}>事实错误</a>
+          <a class="button secondary" href={`mailto:will@willinpractice.com?subject=${mailSubject('内容过时：' + entry.data.title)}`}>内容过时</a>
+          <a class="button secondary" href={`mailto:will@willinpractice.com?subject=${mailSubject('希望补充：' + entry.data.title)}`}>希望补充</a>
+        </div>
+      </section>
+
       {related.length > 0 && (
         <section class="related-block">
           <h2>{shelfInfo ? `同组「${shelfInfo.shelf.title}」` : '本域相关'}</h2>

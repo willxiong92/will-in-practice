@@ -5,6 +5,7 @@ domain: ai
 topics: [agent, task-routing, customer-facing, tooling]
 content_type: playbook
 audience: [fde, csm, team-lead, knowledge-worker]
+task: [diagnose, execute]
 maturity: reviewed
 visibility: public
 publication_status: approved

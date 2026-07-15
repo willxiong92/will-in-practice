@@ -5,6 +5,7 @@ domain: trade_ops
 topics: [quotation, negotiation, pricing, checklist]
 content_type: checklist
 audience: [export-sales, team-lead]
+task: [reuse, execute]
 maturity: reviewed
 visibility: public
 publication_status: approved

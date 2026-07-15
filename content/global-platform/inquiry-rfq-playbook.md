@@ -5,6 +5,7 @@ domain: global_platform
 topics: [inquiry, rfq, buyer-tiering, response]
 content_type: playbook
 audience: [platform-operator, export-sales, team-lead]
+task: [diagnose, execute]
 maturity: reviewed
 visibility: public
 publication_status: approved

@@ -5,6 +5,7 @@ domain: fde
 topics: [conversion, CRM, operating-formula]
 content_type: guide
 audience: [fde, csm, team-lead]
+task: [learn, execute]
 maturity: validated
 visibility: public
 publication_status: approved

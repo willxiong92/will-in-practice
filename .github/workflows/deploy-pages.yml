@@ -1,4 +1,4 @@
-name: Deploy internal preview to GitHub Pages
+name: Deploy production site to GitHub Pages (fallback)
 
 on:
   push:
@@ -30,11 +30,13 @@ jobs:
       - name: Install
         run: npm ci
 
-      - name: Build internal preview
-        run: npm run preview:pages
+      - name: Production build (approved + public only)
+        run: npm run build:github
         env:
           GITHUB_PAGES: 'true'
-          PUBLIC_CONTENT_PREVIEW: 'true'
+          PUBLIC_CONTENT_PREVIEW: 'false'
+          # Origin only; project path is `base: /will-in-practice/`
+          PUBLIC_SITE_URL: 'https://willxiong92.github.io'
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
