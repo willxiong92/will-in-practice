@@ -3,10 +3,10 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PracticeCard from '../components/PracticeCard.astro';
 import { domainMeta, visibleEntries } from '../lib/content';
+import { withBase } from '../lib/paths';
 
 const entries = visibleEntries(await getCollection('practice'));
 const [lead, ...rest] = entries;
-const base = import.meta.env.BASE_URL;
 ---
 <BaseLayout>
   <section class="hub-hero shell island-shell">
@@ -14,7 +14,7 @@ const base = import.meta.env.BASE_URL;
       <div class="eyebrow">实践发现</div>
       <h1>找到下一步<br />可以怎么做</h1>
       <p>AI 对客实践、FDE 服务方法，以及外贸业务、国际站与独立站的可执行框架。</p>
-      <form class="hub-search" action={`${base}search`} role="search">
+      <form class="hub-search" action={withBase('/search')} role="search">
         <label class="sr-only" for="hub-search-input">搜索实践库</label>
         <input id="hub-search-input" name="q" type="search" placeholder="搜索任务、问题或主题，例如：客户执行、落地页、AI 核验" />
         <button type="submit">搜索</button>
@@ -29,7 +29,7 @@ const base = import.meta.env.BASE_URL;
     </div>
     <div class="domain-grid domain-grid-5">
       {domainMeta.map((domain) => (
-        <a class={`domain-card domain-${domain.id}`} href={`${base}${domain.path.slice(1)}`}>
+        <a class={`domain-card domain-${domain.id}`} href={withBase(domain.path)}>
           <span>{domain.name}</span>
           <h3>{domain.tagline}</h3>
           <p>{domain.summary}</p>
@@ -52,7 +52,7 @@ const base = import.meta.env.BASE_URL;
       <div class="empty" style="display:block">
         <h2>正式公开内容尚未接入</h2>
         <p>预览环境可查看草稿；正式构建只收录 approved + public 内容。</p>
-        <a class="button" href={`${base}library`}>进入实践库</a>
+        <a class="button" href={withBase('/library')}>进入实践库</a>
       </div>
     )}
   </section>
@@ -83,7 +83,7 @@ const base = import.meta.env.BASE_URL;
         <h2>不是资料搬运，而是实践编译</h2>
         <p>本地 Wiki 与飞书知识库保留母版，网站只发布经过筛选、脱敏和复核的公开派生稿。当前为内部迭代预览。</p>
       </div>
-      <a class="button" href={`${base}about`}>了解内容原则</a>
+      <a class="button" href={withBase('/about')}>了解内容原则</a>
     </div>
   </section>
 </BaseLayout>

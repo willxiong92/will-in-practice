@@ -7,6 +7,7 @@ export default defineConfig({
   publicDir: './public',
   output: 'static',
   site: isGitHubPages ? 'https://willxiong92.github.io' : 'https://willinpractice.com',
-  base: isGitHubPages ? '/will-in-practice' : '/',
+  // Trailing slash on base keeps asset and route joins correct on project Pages.
+  base: isGitHubPages ? '/will-in-practice/' : '/',
   trailingSlash: 'never',
 });

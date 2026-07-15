@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const base = import.meta.env.BASE_URL;
+import { withBase } from '../lib/paths';
 ---
 <BaseLayout title="页面不存在">
   <section class="not-found shell">
@@ -9,8 +9,8 @@ const base = import.meta.env.BASE_URL;
       <h2>这里没有对应内容</h2>
       <p>页面可能已移动，或者还没有进入公开发布范围。</p>
       <div class="actions">
-        <a class="button" href={`${base}library`}>浏览实践库</a>
-        <a class="button secondary" href={base}>返回首页</a>
+        <a class="button" href={withBase('/library')}>浏览实践库</a>
+        <a class="button secondary" href={withBase()}>返回首页</a>
       </div>
     </div>
   </section>

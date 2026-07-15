@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { domainNames, typeNames } from '../lib/content';
+import { withBase } from '../lib/paths';
 
 interface Props {
   entry: CollectionEntry<'practice'>;
@@ -8,13 +9,12 @@ interface Props {
 }
 
 const { entry, primary = false } = Astro.props;
-const base = import.meta.env.BASE_URL;
 const domainLabel = domainNames[entry.data.domain] ?? entry.data.domain;
 const typeLabel = typeNames[entry.data.content_type] ?? entry.data.content_type;
 ---
 <a
   class:list={['practice-card', { primary }]}
-  href={`${base}practice/${entry.data.slug}`}
+  href={withBase(`/practice/${entry.data.slug}`)}
   data-domain={entry.data.domain}
   data-type={entry.data.content_type}
 >

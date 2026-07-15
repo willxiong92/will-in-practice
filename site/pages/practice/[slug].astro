@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { audienceNames, domainNames, domainPaths, formatDate, typeNames, visibleEntries } from '../../lib/content';
+import { withBase } from '../../lib/paths';
 
 export async function getStaticPaths() {
   const entries = visibleEntries(await getCollection('practice'));
@@ -10,13 +11,12 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content, headings } = await render(entry);
-const base = import.meta.env.BASE_URL;
 const domainPath = domainPaths[entry.data.domain];
 ---
 <BaseLayout title={entry.data.title} description={entry.data.summary}>
   <div class="shell page-head article-meta">
     <div class="meta">
-      <span><a href={`${base}${domainPath.slice(1)}`}>{domainNames[entry.data.domain]}</a></span>
+      <span><a href={withBase(domainPath)}>{domainNames[entry.data.domain]}</a></span>
       <span>{typeNames[entry.data.content_type]}</span>
       <span>复核于 {formatDate(entry.data.reviewed_at)}</span>
     </div>
@@ -36,8 +36,8 @@ const domainPath = domainPaths[entry.data.domain];
       {headings
         .filter((heading) => heading.depth === 2)
         .map((heading) => <a href={`#${heading.slug}`}>{heading.text}</a>)}
-      <a href={`${base}library`}>返回实践库</a>
-      <a href={`${base}${domainPath.slice(1)}`}>返回{domainNames[entry.data.domain]}</a>
+      <a href={withBase('/library')}>返回实践库</a>
+      <a href={withBase(domainPath)}>返回{domainNames[entry.data.domain]}</a>
     </aside>
   </div>
 </BaseLayout>

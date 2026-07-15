@@ -1,8 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { domainMeta } from '../lib/content';
-
-const base = import.meta.env.BASE_URL;
+import { withBase } from '../lib/paths';
 ---
 <BaseLayout title="关于" description="Will in Practice 的定位、内容原则与公开边界。">
   <header class="page-head shell">
@@ -22,7 +21,7 @@ const base = import.meta.env.BASE_URL;
           <div class="domain-row">
             <strong>{domain.name}</strong>
             <div>
-              <h3><a href={`${base}${domain.path.slice(1)}`}>{domain.tagline}</a></h3>
+              <h3><a href={withBase(domain.path)}>{domain.tagline}</a></h3>
               <p>{domain.summary}</p>
             </div>
           </div>
