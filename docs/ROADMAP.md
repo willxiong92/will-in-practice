@@ -2,19 +2,20 @@
 
 ## 当前状态
 
-阶段 1 完成；阶段 2 基本完成（生产已上线，发布闭环收口中）。
+阶段 2 完成；阶段 3 内容加深进行中。
 
-- 31 篇 `approved + public` 实践稿
+- 35 篇 `approved + public` 实践稿（原 31 + 外贸/国际站 4 篇）
 - 货架式首页 / 领域页
 - 生产构建门禁（content / dist / links）
 - GitHub Pages 回退（正式构建，无草稿）
 - Cloudflare Pages 生产：https://will-in-practice.pages.dev
+- **Git 已连接**：`main` push 触发生产构建
 
 ## 阶段 0：内容盘点与门禁
 
 - [x] 项目控制文件、内容政策、登记表
 - [x] 五主类目 TAXONOMY
-- [x] 首批公开派生稿接入（已扩至 31 篇）
+- [x] 首批公开派生稿接入
 - [x] 自动 frontmatter / 敏感词 / dist / 链接门禁
 - [ ] 滚动复核事实时效
 
@@ -29,11 +30,11 @@
 
 ## 阶段 2：视觉与发布闭环
 
-- [x] 首页对齐 DESIGN_SYSTEM 主结构（身份、任务入口、精选、边界、反馈）
-- [x] Cloudflare Pages 构建参数与文档（固定 `*.pages.dev`）
-- [x] Cloudflare Pages 项目 `will-in-practice` 已创建并完成生产部署（https://will-in-practice.pages.dev）
-- [x] 生产默认 `PUBLIC_SITE_URL` / canonical 指向 pages.dev
-- [ ] 连接 Git 实现 `main` 自动部署（控制台一步，见 CLOUDFLARE_PAGES.md）
+- [x] 首页对齐 DESIGN_SYSTEM 主结构
+- [x] Cloudflare Pages 构建参数与固定 `*.pages.dev`
+- [x] 项目 `will-in-practice` 生产部署
+- [x] 生产默认 `PUBLIC_SITE_URL` / canonical
+- [x] Git 连接实现 `main` 自动部署
 - [ ] 真实用户任务测试（3 人）
 - [ ] 轻量分析（需确认）
 
@@ -41,12 +42,15 @@
 
 ## 阶段 3：内容加深与运营（进行中）
 
-- [ ] 优先补强 **国际站 / 外贸业务** 深页（不单独继续堆 FDE）
-- [ ] 替换占位反馈邮箱为真实地址
-- [ ] 按实际上线域名微调分享图（可选）
+- [x] 补强外贸业务：跟进维护、展会执行
+- [x] 补强国际站：发品内容清单、推广诊断
+- [x] 首页反馈邮箱统一为 `will@willinpractice.com`
+- [ ] 继续国际站 / 外贸业务深页（样品、客诉、RFQ 模板等）
+- [ ] 3 人任务测试
+- [ ] 分享图微调（可选）
 
 ## 当前下一步
 
-1. （可选）Dashboard 连接 Git + 环境变量，结束 CLI 手动部署
-2. 内容：国际站 / 外贸业务深页
-3. 真实反馈邮箱 + 3 人任务测试
+1. push 本批内容，确认 CF Git 自动部署 success
+2. 约 3 人按真实任务走一遍站点
+3. 按反馈继续补深页

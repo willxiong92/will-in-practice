@@ -1,6 +1,6 @@
 # Cloudflare Pages 部署说明
 
-> 状态：**项目已创建，生产已上线**  
+> 状态：**生产已上线，Git 已连接**  
 > 生产地址：https://will-in-practice.pages.dev  
 > 不要使用 Quick Tunnel；生产使用固定 `*.pages.dev`。
 
@@ -11,8 +11,8 @@
 | 项目名 | `will-in-practice` |
 | 生产域名 | https://will-in-practice.pages.dev |
 | 账号 | willxiong92@gmail.com |
-| 连接方式（当前） | **Direct Upload**（`wrangler pages deploy`） |
-| Git 连接 | **未连接**（见下方「接 Git 自动部署」） |
+| 连接方式 | **GitHub** `willxiong92/will-in-practice`（`main` → Production） |
+| 备用 | Direct Upload / `wrangler pages deploy` 仍可用 |
 
 ## 构建参数（接 Git 时使用）
 
@@ -61,18 +61,19 @@ env -u HTTP_PROXY -u HTTPS_PROXY -u http_proxy -u https_proxy -u ALL_PROXY -u al
 
 > 若本机走了系统代理导致 API 失败，用上面的 `env -u *PROXY*` 清代理再部署。
 
-## 接 Git 自动部署（推荐，需在控制台点一次）
+## Git 自动部署（已接通）
 
-Direct Upload 项目**不能**通过 wrangler 一键改绑 Git，需在 Dashboard 操作：
+- 仓库：`willxiong92/will-in-practice`
+- Production branch：`main`
+- 推送 `main` 后 Cloudflare 会 `clone_repo → npm run build → deploy`
+- 若 Git 安装异常，可 `POST .../pages/projects/will-in-practice/source` 重挂（需账号已授权 GitHub App）
 
-1. 打开 [Cloudflare Dashboard → Workers & Pages → will-in-practice](https://dash.cloudflare.com/)
-2. Settings → Builds & deployments → **Connect to Git**（或创建 Git 连接的新 Pages 项目并指向同一仓库）
-3. 授权 GitHub，选择 `willxiong92/will-in-practice`
-4. 填上表构建参数 + Production 环境变量
-5. 保存后 push `main` 应触发 Production 部署
-6. 验证 https://will-in-practice.pages.dev/ 与 `/library`
+日常发布：
 
-若「Connect to Git」对已有 Direct Upload 项目不可用：可新建 Git 连接的 Pages 项目（同名可能冲突时用临时名再迁域名），或继续用 CLI 部署。
+```bash
+git push origin main
+# 在 Cloudflare Deployments 查看 Production 是否 success
+```
 
 ## 本地验证
 

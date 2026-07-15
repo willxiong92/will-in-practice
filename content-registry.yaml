@@ -360,3 +360,53 @@ entries:
     visibility: public
     public_copy_path: content/global-platform/compliance-basics.md
     source_project: OKKI WIKI 知识库
+
+  - source_id: trade/follow-up-maintenance
+    domain: trade_ops
+    proposed_title: 外贸客户跟进与维护
+    content_type: playbook
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/trade-ops/follow-up-maintenance-playbook.md
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/外贸业务/concept-外贸客户跟进与维护.md
+    risk_notes:
+      - 已去掉不可核验的地域偏见表述，改为分级与节奏方法
+    rewrite_direction: 价值输出 + SLE + 分级跟进
+
+  - source_id: trade/exhibition-playbook
+    domain: trade_ops
+    proposed_title: 外贸展会执行
+    content_type: playbook
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/trade-ops/exhibition-playbook.md
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/外贸业务/concept-外贸展会营销.md
+    risk_notes:
+      - 不写具体第三方地图/海关产品名与不可核验数据源操作细节
+    rewrite_direction: 展前中后 SOP 与 48 小时跟进
+
+  - source_id: trade/listing-content-checklist
+    domain: global_platform
+    proposed_title: 国际站发品内容检查清单
+    content_type: checklist
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/global-platform/listing-content-checklist.md
+    source_project: OKKI WIKI 知识库
+    risk_notes:
+      - 不写平台专有产品名与营销百分比
+    rewrite_direction: 标题主图商详关键词统一清单
+
+  - source_id: trade/ads-diagnosis-checklist
+    domain: global_platform
+    proposed_title: 国际站推广诊断
+    content_type: checklist
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/global-platform/ads-diagnosis-checklist.md
+    source_project: OKKI WIKI 知识库
+    risk_notes:
+      - 不写具体广告产品名与效果承诺数字
+    rewrite_direction: 五层诊断顺序与分流表

@@ -182,7 +182,7 @@ export const domainMeta: DomainMeta[] = [
     notSuited: '平台后台细则、独立站 SEO 细节。',
     source: 'OKKI WIKI 外贸业务',
     hotSlug: 'export-process-map',
-    readingPath: '流程全景 → 客户开发 → 报价谈判',
+    readingPath: '流程全景 → 客户开发 → 报价谈判 → 跟进与展会',
     shelves: [
       {
         id: 'trade-process',
@@ -197,6 +197,12 @@ export const domainMeta: DomainMeta[] = [
         slugs: ['customer-development-playbook'],
       },
       {
+        id: 'trade-follow',
+        title: '跟进与维护',
+        desc: '价值输出、节奏与客户分级',
+        slugs: ['follow-up-maintenance-playbook'],
+      },
+      {
         id: 'trade-quote',
         title: '报价与谈判',
         desc: '准备、让步、涨价与代理边界',
@@ -208,6 +214,12 @@ export const domainMeta: DomainMeta[] = [
         desc: '收款节点与风险控制',
         slugs: ['payment-risk-checklist'],
       },
+      {
+        id: 'trade-exhibition',
+        title: '展会执行',
+        desc: '展前邀约 · 现场记录 · 48 小时跟进',
+        slugs: ['exhibition-playbook'],
+      },
     ],
   },
   {
@@ -216,12 +228,12 @@ export const domainMeta: DomainMeta[] = [
     path: '/global-platform',
     cardLabel: '平台运营商机',
     tagline: 'B2B 平台获客与运营',
-    summary: '运营五层结构、询盘 / RFQ 与合规闸门。',
+    summary: '运营五层结构、发品内容、商机 / RFQ、推广诊断与合规闸门。',
     suited: '国际站运营与外贸增长负责人。',
     notSuited: '自有站 SEO、FDE 内部制度原文。',
     source: 'OKKI WIKI B2B平台',
     hotSlug: 'platform-ops-framework',
-    readingPath: '运营框架 → 商机交易 → 合规检查',
+    readingPath: '运营框架 → 发品内容 → 商机交易 → 推广诊断 → 合规',
     shelves: [
       {
         id: 'gp-ops',
@@ -230,10 +242,22 @@ export const domainMeta: DomainMeta[] = [
         slugs: ['platform-ops-framework'],
       },
       {
+        id: 'gp-content',
+        title: '发品内容',
+        desc: '标题 · 主图 · 商详 · 关键词',
+        slugs: ['listing-content-checklist'],
+      },
+      {
         id: 'gp-inquiry',
         title: '商机交易',
         desc: '询盘分级 · 背调 · RFQ',
         slugs: ['inquiry-rfq-playbook'],
+      },
+      {
+        id: 'gp-ads',
+        title: '推广诊断',
+        desc: '预算无效时的五层排查',
+        slugs: ['ads-diagnosis-checklist'],
       },
       {
         id: 'gp-compliance',
