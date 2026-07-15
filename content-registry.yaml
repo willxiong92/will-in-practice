@@ -256,3 +256,90 @@ entries:
     risk_notes:
       - 已去内部产品名，改为独立站通用诊断
     rewrite_direction: 有效流量 × 转化率
+
+  # --- Feishu sync batch 2026-07-15 ---
+  - source_id: feishu-ai/workbuddy-obsidian
+    domain: ai
+    proposed_title: 人机协同工作台：LLM Wiki
+    content_type: playbook
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/ai/llm-wiki-workbench.md
+    source_project: 飞书 AI 知识库
+    source_ref: space/7657544248421551291 WorkBuddy+Obsidian
+  - source_id: feishu-ai/coding-agent-bridge
+    domain: ai
+    proposed_title: 把 Coding Agent 接到协作入口
+    content_type: guide
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/ai/agent-in-collab-entry.md
+    source_project: 飞书 AI 知识库
+    source_ref: space/7657544248421551291 Claude+Codex 飞书桥
+  - source_id: feishu-fde/product-matrix
+    domain: fde
+    proposed_title: 先看经营问题，再匹配产品能力
+    content_type: guide
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/fde/product-capability-matrix.md
+    source_project: 飞书 FDE 知识库
+    source_ref: space/7657536685198068957 产品矩阵
+  - source_id: feishu-fde/awb
+    domain: fde
+    proposed_title: 经营判断与能力调度
+    content_type: playbook
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/fde/skill-routing.md
+    source_project: 飞书 FDE 知识库
+    source_ref: space/7657536685198068957 AWB经营大脑
+  - source_id: feishu-fde/platform
+    domain: fde
+    proposed_title: FDE 平台化能力建设
+    content_type: playbook
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/fde/platform-capability.md
+    source_project: 飞书 FDE 知识库
+    source_ref: space/7657536685198068957 平台化
+  - source_id: feishu-fde/more-leads
+    domain: fde
+    proposed_title: 更多有效线索
+    content_type: guide
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/fde/more-effective-leads.md
+    source_project: 飞书 FDE 知识库
+  - source_id: feishu-fde/higher-conversion
+    domain: fde
+    proposed_title: 更高转化率
+    content_type: guide
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/fde/higher-conversion.md
+    source_project: 飞书 FDE 知识库
+  - source_id: feishu-fde/asset-base
+    domain: fde
+    proposed_title: 资产阵地搭建
+    content_type: playbook
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/fde/crm-asset-base.md
+    source_project: 飞书 FDE 知识库
+  - source_id: feishu-fde/new-customer
+    domain: fde
+    proposed_title: 新客户转化
+    content_type: playbook
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/fde/new-customer-conversion.md
+    source_project: 飞书 FDE 知识库
+  - source_id: feishu-fde/aireach
+    domain: fde
+    proposed_title: 主动开发闭环
+    content_type: playbook
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/fde/active-outreach-loop.md
+    source_project: 飞书 FDE 知识库
