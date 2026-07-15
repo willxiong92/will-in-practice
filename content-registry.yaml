@@ -137,6 +137,89 @@ entries:
       - 去掉内部产品版本与未公开评分体系
     rewrite_direction: 定调-生成-自检-人工-发布
 
+  - source_id: ai/agent-layer-roles
+    domain: ai
+    proposed_title: AI 工作三层分工
+    content_type: guide
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/ai/agent-layer-roles.md
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/知识库运维/concept-本地助手-协作助手-外部助手三层分工.md
+    rewrite_direction: 公开为运维/协作/对客三层，去掉内部产品名
+
+  - source_id: ai/team-ai-learning-path
+    domain: ai
+    proposed_title: 团队 AI 基础学习路径
+    content_type: playbook
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/ai/team-ai-learning-path.md
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/AI智能体/协作助手/playbook-AI基础使用团队学习版.md
+    rewrite_direction: 2小时模块与验收练习
+
+  - source_id: ai/collab-scene-cards
+    domain: ai
+    proposed_title: 协作场景卡
+    content_type: playbook
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/ai/collab-scene-cards.md
+    source_project: OKKI WIKI 知识库
+    rewrite_direction: 话术摘要复盘资料分析四卡
+
+  - source_id: indie/seo-framework
+    domain: indie_site
+    proposed_title: 独立站 SEO 基础框架
+    content_type: guide
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/indie-site/seo-framework-guide.md
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/独立站/concept-SEO基础框架.md
+    rewrite_direction: 闭环与何时该做
+
+  - source_id: indie/tech-seo-checklist
+    domain: indie_site
+    proposed_title: 技术 SEO 检查清单
+    content_type: checklist
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/indie-site/tech-seo-checklist.md
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/独立站/concept-技术SEO.md
+
+  - source_id: indie/ai-seo-aeo
+    domain: indie_site
+    proposed_title: AI 时代独立站 AEO/GEO
+    content_type: playbook
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/indie-site/ai-seo-aeo-playbook.md
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/独立站/concept-AI与SEO优化.md
+
+  - source_id: indie/ads-mql-checklist
+    domain: indie_site
+    proposed_title: B2B 搜索广告 MQL 清单
+    content_type: checklist
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/indie-site/ads-mql-checklist.md
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/独立站/concept-Ads-B2B实战.md
+
+  - source_id: indie/eeat-content-checklist
+    domain: indie_site
+    proposed_title: EEAT 内容检查清单
+    content_type: checklist
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/indie-site/eeat-content-checklist.md
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/产品体系/shop/concept-EEAT内容规范.md
+
   # --- FDE ---
   - source_id: fde/customer-execution-diagnosis
     domain: fde
