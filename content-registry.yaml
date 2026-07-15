@@ -410,3 +410,59 @@ entries:
     risk_notes:
       - 不写具体广告产品名与效果承诺数字
     rewrite_direction: 五层诊断顺序与分流表
+
+  - source_id: trade/sample-process-checklist
+    domain: trade_ops
+    proposed_title: 外贸样品全流程检查清单
+    content_type: checklist
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/trade-ops/sample-process-checklist.md
+    source_project: OKKI WIKI 知识库
+    rewrite_direction: 寄前在途测试转单节点
+
+  - source_id: trade/complaint-crisis-playbook
+    domain: trade_ops
+    proposed_title: 外贸客诉与危机应对
+    content_type: playbook
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/trade-ops/complaint-crisis-playbook.md
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/外贸业务/concept-外贸客诉与危机应对.md
+    rewrite_direction: 四步法+交期预警+质量变更铁律
+
+  - source_id: trade/supplier-cooperation-checklist
+    domain: trade_ops
+    proposed_title: 供应商合作与防绕单检查清单
+    content_type: checklist
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/trade-ops/supplier-cooperation-checklist.md
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/外贸业务/concept-供应商管理与合作.md
+    risk_notes:
+      - 不构成法律意见；合同条款提示以法务为准
+    rewrite_direction: 合同边界+信息隔离+双供方
+
+  - source_id: trade/rfq-response-template
+    domain: global_platform
+    proposed_title: 国际站 RFQ 回复模板
+    content_type: template
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/global-platform/rfq-response-template.md
+    source_project: OKKI WIKI 知识库
+    risk_notes:
+      - 去掉不可核验成交率数字与平台专有权益名
+    rewrite_direction: 回复骨架+优先级+额度分配
+
+  - source_id: trade/buyer-tier-playbook
+    domain: global_platform
+    proposed_title: 国际站买家分层经营
+    content_type: playbook
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/global-platform/buyer-tier-playbook.md
+    source_project: OKKI WIKI 知识库
+    rewrite_direction: L0-L4 经营节奏与升级信号

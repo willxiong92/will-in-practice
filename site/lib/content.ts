@@ -177,12 +177,12 @@ export const domainMeta: DomainMeta[] = [
     path: '/trade-ops',
     cardLabel: '开发报价履约',
     tagline: '开发、报价、谈判与履约链路',
-    summary: '业务全景、客户开发与报价谈判检查。',
+    summary: '业务全景、开发跟进、样品、客诉、供应商与付款风险。',
     suited: '外贸业务员、销售主管。',
     notSuited: '平台后台细则、独立站 SEO 细节。',
     source: 'OKKI WIKI 外贸业务',
     hotSlug: 'export-process-map',
-    readingPath: '流程全景 → 客户开发 → 报价谈判 → 跟进与展会',
+    readingPath: '流程 → 开发/跟进 → 样品 → 报价 → 风险/客诉 → 展会',
     shelves: [
       {
         id: 'trade-process',
@@ -203,6 +203,12 @@ export const domainMeta: DomainMeta[] = [
         slugs: ['follow-up-maintenance-playbook'],
       },
       {
+        id: 'trade-sample',
+        title: '样品流程',
+        desc: '寄前、在途、测试与转单',
+        slugs: ['sample-process-checklist'],
+      },
+      {
         id: 'trade-quote',
         title: '报价与谈判',
         desc: '准备、让步、涨价与代理边界',
@@ -210,9 +216,13 @@ export const domainMeta: DomainMeta[] = [
       },
       {
         id: 'trade-risk',
-        title: '付款与风险',
-        desc: '收款节点与风险控制',
-        slugs: ['payment-risk-checklist'],
+        title: '付款与履约风险',
+        desc: '收款、供应商、客诉危机',
+        slugs: [
+          'payment-risk-checklist',
+          'supplier-cooperation-checklist',
+          'complaint-crisis-playbook',
+        ],
       },
       {
         id: 'trade-exhibition',
@@ -228,12 +238,12 @@ export const domainMeta: DomainMeta[] = [
     path: '/global-platform',
     cardLabel: '平台运营商机',
     tagline: 'B2B 平台获客与运营',
-    summary: '运营五层结构、发品内容、商机 / RFQ、推广诊断与合规闸门。',
+    summary: '运营框架、发品、商机分层、RFQ 模板、推广诊断与合规。',
     suited: '国际站运营与外贸增长负责人。',
     notSuited: '自有站 SEO、FDE 内部制度原文。',
     source: 'OKKI WIKI B2B平台',
     hotSlug: 'platform-ops-framework',
-    readingPath: '运营框架 → 发品内容 → 商机交易 → 推广诊断 → 合规',
+    readingPath: '运营框架 → 发品 → 商机/分层 → RFQ → 推广 → 合规',
     shelves: [
       {
         id: 'gp-ops',
@@ -250,8 +260,12 @@ export const domainMeta: DomainMeta[] = [
       {
         id: 'gp-inquiry',
         title: '商机交易',
-        desc: '询盘分级 · 背调 · RFQ',
-        slugs: ['inquiry-rfq-playbook'],
+        desc: '询盘分级 · 背调 · 买家分层 · RFQ 模板',
+        slugs: [
+          'inquiry-rfq-playbook',
+          'buyer-tier-playbook',
+          'rfq-response-template',
+        ],
       },
       {
         id: 'gp-ads',
