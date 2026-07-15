@@ -1,0 +1,17 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { typeNames } from '../lib/content';
+import { withBase } from '../lib/paths';
+
+interface Props {
+  entry: CollectionEntry<'practice'>;
+}
+
+const { entry } = Astro.props;
+const typeLabel = typeNames[entry.data.content_type] ?? entry.data.content_type;
+---
+<a class="shelf-card" href={withBase(`/practice/${entry.data.slug}`)} data-domain={entry.data.domain} data-type={entry.data.content_type}>
+  <span class="shelf-card-type">{typeLabel}</span>
+  <h3>{entry.data.title}</h3>
+  <p>{entry.data.summary}</p>
+</a>

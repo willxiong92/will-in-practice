@@ -1,90 +1,80 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PracticeCard from '../components/PracticeCard.astro';
-import { domainMeta, entriesByDomain, visibleEntries } from '../lib/content';
+import ShelfCard from '../components/ShelfCard.astro';
+import { domainMeta, entriesByDomain, entryBySlug, visibleEntries } from '../lib/content';
 import { withBase } from '../lib/paths';
 
 const all = visibleEntries(await getCollection('practice'));
-const featuredSlugs = [
-  'service-system-map',
-  'more-effective-leads',
-  'higher-conversion',
-  'llm-wiki-workbench',
-  'inquiry-conversion-diagnosis',
-  'b2b-landing-page',
-];
-const featured = featuredSlugs
-  .map((slug) => all.find((entry) => entry.data.slug === slug))
-  .filter((entry): entry is (typeof all)[number] => Boolean(entry));
-const [lead, ...rest] = featured.length ? featured : all;
-const domainStats = domainMeta.map((domain) => ({
-  domain,
-  count: entriesByDomain(all, domain.id).length,
-  ready: domain.lines.filter((line) =>
-    line.slugs.some((slug) => all.some((entry) => entry.data.slug === slug)),
-  ).length,
-}));
+
+const boards = domainMeta.map((domain) => {
+  const count = entriesByDomain(all, domain.id).length;
+  const groups = domain.shelves.length;
+  const hot = entryBySlug(all, domain.hotSlug);
+  return { domain, count, groups, hot };
+});
+
+const hotList = boards
+  .map((board) => board.hot)
+  .filter((entry): entry is NonNullable<typeof entry> => Boolean(entry));
 ---
 <BaseLayout>
   <section class="hub-hero shell island-shell">
     <div class="hub-hero-copy">
-      <div class="eyebrow">Will in Practice · 架构第一版</div>
+      <div class="eyebrow">实践发现</div>
       <h1>找到下一步<br />可以怎么做</h1>
-      <p>
-        五主类目：AI · FDE · 外贸业务 · 国际站 · 独立站。
-        内容来自飞书知识库与本地 Wiki，按主线排版，可直接检索执行。
-      </p>
+      <p>AI、FDE、外贸业务、国际站与独立站。先选板块，再进分组，最后读方法。</p>
       <form class="hub-search" action={withBase('/search')} role="search">
         <label class="sr-only" for="hub-search-input">搜索实践库</label>
-        <input id="hub-search-input" name="q" type="search" placeholder="搜索任务、问题或主题，例如：AIReach、资产阵地、落地页" />
+        <input id="hub-search-input" name="q" type="search" placeholder="搜索任务或主题，例如：AIReach、资产阵地、落地页" />
         <button type="submit">搜索</button>
       </form>
       <div class="hero-meta">
         <span>{all.length} 篇实践</span>
-        <span>5 个领域</span>
-        <span>主线地图导航</span>
+        <span>5 个板块</span>
+        <span>分组货架浏览</span>
       </div>
     </div>
   </section>
 
-  <section class="section shell" id="architecture">
+  <!-- 1. 总览：各板块入口卡（参考工具箱分类大卡） -->
+  <section class="section shell" id="boards">
     <div class="section-heading">
-      <h2>网站架构</h2>
-      <p>领域回答“属于哪一块”，实践库回答“现在要完成什么任务”。正文只保留一份。</p>
+      <h2>板块总览</h2>
+      <p>进入首页先看各板块核心入口，再下钻到分组与文章。</p>
     </div>
-    <div class="arch-overview">
-      <div class="arch-flow">
-        <div class="arch-flow-step"><strong>1</strong><span>选领域</span></div>
-        <div class="arch-flow-step"><strong>2</strong><span>进主线</span></div>
-        <div class="arch-flow-step"><strong>3</strong><span>读实践</span></div>
-        <div class="arch-flow-step"><strong>4</strong><span>带回执行</span></div>
-      </div>
-      <div class="domain-grid domain-grid-5">
-        {domainStats.map(({ domain, count, ready }) => (
-          <a class={`domain-card domain-${domain.id}`} href={withBase(domain.path)}>
-            <span>{domain.name}</span>
-            <h3>{domain.tagline}</h3>
-            <p>{domain.summary}</p>
-            <div class="domain-card-meta">
-              <em>{count} 篇</em>
-              <em>{ready}/{domain.lines.length} 主线</em>
+    <div class="board-grid">
+      {boards.map(({ domain, count, groups }) => (
+        <a class={`board-card domain-${domain.id}`} href={withBase(domain.path)}>
+          <div class="board-icon" aria-hidden="true"></div>
+          <h3>{domain.name}</h3>
+          <p class="board-label">{domain.cardLabel}</p>
+          <p class="board-desc">{domain.summary}</p>
+          <div class="board-meta">
+            <span>{count} 篇内容</span>
+            <span>{groups} 个分组</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- 2. 各板块热门素材 -->
+  <section class="section shell" id="hot">
+    <div class="section-heading">
+      <h2>各板块热门</h2>
+      <p>每个板块 1 篇核心入口，降低选择成本。</p>
+    </div>
+    {hotList.length ? (
+      <div class="shelf-grid hot-grid">
+        {boards.map(({ domain, hot }) =>
+          hot ? (
+            <div class="hot-item">
+              <div class="hot-domain">{domain.name}</div>
+              <ShelfCard entry={hot} />
             </div>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section shell">
-    <div class="section-heading">
-      <h2>优先阅读</h2>
-      <p>先建立总图，再进入线索、转化、工作台与独立站诊断。</p>
-    </div>
-    {lead ? (
-      <div class="featured">
-        <PracticeCard entry={lead} primary />
-        <div class="featured-side">{rest.slice(0, 4).map((entry) => <PracticeCard entry={entry} />)}</div>
+          ) : null,
+        )}
       </div>
     ) : (
       <div class="empty" style="display:block">
@@ -97,19 +87,19 @@ const domainStats = domainMeta.map((domain) => ({
   <section class="section shell">
     <div class="principle-grid">
       <div>
-        <span class="principle-label">判断</span>
-        <h2>先理解问题</h2>
-        <p>分清经营象限、事实与假设，再选方法。</p>
+        <span class="principle-label">1</span>
+        <h2>选板块</h2>
+        <p>AI / FDE / 外贸业务 / 国际站 / 独立站</p>
       </div>
       <div>
-        <span class="principle-label">行动</span>
-        <h2>再完成任务</h2>
-        <p>步骤、模板、完成标准与风险边界齐全。</p>
+        <span class="principle-label">2</span>
+        <h2>进分组</h2>
+        <p>领域页按货架拆开，不把文章堆在一起</p>
       </div>
       <div>
-        <span class="principle-label">复用</span>
-        <h2>最后带回团队</h2>
-        <p>高频动作沉淀为流程、Skill 与模板。</p>
+        <span class="principle-label">3</span>
+        <h2>读方法</h2>
+        <p>步骤、模板、完成标准，直接带回执行</p>
       </div>
     </div>
   </section>
@@ -117,12 +107,12 @@ const domainStats = domainMeta.map((domain) => ({
   <section class="section shell">
     <div class="about-band">
       <div>
-        <h2>飞书与 Wiki 是母版，网站是发布层</h2>
-        <p>FDE 与 AI 主线已对齐飞书知识库目录。领域页展示主线地图，实践库负责跨域筛选，正文不重复维护。</p>
+        <h2>需要跨板块筛选？</h2>
+        <p>实践库支持按领域和内容形式过滤；搜索支持关键词直达。</p>
       </div>
       <div class="about-actions">
-        <a class="button" href={withBase('/fde')}>进入 FDE 架构</a>
-        <a class="button secondary" href={withBase('/library')}>浏览实践库</a>
+        <a class="button" href={withBase('/library')}>打开实践库</a>
+        <a class="button secondary" href={withBase('/fde')}>看 FDE 货架</a>
       </div>
     </div>
   </section>

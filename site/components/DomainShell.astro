@@ -1,117 +1,73 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import PracticeCard from './PracticeCard.astro';
-import { lineEntries, type DomainMeta } from '../lib/content';
+import ShelfCard from './ShelfCard.astro';
+import { shelfEntries, type DomainMeta } from '../lib/content';
 import { withBase } from '../lib/paths';
 
 interface Props {
   meta: DomainMeta;
   entries: CollectionEntry<'practice'>[];
-  /** All visible entries — used when a domain line references cross-domain slugs */
   catalog?: CollectionEntry<'practice'>[];
 }
 
 const { meta, entries, catalog = entries } = Astro.props;
-const [lead, ...rest] = entries;
 
-const lined = meta.lines.map((line) => ({
-  line,
-  items: lineEntries(catalog, line),
+const shelves = meta.shelves.map((shelf) => ({
+  shelf,
+  items: shelfEntries(catalog, shelf),
 }));
-const linedSlugSet = new Set(lined.flatMap((row) => row.items.map((item) => item.data.slug)));
+const linedSlugSet = new Set(shelves.flatMap((row) => row.items.map((item) => item.data.slug)));
 const unlined = entries.filter((entry) => !linedSlugSet.has(entry.data.slug));
-const readyCount = lined.filter((row) => row.items.length > 0).length;
+const readyGroups = shelves.filter((row) => row.items.length > 0).length;
 ---
 <header class="page-head shell domain-head">
-  <div class="eyebrow">{meta.name} · 领域架构</div>
+  <div class="eyebrow">{meta.name}</div>
   <h1>{meta.tagline}</h1>
   <p>{meta.summary}</p>
   <div class="domain-stats">
     <div class="stat-pill"><strong>{entries.length}</strong><span>篇实践</span></div>
-    <div class="stat-pill"><strong>{readyCount}/{meta.lines.length}</strong><span>主线有内容</span></div>
-    <div class="stat-pill source-pill"><span>来源 {meta.source}</span></div>
+    <div class="stat-pill"><strong>{readyGroups}</strong><span>个分组</span></div>
   </div>
+  <p class="reading-path"><strong>推荐路径</strong> {meta.readingPath}</p>
   <div class="meta domain-fit">
     <span>适合：{meta.suited}</span>
   </div>
   <p class="domain-not-suited">不适合：{meta.notSuited}</p>
 </header>
 
-<section class="section shell">
+<section class="section shell" id="shelves">
   <div class="section-heading">
-    <h2>任务入口</h2>
-    <p>从当前工作问题进入，而不是从资料目录进入。</p>
+    <h2>内容货架</h2>
+    <p>先选分组，再进文章。同组内容结构相近，避免长文混排。</p>
   </div>
-  <div class="principle-grid task-grid">
-    {meta.tasks.map((task) => (
-      <a class="task-card" href={withBase(task.href)}>
-        <span class="principle-label">{task.label}</span>
-        <h3>{task.desc}</h3>
-      </a>
-    ))}
-  </div>
-</section>
 
-<section class="section shell" id="lines">
-  <div class="section-heading">
-    <h2>知识主线与内容地图</h2>
-    <p>每一条主线对应飞书 / Wiki 的稳定入口。有稿直接读，无稿显示建设中。</p>
-  </div>
-  <div class="arch-map">
-    {lined.map(({ line, items }, index) => (
-      <article class:list={['arch-line', { ready: items.length > 0, empty: items.length === 0 }]}>
-        <header class="arch-line-head">
-          <div class="arch-index">{String(index + 1).padStart(2, '0')}</div>
-          <div>
-            <div class="arch-status">{items.length ? `${items.length} 篇` : '建设中'}</div>
-            <h3>{line.title}</h3>
-            <p>{line.desc}</p>
-          </div>
-        </header>
-        {items.length ? (
-          <ul class="arch-links">
-            {items.map((item) => (
-              <li>
-                <a href={withBase(`/practice/${item.data.slug}`)}>
-                  <span class="arch-type">{item.data.content_type}</span>
-                  <strong>{item.data.title}</strong>
-                  <em>{item.data.summary}</em>
-                </a>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p class="arch-empty">本主线框架已定，内容待从母版编译。</p>
-        )}
-      </article>
-    ))}
-  </div>
-</section>
-
-<section class="section shell">
-  <div class="section-heading">
-    <h2>本域精选</h2>
-    <p>{entries.length ? `当前共 ${entries.length} 篇，可在实践库按形式继续筛选。` : '本域尚无内容。'}</p>
-  </div>
-  {entries.length ? (
-    <div class="featured">
-      {lead && <PracticeCard entry={lead} primary />}
-      <div class="featured-side">
-        {rest.slice(0, 4).map((entry) => <PracticeCard entry={entry} />)}
+  {shelves.map(({ shelf, items }) => (
+    <div class="shelf-block" id={shelf.id}>
+      <div class="shelf-head">
+        <h3>
+          {shelf.title}
+          <span class="shelf-count">({items.length})</span>
+        </h3>
+        <p>{shelf.desc}</p>
       </div>
+      {items.length ? (
+        <div class="shelf-grid">
+          {items.map((entry) => <ShelfCard entry={entry} />)}
+        </div>
+      ) : (
+        <p class="arch-empty">本分组待补内容。</p>
+      )}
     </div>
-  ) : (
-    <div class="empty" style="display:block">
-      <h2>内容建设中</h2>
-      <p>领域框架已搭好。</p>
-      <a class="button" href={withBase('/library')}>先去实践库</a>
-    </div>
-  )}
+  ))}
+
   {unlined.length > 0 && (
-    <div class="unlined-block">
-      <h3>其他本域内容</h3>
-      <div class="library-grid compact-grid">
-        {unlined.map((entry) => <PracticeCard entry={entry} />)}
+    <div class="shelf-block">
+      <div class="shelf-head">
+        <h3>其他 <span class="shelf-count">({unlined.length})</span></h3>
+        <p>尚未归入上方分组的本域内容。</p>
+      </div>
+      <div class="shelf-grid">
+        {unlined.map((entry) => <ShelfCard entry={entry} />)}
       </div>
     </div>
   )}
@@ -120,8 +76,8 @@ const readyCount = lined.filter((row) => row.items.length > 0).length;
 <section class="section shell">
   <div class="about-band">
     <div>
-      <h2>架构可扩展，正文不复制</h2>
-      <p>领域页只做导航与主线地图。同一正文在实践库、搜索和领域页共享，后续从飞书 / Wiki 按主线补货。</p>
+      <h2>跨领域查找</h2>
+      <p>货架按板块组织；需要按类型或关键词筛选时，进入实践库。</p>
     </div>
     <a class="button" href={withBase(`/library?domain=${meta.id}`)}>筛选本域</a>
   </div>

@@ -62,23 +62,46 @@ h1, h2, h3 { line-height: 1.12; letter-spacing: -.04em; }
 .section-heading { max-width: 660px; margin-bottom: 34px; }
 .section-heading h2 { font-size: clamp(2rem, 3.9vw, 3.3rem); margin: 0 0 13px; }
 .section-heading p { color: var(--ink-muted); margin: 0; }
-.domain-grid { display: grid; grid-template-columns: 1.15fr 1fr 1fr; gap: 12px; }
-.domain-grid-5 { grid-template-columns: repeat(6, 1fr); }
-.domain-grid-5 .domain-card:nth-child(1) { grid-column: span 2; }
-.domain-grid-5 .domain-card:nth-child(2) { grid-column: span 2; }
-.domain-grid-5 .domain-card:nth-child(3) { grid-column: span 2; }
-.domain-grid-5 .domain-card:nth-child(4) { grid-column: span 3; }
-.domain-grid-5 .domain-card:nth-child(5) { grid-column: span 3; }
-.domain-card { min-height: 235px; display: flex; flex-direction: column; justify-content: flex-end; padding: 25px; border: 1px solid var(--line); border-radius: 18px; color: var(--ink); text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
-.domain-card:hover { transform: translateY(-3px); border-color: rgba(121, 214, 190, .7); }
 .domain-card span, .principle-label { display: inline-flex; align-self: flex-start; margin-bottom: auto; border: 1px solid rgba(240, 244, 239, .13); border-radius: 8px; padding: 4px 7px; color: var(--accent); font-size: .72rem; font-weight: 760; letter-spacing: .08em; }
-.domain-card h3 { margin: 0 0 7px; font-size: 1.36rem; }
-.domain-card p { margin: 0; color: var(--ink-muted); font-size: .92rem; }
 .domain-ai { background: linear-gradient(145deg, rgba(121, 214, 190, .17), var(--surface) 74%); }
 .domain-fde { background: linear-gradient(145deg, rgba(117, 170, 225, .17), var(--surface) 74%); }
 .domain-trade_ops { background: linear-gradient(145deg, rgba(221, 174, 99, .16), var(--surface) 74%); }
 .domain-global_platform { background: linear-gradient(145deg, rgba(167, 140, 230, .16), var(--surface) 74%); }
 .domain-indie_site { background: linear-gradient(145deg, rgba(99, 196, 221, .16), var(--surface) 74%); }
+
+/* 首页板块总览卡（工具箱式） */
+.board-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.board-card { display: flex; flex-direction: column; gap: 8px; min-height: 220px; padding: 22px 20px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); color: var(--ink); text-decoration: none; transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+.board-card:hover { transform: translateY(-3px); border-color: rgba(121, 214, 190, .55); box-shadow: var(--shadow); }
+.board-icon { width: 36px; height: 36px; border-radius: 12px; background: rgba(121, 214, 190, .14); border: 1px solid rgba(121, 214, 190, .22); margin-bottom: 8px; }
+.board-card h3 { margin: 0; font-size: 1.35rem; letter-spacing: -.03em; }
+.board-label { margin: 0; color: var(--accent); font-size: .88rem; font-weight: 720; }
+.board-desc { margin: 0; color: var(--ink-muted); font-size: .9rem; line-height: 1.5; flex: 1; }
+.board-meta { display: flex; flex-wrap: wrap; gap: 10px 14px; margin-top: 10px; color: var(--ink-muted); font-size: .78rem; font-weight: 650; }
+.board-card.domain-ai .board-icon { background: rgba(121, 214, 190, .18); }
+.board-card.domain-fde .board-icon { background: rgba(117, 170, 225, .18); }
+.board-card.domain-trade_ops .board-icon { background: rgba(221, 174, 99, .18); }
+.board-card.domain-global_platform .board-icon { background: rgba(167, 140, 230, .18); }
+.board-card.domain-indie_site .board-icon { background: rgba(99, 196, 221, .18); }
+
+/* 领域页货架 */
+.shelf-block { margin-bottom: 42px; }
+.shelf-head { margin-bottom: 14px; }
+.shelf-head h3 { margin: 0 0 6px; font-size: 1.35rem; letter-spacing: -.03em; }
+.shelf-count { color: var(--accent); font-weight: 700; margin-left: 6px; font-size: 1rem; }
+.shelf-head p { margin: 0; color: var(--ink-muted); font-size: .95rem; }
+.shelf-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.hot-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.hot-item { display: grid; gap: 8px; }
+.hot-domain { color: var(--accent); font-size: .75rem; font-weight: 760; letter-spacing: .08em; text-transform: uppercase; padding-left: 2px; }
+.shelf-card { display: flex; flex-direction: column; gap: 8px; min-height: 148px; padding: 18px 18px 16px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); color: var(--ink); text-decoration: none; transition: transform .18s ease, border-color .18s ease, background .18s ease; }
+.shelf-card:hover { transform: translateY(-2px); border-color: rgba(121, 214, 190, .55); background: var(--surface-strong); }
+.shelf-card-type { color: var(--accent); font-size: .72rem; font-weight: 740; letter-spacing: .06em; text-transform: uppercase; }
+.shelf-card h3 { margin: 0; font-size: 1.05rem; line-height: 1.35; letter-spacing: -.02em; }
+.shelf-card p { margin: 0; color: var(--ink-muted); font-size: .9rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.reading-path { margin: 16px 0 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--ink-muted); font-size: .92rem; }
+.reading-path strong { color: var(--accent); margin-right: 8px; }
+.related-grid { margin-top: 12px; }
 .task-card { display: flex; flex-direction: column; gap: 12px; min-height: 180px; padding: 26px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
 .task-card:hover { transform: translateY(-3px); border-color: rgba(121, 214, 190, .55); }
 .task-card h3 { margin: 0; font-size: 1.25rem; }
@@ -202,8 +225,7 @@ h1, h2, h3 { line-height: 1.12; letter-spacing: -.04em; }
   .hub-hero h1 { font-size: clamp(2.65rem, 12vw, 4.3rem); }
   .hub-search { grid-template-columns: 1fr; }
   .hub-search input { min-height: 42px; }
-  .domain-grid, .domain-grid-5, .principle-grid, .featured, .domain-map, .about-band, .article-wrap, .arch-flow, .arch-line-head { grid-template-columns: 1fr; }
-  .domain-grid-5 .domain-card:nth-child(n) { grid-column: auto; }
+  .principle-grid, .featured, .domain-map, .about-band, .article-wrap, .arch-flow, .arch-line-head, .board-grid, .shelf-grid, .hot-grid { grid-template-columns: 1fr; }
   .nav-links { max-height: 70dvh; overflow: auto; }
   .about-actions { width: 100%; }
   .about-actions .button { width: 100%; }

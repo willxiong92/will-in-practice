@@ -3,14 +3,15 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import {
   audienceNames,
-  domainMeta,
   domainNames,
   domainPaths,
+  findShelfForSlug,
   formatDate,
   typeNames,
   visibleEntries,
 } from '../../lib/content';
 import { withBase } from '../../lib/paths';
+import ShelfCard from '../../components/ShelfCard.astro';
 
 export async function getStaticPaths() {
   const entries = visibleEntries(await getCollection('practice'));
@@ -20,11 +21,17 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content, headings } = await render(entry);
 const domainPath = domainPaths[entry.data.domain];
-const domain = domainMeta.find((item) => item.id === entry.data.domain);
-const line = domain?.lines.find((item) => item.slugs.includes(entry.data.slug));
-const related = visibleEntries(await getCollection('practice'))
-  .filter((item) => item.data.domain === entry.data.domain && item.data.slug !== entry.data.slug)
-  .slice(0, 4);
+const shelfInfo = findShelfForSlug(entry.data.slug);
+const all = visibleEntries(await getCollection('practice'));
+const related = shelfInfo
+  ? shelfInfo.shelf.slugs
+      .filter((slug) => slug !== entry.data.slug)
+      .map((slug) => all.find((item) => item.data.slug === slug))
+      .filter((item): item is (typeof all)[number] => Boolean(item))
+      .slice(0, 3)
+  : all
+      .filter((item) => item.data.domain === entry.data.domain && item.data.slug !== entry.data.slug)
+      .slice(0, 3);
 ---
 <BaseLayout title={entry.data.title} description={entry.data.summary}>
   <div class="shell page-head article-meta">
@@ -32,17 +39,17 @@ const related = visibleEntries(await getCollection('practice'))
       <a href={withBase('/')}>首页</a>
       <span>/</span>
       <a href={withBase(domainPath)}>{domainNames[entry.data.domain]}</a>
-      {line && (
+      {shelfInfo && (
         <>
           <span>/</span>
-          <a href={withBase(`${domainPath}#lines`)}>{line.title}</a>
+          <a href={withBase(`${domainPath}#${shelfInfo.shelf.id}`)}>{shelfInfo.shelf.title}</a>
         </>
       )}
     </nav>
     <div class="meta">
       <span>{domainNames[entry.data.domain]}</span>
+      {shelfInfo && <span>{shelfInfo.shelf.title}</span>}
       <span>{typeNames[entry.data.content_type]}</span>
-      {line && <span>{line.title}</span>}
       <span>更新于 {formatDate(entry.data.updated_at)}</span>
     </div>
   </div>
@@ -57,14 +64,10 @@ const related = visibleEntries(await getCollection('practice'))
       <Content />
       {related.length > 0 && (
         <section class="related-block">
-          <h2>本域相关</h2>
-          <ul class="related-list">
-            {related.map((item) => (
-              <li>
-                <a href={withBase(`/practice/${item.data.slug}`)}>{item.data.title}</a>
-              </li>
-            ))}
-          </ul>
+          <h2>{shelfInfo ? `同组「${shelfInfo.shelf.title}」` : '本域相关'}</h2>
+          <div class="shelf-grid related-grid">
+            {related.map((item) => <ShelfCard entry={item} />)}
+          </div>
         </section>
       )}
     </article>
@@ -74,6 +77,9 @@ const related = visibleEntries(await getCollection('practice'))
         .filter((heading) => heading.depth === 2)
         .map((heading) => <a href={`#${heading.slug}`}>{heading.text}</a>)}
       <hr class="toc-rule" />
+      {shelfInfo && (
+        <a href={withBase(`${domainPath}#${shelfInfo.shelf.id}`)}>返回「{shelfInfo.shelf.title}」</a>
+      )}
       <a href={withBase(domainPath)}>返回{domainNames[entry.data.domain]}</a>
       <a href={withBase('/library')}>返回实践库</a>
     </aside>
