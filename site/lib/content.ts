@@ -300,18 +300,24 @@ export const domainMeta: DomainMeta[] = [
     path: '/global-platform',
     cardLabel: '平台运营商机',
     tagline: 'B2B 平台获客与运营',
-    summary: '运营框架、发品、商机分层、RFQ 模板、推广诊断与合规。',
+    summary: '运营底座、日操指标、发品商机、成交闭环、推广与合规。',
     suited: '国际站运营与外贸增长负责人。',
     notSuited: '自有站 SEO、FDE 内部制度原文。',
     source: 'OKKI WIKI B2B平台',
     hotSlug: 'platform-ops-framework',
-    readingPath: '运营框架 → 发品 → 商机/分层 → RFQ → 推广 → 合规',
+    readingPath: '运营框架 → 店铺质量 → 日操/指标 → 发品 → 商机 → 漏斗/履约 → 推广 → 合规',
     shelves: [
       {
         id: 'gp-ops',
         title: '运营框架',
-        desc: '账户 · 店铺 · 内容 · 推广',
-        slugs: ['platform-ops-framework'],
+        desc: '总图 · 店铺质量底座',
+        slugs: ['platform-ops-framework', 'store-quality-baseline'],
+      },
+      {
+        id: 'gp-daily',
+        title: '数据与日操',
+        desc: '日常节奏 · 核心指标',
+        slugs: ['platform-daily-ops', 'platform-core-metrics'],
       },
       {
         id: 'gp-content',
@@ -328,6 +334,12 @@ export const domainMeta: DomainMeta[] = [
           'buyer-tier-playbook',
           'rfq-response-template',
         ],
+      },
+      {
+        id: 'gp-funnel',
+        title: '成交闭环',
+        desc: '曝光到询盘 · 交易信任履约',
+        slugs: ['exposure-inquiry-funnel', 'platform-trade-trust-checklist'],
       },
       {
         id: 'gp-ads',

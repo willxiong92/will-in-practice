@@ -892,3 +892,61 @@ entries:
     risk_notes:
       - 工具无关五步重写；去除厂商 UI/10分钟承诺；复审 8.5
     rewrite_direction: SERP 抽样 + 限量动作
+
+  # --- B1 global_platform scatter (approved after adversarial) ---
+  - source_id: gp/platform-daily-ops
+    domain: global_platform
+    proposed_title: 国际站日常运营节奏
+    content_type: playbook
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/B2B平台/concept-渠道平台A数据同步与运营实务.md
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/global-platform/platform-daily-ops.md
+    maturity: reviewed
+    risk_notes: [去内部CRM与营销额度硬数字, L0-L4映射已写清]
+  - source_id: gp/platform-core-metrics
+    domain: global_platform
+    proposed_title: 国际站核心指标一页纸
+    content_type: checklist
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/B2B平台/concept-渠道平台A数据同步与运营实务.md
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/global-platform/platform-core-metrics.md
+    maturity: reviewed
+  - source_id: gp/exposure-inquiry-funnel
+    domain: global_platform
+    proposed_title: 国际站曝光到询盘漏斗
+    content_type: playbook
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/B2B平台/concept-渠道平台A运营与推广.md
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/global-platform/exposure-inquiry-funnel.md
+    maturity: reviewed
+    risk_notes: [与ads-diagnosis分工已写清]
+  - source_id: gp/store-quality-baseline
+    domain: global_platform
+    proposed_title: 国际站店铺质量底座
+    content_type: checklist
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/B2B平台/concept-渠道平台A运营与推广.md
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/global-platform/store-quality-baseline.md
+    maturity: reviewed
+    risk_notes: [不写死星级倍数]
+  - source_id: gp/platform-trade-trust
+    domain: global_platform
+    proposed_title: 国际站交易信任与履约检查清单
+    content_type: checklist
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/B2B平台/source-渠道平台A知识体系.md
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/global-platform/platform-trade-trust-checklist.md
+    maturity: reviewed
+    risk_notes: [保障产品名与额度不写死]
+
+
