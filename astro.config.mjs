@@ -1,6 +1,8 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
+import cloudflare from "@astrojs/cloudflare";
+
 /**
  * Deploy targets
  * - Cloudflare Pages (default / production): base `/`
@@ -29,9 +31,12 @@ export default defineConfig({
   site,
   base,
   trailingSlash: 'never',
+
   integrations: [
     sitemap({
       filter: (page) => !page.includes('/404'),
     }),
   ],
+
+  adapter: cloudflare()
 });
