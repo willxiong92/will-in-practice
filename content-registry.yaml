@@ -849,3 +849,46 @@ entries:
       - 已去内部工具名与 FY 语境；AI 仅草稿须核验
       - 独立对抗审核 10/10
     rewrite_direction: 一手字段 + 行业一页纸 + 会前清单
+
+  # --- batch 2026-07-15 indie SEO/Ads (adversarial re-review pass) ---
+  - source_id: indie/internal-linking
+    domain: indie_site
+    proposed_title: 独立站内链与站内架构
+    content_type: playbook
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/独立站/concept-内链与站内架构.md
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/indie-site/internal-linking-playbook.md
+    maturity: reviewed
+    risk_notes:
+      - 工具品牌已泛化；不承诺排名；复审 9.0
+    rewrite_direction: money page + pillar/cluster + 回收清单
+
+  - source_id: indie/ads-account-diagnosis
+    domain: indie_site
+    proposed_title: B2B 搜索广告账户诊断
+    content_type: playbook
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/独立站/playbook-外部搜索平台A-Ads账户诊断.md
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/indie-site/ads-account-diagnosis.md
+    maturity: reviewed
+    risk_notes:
+      - Consent 细则不写死；标准表外链 MQL/追踪专页；复审 8.8
+    rewrite_direction: 七步诊断闸门 + 报告模板
+
+  - source_id: indie/seo-competitor-gap
+    domain: indie_site
+    proposed_title: SEO 竞品差距分析
+    content_type: playbook
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/独立站/playbook-SEO竞争对手分析.md
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/indie-site/seo-competitor-gap-playbook.md
+    maturity: reviewed
+    risk_notes:
+      - 工具无关五步重写；去除厂商 UI/10分钟承诺；复审 8.5
+    rewrite_direction: SERP 抽样 + 限量动作

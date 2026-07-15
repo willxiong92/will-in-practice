@@ -376,6 +376,8 @@ export const domainMeta: DomainMeta[] = [
           'seo-framework-guide',
           'seo-basic-diagnosis',
           'tech-seo-checklist',
+          'internal-linking-playbook',
+          'seo-competitor-gap-playbook',
           'ai-seo-aeo-playbook',
         ],
       },
@@ -394,8 +396,8 @@ export const domainMeta: DomainMeta[] = [
       {
         id: 'indie-ads',
         title: '付费获客',
-        desc: 'MQL 优先的搜索广告',
-        slugs: ['ads-mql-checklist'],
+        desc: 'MQL 清单 · 账户诊断',
+        slugs: ['ads-mql-checklist', 'ads-account-diagnosis'],
       },
       {
         id: 'indie-diag',
