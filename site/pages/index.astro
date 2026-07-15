@@ -2,56 +2,93 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PracticeCard from '../components/PracticeCard.astro';
-import { domainMeta, visibleEntries } from '../lib/content';
+import { domainMeta, entriesByDomain, visibleEntries } from '../lib/content';
 import { withBase } from '../lib/paths';
 
-const entries = visibleEntries(await getCollection('practice'));
-const [lead, ...rest] = entries;
+const all = visibleEntries(await getCollection('practice'));
+const featuredSlugs = [
+  'service-system-map',
+  'more-effective-leads',
+  'higher-conversion',
+  'llm-wiki-workbench',
+  'inquiry-conversion-diagnosis',
+  'b2b-landing-page',
+];
+const featured = featuredSlugs
+  .map((slug) => all.find((entry) => entry.data.slug === slug))
+  .filter((entry): entry is (typeof all)[number] => Boolean(entry));
+const [lead, ...rest] = featured.length ? featured : all;
+const domainStats = domainMeta.map((domain) => ({
+  domain,
+  count: entriesByDomain(all, domain.id).length,
+  ready: domain.lines.filter((line) =>
+    line.slugs.some((slug) => all.some((entry) => entry.data.slug === slug)),
+  ).length,
+}));
 ---
 <BaseLayout>
   <section class="hub-hero shell island-shell">
     <div class="hub-hero-copy">
-      <div class="eyebrow">实践发现</div>
+      <div class="eyebrow">Will in Practice · 架构第一版</div>
       <h1>找到下一步<br />可以怎么做</h1>
-      <p>AI 对客实践、FDE 服务方法，以及外贸业务、国际站与独立站的可执行框架。</p>
+      <p>
+        五主类目：AI · FDE · 外贸业务 · 国际站 · 独立站。
+        内容来自飞书知识库与本地 Wiki，按主线排版，可直接检索执行。
+      </p>
       <form class="hub-search" action={withBase('/search')} role="search">
         <label class="sr-only" for="hub-search-input">搜索实践库</label>
-        <input id="hub-search-input" name="q" type="search" placeholder="搜索任务、问题或主题，例如：客户执行、落地页、AI 核验" />
+        <input id="hub-search-input" name="q" type="search" placeholder="搜索任务、问题或主题，例如：AIReach、资产阵地、落地页" />
         <button type="submit">搜索</button>
       </form>
+      <div class="hero-meta">
+        <span>{all.length} 篇实践</span>
+        <span>5 个领域</span>
+        <span>主线地图导航</span>
+      </div>
     </div>
   </section>
 
-  <section class="section shell" id="domains">
+  <section class="section shell" id="architecture">
     <div class="section-heading">
-      <h2>从领域进入</h2>
-      <p>五个主类目各自独立。一篇内容只归属一个主域，交叉能力用标签关联。</p>
+      <h2>网站架构</h2>
+      <p>领域回答“属于哪一块”，实践库回答“现在要完成什么任务”。正文只保留一份。</p>
     </div>
-    <div class="domain-grid domain-grid-5">
-      {domainMeta.map((domain) => (
-        <a class={`domain-card domain-${domain.id}`} href={withBase(domain.path)}>
-          <span>{domain.name}</span>
-          <h3>{domain.tagline}</h3>
-          <p>{domain.summary}</p>
-        </a>
-      ))}
+    <div class="arch-overview">
+      <div class="arch-flow">
+        <div class="arch-flow-step"><strong>1</strong><span>选领域</span></div>
+        <div class="arch-flow-step"><strong>2</strong><span>进主线</span></div>
+        <div class="arch-flow-step"><strong>3</strong><span>读实践</span></div>
+        <div class="arch-flow-step"><strong>4</strong><span>带回执行</span></div>
+      </div>
+      <div class="domain-grid domain-grid-5">
+        {domainStats.map(({ domain, count, ready }) => (
+          <a class={`domain-card domain-${domain.id}`} href={withBase(domain.path)}>
+            <span>{domain.name}</span>
+            <h3>{domain.tagline}</h3>
+            <p>{domain.summary}</p>
+            <div class="domain-card-meta">
+              <em>{count} 篇</em>
+              <em>{ready}/{domain.lines.length} 主线</em>
+            </div>
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 
   <section class="section shell">
     <div class="section-heading">
       <h2>优先阅读</h2>
-      <p>从当前可用的实践稿中，选择一个最接近你问题的入口。</p>
+      <p>先建立总图，再进入线索、转化、工作台与独立站诊断。</p>
     </div>
     {lead ? (
       <div class="featured">
         <PracticeCard entry={lead} primary />
-        <div class="featured-side">{rest.map((entry) => <PracticeCard entry={entry} />)}</div>
+        <div class="featured-side">{rest.slice(0, 4).map((entry) => <PracticeCard entry={entry} />)}</div>
       </div>
     ) : (
       <div class="empty" style="display:block">
-        <h2>正式公开内容尚未接入</h2>
-        <p>预览环境可查看草稿；正式构建只收录 approved + public 内容。</p>
+        <h2>内容接入中</h2>
         <a class="button" href={withBase('/library')}>进入实践库</a>
       </div>
     )}
@@ -62,17 +99,17 @@ const [lead, ...rest] = entries;
       <div>
         <span class="principle-label">判断</span>
         <h2>先理解问题</h2>
-        <p>分清事实、假设、限制与可用证据。</p>
+        <p>分清经营象限、事实与假设，再选方法。</p>
       </div>
       <div>
         <span class="principle-label">行动</span>
         <h2>再完成任务</h2>
-        <p>每篇内容提供步骤、边界和完成标准。</p>
+        <p>步骤、模板、完成标准与风险边界齐全。</p>
       </div>
       <div>
         <span class="principle-label">复用</span>
         <h2>最后带回团队</h2>
-        <p>高频方法沉淀为模板、SOP 或工具。</p>
+        <p>高频动作沉淀为流程、Skill 与模板。</p>
       </div>
     </div>
   </section>
@@ -80,10 +117,13 @@ const [lead, ...rest] = entries;
   <section class="section shell">
     <div class="about-band">
       <div>
-        <h2>不是资料搬运，而是实践编译</h2>
-        <p>本地 Wiki 与飞书知识库保留母版，网站只发布经过筛选、脱敏和复核的公开派生稿。当前为内部迭代预览。</p>
+        <h2>飞书与 Wiki 是母版，网站是发布层</h2>
+        <p>FDE 与 AI 主线已对齐飞书知识库目录。领域页展示主线地图，实践库负责跨域筛选，正文不重复维护。</p>
       </div>
-      <a class="button" href={withBase('/about')}>了解内容原则</a>
+      <div class="about-actions">
+        <a class="button" href={withBase('/fde')}>进入 FDE 架构</a>
+        <a class="button secondary" href={withBase('/library')}>浏览实践库</a>
+      </div>
     </div>
   </section>
 </BaseLayout>

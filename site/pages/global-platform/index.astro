@@ -5,8 +5,9 @@ import DomainShell from '../../components/DomainShell.astro';
 import { entriesByDomain, getDomainMeta, visibleEntries } from '../../lib/content';
 
 const meta = getDomainMeta('global_platform')!;
-const entries = entriesByDomain(visibleEntries(await getCollection('practice')), 'global_platform');
+const all = visibleEntries(await getCollection('practice'));
+const entries = entriesByDomain(all, 'global_platform');
 ---
 <BaseLayout title={meta.name} description={meta.summary}>
-  <DomainShell meta={meta} entries={entries} />
+  <DomainShell meta={meta} entries={entries} catalog={all} />
 </BaseLayout>

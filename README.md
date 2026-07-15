@@ -14,9 +14,12 @@
 
 ## 当前阶段
 
-阶段 1：五主类目骨架已上线，首批 **16 篇**公开实践稿已接入（`approved + public`）。
+阶段 1：网站架构第一版已上线。
 
-内容按 AI / FDE / 外贸业务 / 国际站 / 独立站主线从本地 Wiki 与 FDE-KB 编译，仍可继续从母版扩量。内部预览部署在 GitHub Pages。
+- 五主类目 + 领域主线地图排版
+- 约 **29 篇**实践正文（`approved + public`）
+- FDE / AI 主线已对齐飞书知识库原文口径（产品名保留：SHOP / AIReach / CRM / AWB 等）
+- 内部预览：GitHub Pages
 
 ## 目录
 

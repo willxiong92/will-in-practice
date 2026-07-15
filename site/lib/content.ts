@@ -45,6 +45,14 @@ export const audienceNames: Record<string, string> = {
   'platform-operator': '平台运营',
 };
 
+export type LineDef = {
+  id: string;
+  title: string;
+  desc: string;
+  /** content frontmatter.line or slug fallbacks */
+  slugs: string[];
+};
+
 export type DomainMeta = {
   id: DomainId;
   name: string;
@@ -53,7 +61,8 @@ export type DomainMeta = {
   summary: string;
   suited: string;
   notSuited: string;
-  lines: { title: string; desc: string }[];
+  source: string;
+  lines: LineDef[];
   tasks: { label: string; href: string; desc: string }[];
 };
 
@@ -63,21 +72,40 @@ export const domainMeta: DomainMeta[] = [
     name: 'AI',
     path: '/ai',
     tagline: '对客场景下的 AI 工作方式',
-    summary: '先建立可复制的对客 AI 工作系统，再落到工作台、场景 Playbook 与核验边界。不是工具课目录站。',
-    suited: '需要在客户现场交付判断、材料或方案，并希望用 AI 提效的人。',
-    notSuited: '只想找模型排行榜，或需要处理未授权客户隐私与密钥的场景。',
+    summary: '从任务判断、人机协同工作台、Agent 接入到输出核验，把 AI 用成可交付能力，而不是工具课目录。',
+    suited: 'FDE / CSM / 知识工作者与需要统一团队 AI 用法的主管。',
+    notSuited: '只想看模型排行榜、或把密钥与未授权材料直接喂给公开模型的场景。',
+    source: '飞书 AI 知识库 + OKKI WIKI AI智能体',
     lines: [
-      { title: '对客 AI 使用总方案', desc: '建立可复制的任务判断与执行方式' },
-      { title: '人机协同工作台', desc: 'Codex / Claude Code / Obsidian / WorkBuddy 如何组合产出' },
-      { title: '对客场景 Playbook', desc: '询盘、诊断、独立站、开发等真实任务怎么用 AI' },
-      { title: '任务分流与 Agent 选型', desc: '何时直聊、何时 Agent、何时必须人工' },
-      { title: '输出核验与风险边界', desc: '对客材料如何可核验、可追责' },
-      { title: '环境与接入基线', desc: '开始前的最小合规准备（次级）' },
+      {
+        id: 'ai-basics',
+        title: '对客 AI 使用总方案',
+        desc: '任务判断、执行流程与对客闸门',
+        slugs: ['ai-basics-one-page'],
+      },
+      {
+        id: 'ai-workbench',
+        title: '人机协同工作台',
+        desc: 'LLM Wiki、WorkBuddy、Obsidian、协作入口',
+        slugs: ['llm-wiki-workbench', 'agent-in-collab-entry'],
+      },
+      {
+        id: 'ai-routing',
+        title: '任务分流与 Agent 选型',
+        desc: '按任务选择工作方式，不按模型排名',
+        slugs: ['task-based-ai-selection'],
+      },
+      {
+        id: 'ai-verify',
+        title: '输出核验与风险边界',
+        desc: '任务前/中/后三段核验清单',
+        slugs: ['ai-verification-checklist'],
+      },
     ],
     tasks: [
       { label: '学结构', href: '/library?domain=ai&type=guide', desc: '先看判断框架' },
-      { label: '做诊断', href: '/library?domain=ai&type=playbook', desc: '按场景执行' },
-      { label: '拿清单', href: '/library?domain=ai&type=checklist', desc: '复用核验项' },
+      { label: '搭工作台', href: '/practice/llm-wiki-workbench', desc: 'LLM Wiki 编译模式' },
+      { label: '核验输出', href: '/practice/ai-verification-checklist', desc: '对客前过清单' },
     ],
   },
   {
@@ -85,22 +113,64 @@ export const domainMeta: DomainMeta[] = [
     name: 'FDE',
     path: '/fde',
     tagline: '一体化服务与经营增长方法',
-    summary: '用经营公式识别客户问题，用保障体系推动执行，用复盘与平台化沉淀复利。对外保留 FDE 名称。',
-    suited: 'FDE、CSM、顾问和对客交付负责人。',
-    notSuited: '国际站平台细则（见国际站）、人事绩效与内部编制材料。',
+    summary: '用生意链路与经营公式识别客户问题，用 SHOP / AIReach / CRM / AWB 承接执行，用保障与平台化形成复利。',
+    suited: 'FDE、CSM、顾问与对客交付负责人。',
+    notSuited: '国际站平台细则（见国际站域）；人事绩效与未授权客户材料。',
+    source: '飞书 FDE 知识库 + 团队 FDE-KB',
     lines: [
-      { title: '服务体系总纲', desc: '生意链路、公式、能力与服务如何串起来' },
-      { title: '经营公式', desc: '线索、转化、客单、毛利四象限判断' },
-      { title: '产品与能力矩阵', desc: '客户问题匹配到哪类能力' },
-      { title: '经营判断与 Skill 调度', desc: '按经营问题选方法组合' },
-      { title: '保障体系', desc: '诊断后如何推动客户真正执行' },
-      { title: '客户成功方法', desc: '阶段复盘、QBR 与对客沟通结构' },
-      { title: '平台化能力建设', desc: '单次服务如何沉淀为可复用资产' },
+      {
+        id: 'fde-system',
+        title: '服务体系总纲',
+        desc: '生意链路 → 经营公式 → 产品 → AWB → 保障 → 平台化',
+        slugs: ['service-system-map'],
+      },
+      {
+        id: 'fde-product',
+        title: '产品矩阵',
+        desc: 'SHOP · AIReach · CRM Lite/Smart/Pro · OMS · ERP API',
+        slugs: ['product-capability-matrix'],
+      },
+      {
+        id: 'fde-awb',
+        title: 'AWB 经营大脑',
+        desc: '7 大 Skill 群与 Agent 编排',
+        slugs: ['skill-routing'],
+      },
+      {
+        id: 'fde-leads',
+        title: '更多有效线索',
+        desc: 'SHOP 承接 + AIReach 主动开发 + 线索入库',
+        slugs: ['more-effective-leads', 'active-outreach-loop', 'lead-to-customer'],
+      },
+      {
+        id: 'fde-conversion',
+        title: '更高转化率',
+        desc: '资产阵地 · 新客转化 · 沉睡盘活 · 合作复购',
+        slugs: ['higher-conversion', 'crm-asset-base', 'new-customer-conversion', 'sleeping-reactivation', 'partner-repurchase'],
+      },
+      {
+        id: 'fde-guard',
+        title: '保障体系',
+        desc: '陪跑计划与执行卡点诊断',
+        slugs: ['customer-rollout-plan', 'customer-execution-diagnosis'],
+      },
+      {
+        id: 'fde-qbr',
+        title: '客户成功方法',
+        desc: 'QBR / 阶段复盘结构',
+        slugs: ['qbr-stage-review'],
+      },
+      {
+        id: 'fde-platform',
+        title: '平台化能力建设',
+        desc: '流程 / Skill / 资产 / 复利反哺',
+        slugs: ['platform-capability'],
+      },
     ],
     tasks: [
-      { label: '判断卡点', href: '/library?domain=fde&type=playbook', desc: '执行与转化诊断' },
-      { label: '推动落地', href: '/library?domain=fde&type=template', desc: '陪跑与计划模板' },
-      { label: '阶段复盘', href: '/library?domain=fde&type=guide', desc: 'QBR 与结构' },
+      { label: '看总图', href: '/practice/service-system-map', desc: '服务体系怎么串' },
+      { label: '判卡点', href: '/practice/customer-execution-diagnosis', desc: '执行不动四类原因' },
+      { label: '做陪跑', href: '/practice/customer-rollout-plan', desc: '诊断变计划' },
     ],
   },
   {
@@ -108,21 +178,34 @@ export const domainMeta: DomainMeta[] = [
     name: '外贸业务',
     path: '/trade-ops',
     tagline: '开发、报价、谈判与履约链路',
-    summary: '聚焦外贸成交与履约本身：开发、画像、报价谈判、跟进、风险与展会。',
-    suited: '外贸业务员、销售主管和需要标准业务链路的团队。',
+    summary: '聚焦外贸成交与履约本身：开发、画像、报价谈判、跟进与出货交接。',
+    suited: '外贸业务员、销售主管与需要标准业务链路的团队。',
     notSuited: '平台后台细则、独立站 SEO 技术细节。',
+    source: 'OKKI WIKI 外贸业务',
     lines: [
-      { title: '流程全景', desc: '端到端 SOP 地图' },
-      { title: '客户开发', desc: '触达、画像与渠道' },
-      { title: '报价与谈判', desc: '报价、让步与涨价沟通' },
-      { title: '跟进与维护', desc: '节奏、分级与价值输出' },
-      { title: '风险与客诉', desc: '付款、履约与危机处理' },
-      { title: '展会与线下', desc: '展前展中展后动作' },
+      {
+        id: 'trade-process',
+        title: '流程全景',
+        desc: '从开发到出货的阶段地图与检查表',
+        slugs: ['export-process-map'],
+      },
+      {
+        id: 'trade-dev',
+        title: '客户开发',
+        desc: '渠道、背调与触达节奏',
+        slugs: ['customer-development-playbook'],
+      },
+      {
+        id: 'trade-quote',
+        title: '报价与谈判',
+        desc: '准备、报价、让步、涨价与代理边界',
+        slugs: ['quotation-negotiation-checklist'],
+      },
     ],
     tasks: [
-      { label: '看流程', href: '/library?domain=trade_ops&type=guide', desc: '业务全景' },
-      { label: '做开发', href: '/library?domain=trade_ops&type=playbook', desc: '开发与跟进' },
-      { label: '拿清单', href: '/library?domain=trade_ops&type=checklist', desc: '报价谈判检查' },
+      { label: '看流程', href: '/practice/export-process-map', desc: '业务全景' },
+      { label: '做开发', href: '/practice/customer-development-playbook', desc: '开发与跟进' },
+      { label: '拿清单', href: '/practice/quotation-negotiation-checklist', desc: '报价谈判检查' },
     ],
   },
   {
@@ -130,20 +213,28 @@ export const domainMeta: DomainMeta[] = [
     name: '国际站',
     path: '/global-platform',
     tagline: 'B2B 平台获客与运营',
-    summary: '在 B2B 平台上完成运营推广、商机交易、合规与日常运营闭环。与 FDE、独立站分开。',
-    suited: '国际站运营、外贸增长负责人和平台成交团队。',
-    notSuited: '自有站 SEO、纯线下展会 SOP、FDE 内部服务制度原文。',
+    summary: '会员、星等级、内容发品、商机响应与付费推广五层运营结构。',
+    suited: '国际站运营、外贸增长负责人与平台成交团队。',
+    notSuited: '自有站 SEO、FDE 内部服务制度原文。',
+    source: 'OKKI WIKI B2B平台',
     lines: [
-      { title: '运营与推广', desc: '店铺、会员与推广结构' },
-      { title: '商机与交易', desc: '询盘、RFQ 与买家分层' },
-      { title: '合规', desc: '禁限售与目标市场规则' },
-      { title: '数据与日操', desc: '指标、同步与日常规范' },
-      { title: '成交闭环', desc: '曝光到询盘再到跟进' },
+      {
+        id: 'gp-ops',
+        title: '运营与推广',
+        desc: '账户基础、店铺质量、内容与广告组合',
+        slugs: ['platform-ops-framework'],
+      },
+      {
+        id: 'gp-inquiry',
+        title: '商机与交易',
+        desc: '询盘分级、背调、分层与 RFQ 响应',
+        slugs: ['inquiry-rfq-playbook'],
+      },
     ],
     tasks: [
-      { label: '学运营', href: '/library?domain=global_platform&type=guide', desc: '平台结构' },
-      { label: '做商机', href: '/library?domain=global_platform&type=playbook', desc: '询盘与交易' },
-      { label: '查合规', href: '/library?domain=global_platform&type=checklist', desc: '禁限售检查' },
+      { label: '学运营', href: '/practice/platform-ops-framework', desc: '五层结构' },
+      { label: '做商机', href: '/practice/inquiry-rfq-playbook', desc: '询盘与 RFQ' },
+      { label: '看实践库', href: '/library?domain=global_platform', desc: '本域全部' },
     ],
   },
   {
@@ -151,21 +242,40 @@ export const domainMeta: DomainMeta[] = [
     name: '独立站',
     path: '/indie-site',
     tagline: '自有站增长：SEO / Ads / 转化',
-    summary: '让目标买家找到网站、看懂产品、完成询盘。覆盖增长总图、SEO、Ads、落地页与数据追踪。',
-    suited: '独立站运营、外贸营销、交付诊断与网站负责人。',
+    summary: '增长闭环、SEO 诊断、落地页优化与询盘转化判断，服务 SHOP / 独立站交付。',
+    suited: '独立站运营、外贸营销、FDE/CSM 诊断与网站负责人。',
     notSuited: '国际站会员规则、纯 CRM 配置手册。',
+    source: 'OKKI WIKI 独立站 + FDE 线索侧',
     lines: [
-      { title: '增长总图', desc: '搜索、广告、内容、信任与询盘' },
-      { title: 'SEO', desc: '收录、技术、内容与 Entity' },
-      { title: '付费获客', desc: 'Ads 账户健康与 B2B 出价' },
-      { title: '落地页与转化', desc: '首屏、信任、表单与移动端' },
-      { title: '数据追踪', desc: 'GSC、GA4、UTM 与 MQL' },
-      { title: '建站运维基线', desc: '域名、HTTPS、安全与交付基线' },
+      {
+        id: 'indie-growth',
+        title: '增长总图',
+        desc: '被看见 → 被理解 → 被信任 → 被询盘 → 被复盘',
+        slugs: ['growth-loop'],
+      },
+      {
+        id: 'indie-seo',
+        title: 'SEO 诊断',
+        desc: '30 分钟红线优先诊断',
+        slugs: ['seo-basic-diagnosis'],
+      },
+      {
+        id: 'indie-landing',
+        title: '落地页与转化',
+        desc: '六段式落地页结构',
+        slugs: ['b2b-landing-page'],
+      },
+      {
+        id: 'indie-inquiry',
+        title: '询盘转化诊断',
+        desc: '有效流量 × 页面五要素',
+        slugs: ['inquiry-conversion-diagnosis'],
+      },
     ],
     tasks: [
-      { label: '看增长', href: '/library?domain=indie_site&type=guide', desc: '总图与概念' },
-      { label: '做诊断', href: '/library?domain=indie_site&type=playbook', desc: 'SEO / 落地页' },
-      { label: '配追踪', href: '/library?domain=indie_site&type=template', desc: '数据闭环' },
+      { label: '看增长', href: '/practice/growth-loop', desc: '闭环总图' },
+      { label: '做诊断', href: '/practice/inquiry-conversion-diagnosis', desc: '没询盘先拆什么' },
+      { label: '改落地页', href: '/practice/b2b-landing-page', desc: '六段式结构' },
     ],
   },
 ];
@@ -186,4 +296,14 @@ export function visibleEntries<T extends { data: { publication_status?: string; 
 
 export function entriesByDomain<T extends { data: { domain: string } }>(entries: T[], domain: DomainId) {
   return entries.filter((entry) => entry.data.domain === domain);
+}
+
+export function entryBySlug<T extends { data: { slug: string } }>(entries: T[], slug: string) {
+  return entries.find((entry) => entry.data.slug === slug);
+}
+
+export function lineEntries<T extends { data: { slug: string } }>(entries: T[], line: LineDef) {
+  return line.slugs
+    .map((slug) => entryBySlug(entries, slug))
+    .filter((item): item is T => Boolean(item));
 }

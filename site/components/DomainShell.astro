@@ -1,21 +1,36 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import PracticeCard from './PracticeCard.astro';
-import type { DomainMeta } from '../lib/content';
+import { lineEntries, type DomainMeta } from '../lib/content';
 import { withBase } from '../lib/paths';
 
 interface Props {
   meta: DomainMeta;
   entries: CollectionEntry<'practice'>[];
+  /** All visible entries — used when a domain line references cross-domain slugs */
+  catalog?: CollectionEntry<'practice'>[];
 }
 
-const { meta, entries } = Astro.props;
+const { meta, entries, catalog = entries } = Astro.props;
 const [lead, ...rest] = entries;
+
+const lined = meta.lines.map((line) => ({
+  line,
+  items: lineEntries(catalog, line),
+}));
+const linedSlugSet = new Set(lined.flatMap((row) => row.items.map((item) => item.data.slug)));
+const unlined = entries.filter((entry) => !linedSlugSet.has(entry.data.slug));
+const readyCount = lined.filter((row) => row.items.length > 0).length;
 ---
-<header class="page-head shell">
-  <div class="eyebrow">{meta.name}</div>
+<header class="page-head shell domain-head">
+  <div class="eyebrow">{meta.name} · 领域架构</div>
   <h1>{meta.tagline}</h1>
   <p>{meta.summary}</p>
+  <div class="domain-stats">
+    <div class="stat-pill"><strong>{entries.length}</strong><span>篇实践</span></div>
+    <div class="stat-pill"><strong>{readyCount}/{meta.lines.length}</strong><span>主线有内容</span></div>
+    <div class="stat-pill source-pill"><span>来源 {meta.source}</span></div>
+  </div>
   <div class="meta domain-fit">
     <span>适合：{meta.suited}</span>
   </div>
@@ -37,52 +52,67 @@ const [lead, ...rest] = entries;
   </div>
 </section>
 
-<section class="section shell">
+<section class="section shell" id="lines">
   <div class="section-heading">
-    <h2>知识主线</h2>
-    <p>后续从 Wiki / 飞书知识库按主线补公开稿。无稿主线只显示建设中，不放占位正文。</p>
+    <h2>知识主线与内容地图</h2>
+    <p>每一条主线对应飞书 / Wiki 的稳定入口。有稿直接读，无稿显示建设中。</p>
   </div>
-  <div class="domain-list line-list">
-    {meta.lines.map((line, index) => (
-      <div class="domain-row">
-        <strong>{String(index + 1).padStart(2, '0')}</strong>
-        <div>
-          <h3>{line.title}</h3>
-          <p>{line.desc}</p>
-        </div>
-      </div>
+  <div class="arch-map">
+    {lined.map(({ line, items }, index) => (
+      <article class:list={['arch-line', { ready: items.length > 0, empty: items.length === 0 }]}>
+        <header class="arch-line-head">
+          <div class="arch-index">{String(index + 1).padStart(2, '0')}</div>
+          <div>
+            <div class="arch-status">{items.length ? `${items.length} 篇` : '建设中'}</div>
+            <h3>{line.title}</h3>
+            <p>{line.desc}</p>
+          </div>
+        </header>
+        {items.length ? (
+          <ul class="arch-links">
+            {items.map((item) => (
+              <li>
+                <a href={withBase(`/practice/${item.data.slug}`)}>
+                  <span class="arch-type">{item.data.content_type}</span>
+                  <strong>{item.data.title}</strong>
+                  <em>{item.data.summary}</em>
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="arch-empty">本主线框架已定，内容待从母版编译。</p>
+        )}
+      </article>
     ))}
   </div>
 </section>
 
 <section class="section shell">
   <div class="section-heading">
-    <h2>本域实践</h2>
-    <p>
-      {entries.length
-        ? `当前有 ${entries.length} 篇可预览内容。`
-        : '本域尚无预览稿，主线框架已就绪，可从 Wiki 白名单编译。'}
-    </p>
+    <h2>本域精选</h2>
+    <p>{entries.length ? `当前共 ${entries.length} 篇，可在实践库按形式继续筛选。` : '本域尚无内容。'}</p>
   </div>
   {entries.length ? (
     <div class="featured">
       {lead && <PracticeCard entry={lead} primary />}
       <div class="featured-side">
-        {rest.map((entry) => <PracticeCard entry={entry} />)}
-        {!rest.length && (
-          <a class="practice-card" href={withBase('/library')}>
-            <div class="meta"><span>实践库</span></div>
-            <h3>浏览全部领域</h3>
-            <p>跨 AI、FDE、外贸业务、国际站与独立站筛选方法。</p>
-          </a>
-        )}
+        {rest.slice(0, 4).map((entry) => <PracticeCard entry={entry} />)}
       </div>
     </div>
   ) : (
     <div class="empty" style="display:block">
       <h2>内容建设中</h2>
-      <p>领域框架已搭好。批准公开稿后会显示在这里。</p>
+      <p>领域框架已搭好。</p>
       <a class="button" href={withBase('/library')}>先去实践库</a>
+    </div>
+  )}
+  {unlined.length > 0 && (
+    <div class="unlined-block">
+      <h3>其他本域内容</h3>
+      <div class="library-grid compact-grid">
+        {unlined.map((entry) => <PracticeCard entry={entry} />)}
+      </div>
     </div>
   )}
 </section>
@@ -90,8 +120,8 @@ const [lead, ...rest] = entries;
 <section class="section shell">
   <div class="about-band">
     <div>
-      <h2>从 Wiki 补货，而不是镜像全库</h2>
-      <p>本地母版只读。每条主线优先凑齐 1 方法 + 1 实践 + 1 模板/清单，再扩量。</p>
+      <h2>架构可扩展，正文不复制</h2>
+      <p>领域页只做导航与主线地图。同一正文在实践库、搜索和领域页共享，后续从飞书 / Wiki 按主线补货。</p>
     </div>
     <a class="button" href={withBase(`/library?domain=${meta.id}`)}>筛选本域</a>
   </div>
