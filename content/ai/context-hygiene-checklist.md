@@ -13,6 +13,7 @@ summary: 用开新会话、资料摘要、禁区声明与长度控制，保持 C
 source_id: ai/context-hygiene-checklist
 source_project: OKKI WIKI 知识库
 reviewed_at: 2026-07-15
+reviewed_by: legacy-pre-schema
 updated_at: 2026-07-15
 ---
 

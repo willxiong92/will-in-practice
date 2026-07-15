@@ -7,9 +7,10 @@
 ## 启动顺序
 
 1. 先读 `README.md`、`docs/ROADMAP.md`、`docs/CONTENT_POLICY.md`。
-2. 涉及类目、领域页或内容归属时，读 `docs/TAXONOMY.md`。
-3. 涉及产品或信息架构决策时，再读 `docs/DECISIONS.md`。
-4. 修改发布候选前，核对 `content-registry.yaml` 的来源、状态和公开风险。
+2. 编写或改写实践稿前，读 `docs/WRITING_GUIDE.md`（五段式、来源边界、知识关联、草稿状态）。
+3. 涉及类目、领域页或内容归属时，读 `docs/TAXONOMY.md`。
+4. 涉及产品或信息架构决策时，再读 `docs/DECISIONS.md`。
+5. 修改发布候选前，核对 `content-registry.yaml` 的来源、状态和公开风险。
 
 ## 类目边界（摘要）
 

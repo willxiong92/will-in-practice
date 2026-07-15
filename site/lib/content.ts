@@ -153,12 +153,12 @@ export const domainMeta: DomainMeta[] = [
     path: '/fde',
     cardLabel: '经营增长与交付',
     tagline: '一体化服务与经营增长方法',
-    summary: '经营公式、线索转化、销售复盘、顾问沟通、健康信号与交付沉淀。',
+    summary: '经营公式、线索转化、销售复盘、顾问沟通、管理方法、健康信号与交付沉淀。',
     suited: 'FDE、CSM、顾问与对客交付负责人。',
     notSuited: '国际站平台细则（见国际站）；人事绩效材料。',
     source: '飞书 FDE 知识库 + OKKI WIKI 客户成功',
     hotSlug: 'service-system-map',
-    readingPath: '总图 → 线索/转化 → 销售过程 → 沟通与健康 → 交付',
+    readingPath: '总图 → 线索/转化 → 销售过程 → 沟通与管理方法 → 交付',
     shelves: [
       {
         id: 'fde-map',
@@ -196,6 +196,15 @@ export const domainMeta: DomainMeta[] = [
         title: '沟通与健康',
         desc: '顾问式沟通 · 健康信号',
         slugs: ['consultative-communication-playbook', 'customer-health-signals'],
+      },
+      {
+        id: 'fde-mgmt',
+        title: '管理方法',
+        desc: '问题拆解 · 协作沟通',
+        slugs: [
+          'problem-decomposition-playbook',
+          'management-communication-playbook',
+        ],
       },
       {
         id: 'fde-delivery',
@@ -336,18 +345,24 @@ export const domainMeta: DomainMeta[] = [
     path: '/indie-site',
     cardLabel: '增长 SEO 转化',
     tagline: '自有站增长：SEO / Ads / 转化',
-    summary: '增长闭环、SEO 框架与技术、EEAT/AEO、Ads MQL 与落地转化。',
+    summary: '增长闭环、SEO、建站运维、数据追踪、EEAT/AEO、Ads MQL 与落地转化。',
     suited: '独立站运营、外贸营销、FDE/CSM。',
     notSuited: '国际站会员规则、纯 CRM 手册。',
     source: 'OKKI WIKI 独立站',
     hotSlug: 'inquiry-conversion-diagnosis',
-    readingPath: '增长总图 → SEO/技术 → 内容 EEAT/AEO → Ads → 转化',
+    readingPath: '增长总图 → 建站运维 → SEO/技术 → 数据追踪 → 内容 EEAT/AEO → Ads → 转化',
     shelves: [
       {
         id: 'indie-growth',
         title: '增长总图',
         desc: '被看见到被复盘',
         slugs: ['growth-loop'],
+      },
+      {
+        id: 'indie-ops',
+        title: '建站运维',
+        desc: '上线前基线与月度巡检',
+        slugs: ['site-ops-baseline'],
       },
       {
         id: 'indie-seo',
@@ -359,6 +374,12 @@ export const domainMeta: DomainMeta[] = [
           'tech-seo-checklist',
           'ai-seo-aeo-playbook',
         ],
+      },
+      {
+        id: 'indie-tracking',
+        title: '数据追踪',
+        desc: 'GSC · GA4 · 转化 · MQL 对账',
+        slugs: ['data-tracking-setup'],
       },
       {
         id: 'indie-content',

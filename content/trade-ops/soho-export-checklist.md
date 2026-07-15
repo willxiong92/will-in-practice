@@ -13,6 +13,7 @@ summary: SOHO 不是逃避职场的捷径；启动前检查供应商、客户、
 source_id: trade/soho-export-checklist
 source_project: OKKI WIKI 知识库
 reviewed_at: 2026-07-15
+reviewed_by: legacy-pre-schema
 updated_at: 2026-07-15
 ---
 

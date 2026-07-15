@@ -13,6 +13,7 @@ summary: 先判断客户经营象限，再匹配 SHOP、AIReach、CRM Lite/Smart
 source_id: feishu-fde/product-matrix
 source_project: 飞书 FDE 知识库
 reviewed_at: 2026-07-15
+reviewed_by: legacy-pre-schema
 updated_at: 2026-07-15
 ---
 

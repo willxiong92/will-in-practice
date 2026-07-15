@@ -13,6 +13,7 @@ summary: 按 HTTPS、域名规范、robots/sitemap、速度、Schema、内链与
 source_id: indie/tech-seo-checklist
 source_project: OKKI WIKI 知识库
 reviewed_at: 2026-07-15
+reviewed_by: legacy-pre-schema
 updated_at: 2026-07-15
 ---
 

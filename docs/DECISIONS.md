@@ -72,3 +72,9 @@
 - 决策：Cloudflare Pages 与 GitHub Pages 正式构建禁止 `PUBLIC_CONTENT_PREVIEW=true`，仅收录 `approved|published` 且 `public` 内容；构建流水线包含 content / dist / links 自动门禁。
 - 原因：防止草稿与非公开内容泄漏到固定生产 URL。
 - 影响：本地 `npm run dev` / `preview:build` 仍可预览草稿；线上 Preview 若看草稿必须另加 Access。
+
+## D-013 实践稿写作结构与结构参考边界
+
+- 决策：公开实践稿优先采用「场景与问题 → 核心判断 → 方法拆解 → 风险边界 → 行动工具」五段式，并强制知识关联与可交付行动工具；八宝周等图谱材料只作结构参考。
+- 原因：提升任务完成率与可复用性，同时避免把第三方付费/公众号内容近义洗稿进公开站。
+- 影响：作者模式须遵守 `docs/WRITING_GUIDE.md`；新稿默认 `maturity: draft` + `visibility: private` + `publication_status: review_required`，未经独立审核不得建议公开。

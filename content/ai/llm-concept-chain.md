@@ -13,6 +13,7 @@ summary: 用 LLM → Token → Context → Prompt → Tool → Agent → Skill �
 source_id: ai/llm-to-agent-skill
 source_project: OKKI WIKI 知识库
 reviewed_at: 2026-07-15
+reviewed_by: legacy-pre-schema
 updated_at: 2026-07-15
 ---
 

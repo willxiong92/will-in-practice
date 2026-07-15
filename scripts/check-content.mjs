@@ -126,6 +126,11 @@ for (const file of files) {
 
   if (isPublicApproved) {
     publicApproved += 1;
+    if (!data.reviewed_by || String(data.reviewed_by).trim() === '') {
+      errors.push(
+        `${rel}: approved+public content requires \`reviewed_by\` (adversarial or named reviewer)`,
+      );
+    }
     for (const rule of SENSITIVE) {
       const hits = body.match(rule.re);
       if (hits?.length) {

@@ -2,6 +2,7 @@ version: 1
 updated_at: 2026-07-15
 policy: docs/CONTENT_POLICY.md
 taxonomy: docs/TAXONOMY.md
+writing_guide: docs/WRITING_GUIDE.md
 
 defaults:
   publication_status: review_required
@@ -712,3 +713,73 @@ entries:
     risk_notes:
       - 去掉真实客户公司名与内部产品配置
     rewrite_direction: 五维模板 + 动态分级
+
+  # --- batch 2026-07-15: indie ops/tracking + FDE management methods ---
+  # writing: docs/WRITING_GUIDE.md；八宝周仅结构参考；reviewed_by: grok-adversarial-review
+  - source_id: indie/data-tracking-setup
+    domain: indie_site
+    proposed_title: 独立站数据追踪：打通 GSC、GA4、广告转化与 MQL 对账
+    content_type: playbook
+    role: practice
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/独立站/playbook-独立站数据追踪配置.md
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/indie-site/data-tracking-setup.md
+    maturity: reviewed
+    risk_notes:
+      - 广告/隐私易变规则未写死；Consent Mode 细节刻意省略
+      - 已去内部模块名与服务版本承接边界
+      - 独立对抗审核 10/10；八宝周非内容来源
+    rewrite_direction: 五段式 + 验收清单 + 月复盘模板 + 知识关联
+
+  - source_id: indie/site-ops-baseline
+    domain: indie_site
+    proposed_title: 独立站建站与运维基线：上线前与月度巡检清单
+    content_type: checklist
+    role: template
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/独立站/playbook-独立站建站与运维基线.md
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/indie-site/site-ops-baseline.md
+    maturity: reviewed
+    risk_notes:
+      - 不承诺速度分数与收录周期
+      - 已去内部产品/学习模块编号
+      - 独立对抗审核 10/10；八宝周非内容来源
+    rewrite_direction: 五段式 + 上线验收清单 + 巡检节奏 + 知识关联
+
+  - source_id: fde/problem-decomposition
+    domain: fde
+    proposed_title: 管理者问题拆解：从忙乱救火到找杠杆点
+    content_type: playbook
+    role: methodology
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/企业经营/concept-问题拆解与管理者思维.md
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/fde/problem-decomposition-playbook.md
+    maturity: reviewed
+    risk_notes:
+      - 来源为读书笔记合成页，公开稿只保留可执行框架，不搬运书中案例
+      - 不得写成行业普遍事实
+      - 独立对抗审核 10/10；八宝周非内容来源
+    rewrite_direction: 五段式 + 问题卡工具 + 知识关联
+
+  - source_id: fde/management-communication
+    domain: fde
+    proposed_title: 管理沟通与协作：目标、事实、关系与行动承诺
+    content_type: playbook
+    role: methodology
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/企业经营/concept-管理沟通与协作.md
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/fde/management-communication-playbook.md
+    maturity: reviewed
+    risk_notes:
+      - 来源为读书笔记合成页；与顾问式沟通互补不重复
+      - 不记录真实员工绩效对话
+      - 独立对抗审核 10/10；八宝周非内容来源
+    rewrite_direction: 五段式 + 会议/冲突模板 + 知识关联

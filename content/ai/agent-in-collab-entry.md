@@ -13,6 +13,7 @@ summary: 当 AI 执行工作进入真实交付时，把 Agent 会话留在协作
 source_id: feishu-ai/coding-agent-bridge
 source_project: 飞书 AI 知识库
 reviewed_at: 2026-07-15
+reviewed_by: legacy-pre-schema
 updated_at: 2026-07-15
 ---
 

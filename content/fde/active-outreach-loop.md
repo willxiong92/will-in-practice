@@ -13,6 +13,7 @@ summary: AIReach 目标不是多发开发信，而是跑通挖潜、背调、千
 source_id: feishu-fde/aireach
 source_project: 飞书 FDE 知识库
 reviewed_at: 2026-07-15
+reviewed_by: legacy-pre-schema
 updated_at: 2026-07-15
 ---
 

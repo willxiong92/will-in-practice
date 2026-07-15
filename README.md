@@ -13,7 +13,7 @@
 阶段 3 内容加深：生产已上线，Git 自动部署已接通。
 
 - 五主类目 + 首页总览卡 + 领域货架分组
-- **62 篇** `approved + public` 实践正文
+- **66 篇** `approved + public` 实践正文
 - 正式构建门禁：`guard:content` → build → `guard:dist` → `guard:links`
 - **生产**：https://will-in-practice.pages.dev （Cloudflare Pages + Git `main`）
 - GitHub Pages 作为回退入口（正式构建，不含草稿）

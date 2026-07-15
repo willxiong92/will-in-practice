@@ -13,6 +13,7 @@ summary: 上架与改品前用统一清单检查标题、主图、属性、商�
 source_id: trade/listing-content-checklist
 source_project: OKKI WIKI 知识库
 reviewed_at: 2026-07-15
+reviewed_by: legacy-pre-schema
 updated_at: 2026-07-15
 ---
 

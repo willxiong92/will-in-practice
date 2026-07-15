@@ -13,6 +13,7 @@ summary: 先判断客户卡在哪个经营动作，再调用对应 Skill 群或 
 source_id: feishu-fde/awb
 source_project: 飞书 FDE 知识库
 reviewed_at: 2026-07-15
+reviewed_by: legacy-pre-schema
 updated_at: 2026-07-15
 ---
 

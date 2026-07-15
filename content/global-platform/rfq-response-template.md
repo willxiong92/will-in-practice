@@ -13,6 +13,7 @@ summary: 用统一 RFQ 回复结构与优先级规则，提高匹配商机的响
 source_id: trade/rfq-response-template
 source_project: OKKI WIKI 知识库
 reviewed_at: 2026-07-15
+reviewed_by: legacy-pre-schema
 updated_at: 2026-07-15
 ---
 
