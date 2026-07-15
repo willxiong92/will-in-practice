@@ -10,13 +10,13 @@
 
 ## 当前阶段
 
-阶段 2 推进中：生产安全构建、Cloudflare Pages 配置就绪（待控制台创建）、SEO 与货架式导航已落地。
+阶段 2 收口 / 阶段 3 内容加深：生产已上线，发布与内容并行推进。
 
 - 五主类目 + 首页总览卡 + 领域货架分组
 - **31 篇** `approved + public` 实践正文
 - 正式构建门禁：`guard:content` → build → `guard:dist` → `guard:links`
+- **生产**：https://will-in-practice.pages.dev （Cloudflare Pages）
 - GitHub Pages 作为回退入口（正式构建，不含草稿）
-- Cloudflare Pages 固定 `*.pages.dev`：见 `docs/CLOUDFLARE_PAGES.md`（需 Will 在控制台创建项目）
 
 ## 目录
 
@@ -38,7 +38,7 @@
 └── public/
 ```
 
-## 关键边界
+## 安全边界
 
 - 正式线上构建只收录 `publication_status: approved|published` 且 `visibility: public`。
 - `team` / `private` / `review_required` 不得进入 `dist`。
@@ -50,20 +50,20 @@
 | 命令 | 用途 |
 |---|---|
 | `npm run dev` | 本地开发（预览模式，可含草稿） |
-| `npm run build` | **正式生产构建**（根路径 `/`，门禁全开） |
+| `npm run build` | **正式生产构建**（根路径 `/`，门禁全开；默认 CF canonical） |
 | `npm run build:github` | 正式构建 + GitHub Pages base |
 | `npm run preview:build` | 本地草稿预览构建（不可用于生产） |
 | `npm run guard:content` | frontmatter / 敏感模式检查 |
 | `npm run guard:dist` | 非公开内容与泄漏检查 |
 | `npm run guard:links` | 站内链接检查 |
 
-生产构建请设置：
+生产构建默认 `PUBLIC_SITE_URL=https://will-in-practice.pages.dev`（可被环境变量覆盖）：
 
 ```bash
-PUBLIC_SITE_URL=https://<project-name>.pages.dev npm run build
+npm run build
+# 或显式指定
+PUBLIC_SITE_URL=https://will-in-practice.pages.dev npm run build
 ```
-
-未设置时默认 canonical 回退到 GitHub Pages 完整 URL，**不会虚构** Cloudflare 地址。
 
 ## 部署地址
 
@@ -71,10 +71,20 @@ PUBLIC_SITE_URL=https://<project-name>.pages.dev npm run build
 |---|---|---|
 | 本地 | http://localhost:4321 | `npm run dev` |
 | GitHub Pages（回退） | https://willxiong92.github.io/will-in-practice/ | 已自动部署正式构建 |
-| Cloudflare Pages | `https://<project-name>.pages.dev` | **待 Will 创建项目**，建议名 `will-in-practice` |
+| Cloudflare Pages（生产） | **https://will-in-practice.pages.dev** | 已上线（长期免费固定域名） |
+
+CLI 部署（Direct Upload）：
+
+```bash
+npm run build
+env -u HTTP_PROXY -u HTTPS_PROXY -u http_proxy -u https_proxy -u ALL_PROXY -u all_proxy \
+  npx wrangler pages deploy dist --project-name=will-in-practice --branch=main
+```
+
+接 Git 自动部署步骤见 `docs/CLOUDFLARE_PAGES.md`。
 
 ## 下一步
 
-1. Will 在 Cloudflare 控制台创建 Pages 项目并配置 `PUBLIC_SITE_URL`（见 `docs/CLOUDFLARE_PAGES.md`）。
+1. （可选）Cloudflare Dashboard 连接 Git + 配置环境变量，实现 `main` 自动部署。
 2. 继续补强国际站 / 外贸业务内容深度。
-3. 可选：Cloudflare Access 保护 Preview 草稿环境。
+3. 替换真实反馈邮箱；3 人任务测试。

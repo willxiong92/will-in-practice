@@ -57,9 +57,15 @@
 
 ## D-010 生产托管
 
-- 决策：个人网站生产环境采用 **Cloudflare Pages** 静态托管，使用固定免费地址 `https://<project-name>.pages.dev`；GitHub Pages 保留为回退入口。
-- 原因：Quick Tunnel 依赖本机且 URL 会变，不适合对外传播；Pages 由 `main` 自动构建，关机仍可访问。
-- 影响：生产 `base` 为 `/`；`PUBLIC_SITE_URL` 必须在 Cloudflare 环境变量中配置真实 pages.dev，代码不硬编码虚构 hostname。
+- 决策：个人网站生产环境采用 **Cloudflare Pages** 静态托管，使用固定免费地址 `https://will-in-practice.pages.dev`；GitHub Pages 保留为回退入口。
+- 原因：Quick Tunnel 依赖本机且 URL 会变，不适合对外传播；Pages 固定域名可关机访问、可对外传播。
+- 影响：生产 `base` 为 `/`；默认 `PUBLIC_SITE_URL` / Astro `site` 为 `https://will-in-practice.pages.dev`（可被环境变量覆盖）。接 Git 后仍建议在 CF Production 环境变量写同一值。
+
+## D-012 生产项目已落地
+
+- 决策：Cloudflare Pages 项目名固定为 `will-in-practice`，生产域名 `https://will-in-practice.pages.dev`。
+- 原因：首次部署已完成；代码与文档可写死真实 hostname，避免再回落 GitHub origin。
+- 影响：`astro.config.mjs` 非 GitHub 构建默认 site 为 pages.dev；CLI 继续 Direct Upload，Git 自动部署需控制台连接仓库。
 
 ## D-011 生产内容门禁
 
