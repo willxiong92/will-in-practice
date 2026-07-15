@@ -13,7 +13,7 @@
 阶段 3 内容加深：生产已上线，Git 自动部署已接通。
 
 - 五主类目 + 首页总览卡 + 领域货架分组
-- **40 篇** `approved + public` 实践正文
+- **47 篇** `approved + public` 实践正文
 - 正式构建门禁：`guard:content` → build → `guard:dist` → `guard:links`
 - **生产**：https://will-in-practice.pages.dev （Cloudflare Pages + Git `main`）
 - GitHub Pages 作为回退入口（正式构建，不含草稿）
@@ -85,6 +85,6 @@ env -u HTTP_PROXY -u HTTPS_PROXY -u http_proxy -u https_proxy -u ALL_PROXY -u al
 
 ## 下一步
 
-1. 继续补强国际站 / 外贸业务深页（样品、客诉、模板类）。
-2. 3 人真实任务测试。
-3. 可选：轻量分析、分享图、自定义域名（需 Will 确认）。
+1. 继续从本地结构化 wiki 编译公开实践（AI / 独立站 / 外贸）。
+2. 滚动复核事实时效。
+3. 可选：任务测试、轻量分析、自定义域名（需 Will 确认）。

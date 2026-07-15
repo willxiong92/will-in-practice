@@ -57,6 +57,86 @@ entries:
       - 工具名单易变，改为原则清单
     rewrite_direction: 任务前/中/后三段核验
 
+  - source_id: ai/llm-to-agent-skill
+    domain: ai
+    proposed_title: 从 LLM 到 Skill 概念链
+    content_type: guide
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/ai/llm-concept-chain.md
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/AI智能体/source-从LLM到AgentSkill底层逻辑.md
+    rewrite_direction: 公开概念链与误区，不绑模型版本
+
+  - source_id: ai/prompt-dispatch-template
+    domain: ai
+    proposed_title: AI 派工模板
+    content_type: template
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/ai/prompt-dispatch-template.md
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/AI智能体/协作助手/playbook-AI基础使用团队学习版.md
+    rewrite_direction: 最小字段派工单 + 外贸示例
+
+  - source_id: ai/context-hygiene-checklist
+    domain: ai
+    proposed_title: AI 上下文卫生清单
+    content_type: checklist
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/ai/context-hygiene-checklist.md
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/AI智能体/concept-LLM实用工具与技巧.md
+    rewrite_direction: 开聊/塞资料/对话中/结束
+
+  - source_id: ai/llm-tool-stack
+    domain: ai
+    proposed_title: AI 工具栈选用
+    content_type: playbook
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/ai/ai-tool-stack-playbook.md
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/AI智能体/concept-LLM实用工具与技巧.md
+    risk_notes:
+      - 不写死厂商功能入口与不可核验百分比
+    rewrite_direction: 决策树 + 深研当初稿
+
+  - source_id: ai/skill-sop-template
+    domain: ai
+    proposed_title: Skill/SOP 沉淀模板
+    content_type: template
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/ai/skill-sop-template.md
+    source_project: OKKI WIKI 知识库
+    rewrite_direction: 高频任务沉淀卡片结构
+
+  - source_id: ai/export-workflow-ai
+    domain: ai
+    proposed_title: 外贸业务环节 AI 用法
+    content_type: playbook
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/ai/ai-export-workflow-playbook.md
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/AI智能体/外部助手/taskcard-matrix-外贸-业务环节赋能.md
+    rewrite_direction: 链路表 + 链到 trade_ops 业务页
+
+  - source_id: ai/content-draft-sop
+    domain: ai
+    proposed_title: 对客内容 AI 起草 SOP
+    content_type: playbook
+    publication_status: approved
+    visibility: public
+    public_copy_path: content/ai/ai-content-draft-sop.md
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/产品体系/shop/playbook-AI内容生成SOP.md
+    risk_notes:
+      - 去掉内部产品版本与未公开评分体系
+    rewrite_direction: 定调-生成-自检-人工-发布
+
   # --- FDE ---
   - source_id: fde/customer-execution-diagnosis
     domain: fde
