@@ -1,0 +1,104 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import PracticeCard from './PracticeCard.astro';
+import type { DomainMeta } from '../lib/content';
+
+interface Props {
+  meta: DomainMeta;
+  entries: CollectionEntry<'practice'>[];
+}
+
+const { meta, entries } = Astro.props;
+const [lead, ...rest] = entries;
+const base = import.meta.env.BASE_URL;
+
+const withBase = (path: string) => {
+  if (path.startsWith('http')) return path;
+  const clean = path.replace(/^\//, '');
+  return `${base}${clean}`;
+};
+---
+<header class="page-head shell">
+  <div class="eyebrow">{meta.name}</div>
+  <h1>{meta.tagline}</h1>
+  <p>{meta.summary}</p>
+  <div class="meta domain-fit">
+    <span>适合：{meta.suited}</span>
+  </div>
+  <p class="domain-not-suited">不适合：{meta.notSuited}</p>
+</header>
+
+<section class="section shell">
+  <div class="section-heading">
+    <h2>任务入口</h2>
+    <p>从当前工作问题进入，而不是从资料目录进入。</p>
+  </div>
+  <div class="principle-grid task-grid">
+    {meta.tasks.map((task) => (
+      <a class="task-card" href={withBase(task.href)}>
+        <span class="principle-label">{task.label}</span>
+        <h3>{task.desc}</h3>
+      </a>
+    ))}
+  </div>
+</section>
+
+<section class="section shell">
+  <div class="section-heading">
+    <h2>知识主线</h2>
+    <p>后续从 Wiki / 飞书知识库按主线补公开稿。无稿主线只显示建设中，不放占位正文。</p>
+  </div>
+  <div class="domain-list line-list">
+    {meta.lines.map((line, index) => (
+      <div class="domain-row">
+        <strong>{String(index + 1).padStart(2, '0')}</strong>
+        <div>
+          <h3>{line.title}</h3>
+          <p>{line.desc}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<section class="section shell">
+  <div class="section-heading">
+    <h2>本域实践</h2>
+    <p>
+      {entries.length
+        ? `当前有 ${entries.length} 篇可预览内容。`
+        : '本域尚无预览稿，主线框架已就绪，可从 Wiki 白名单编译。'}
+    </p>
+  </div>
+  {entries.length ? (
+    <div class="featured">
+      {lead && <PracticeCard entry={lead} primary />}
+      <div class="featured-side">
+        {rest.map((entry) => <PracticeCard entry={entry} />)}
+        {!rest.length && (
+          <a class="practice-card" href={withBase('/library')}>
+            <div class="meta"><span>实践库</span></div>
+            <h3>浏览全部领域</h3>
+            <p>跨 AI、FDE、外贸业务、国际站与独立站筛选方法。</p>
+          </a>
+        )}
+      </div>
+    </div>
+  ) : (
+    <div class="empty" style="display:block">
+      <h2>内容建设中</h2>
+      <p>领域框架已搭好。批准公开稿后会显示在这里。</p>
+      <a class="button" href={withBase('/library')}>先去实践库</a>
+    </div>
+  )}
+</section>
+
+<section class="section shell">
+  <div class="about-band">
+    <div>
+      <h2>从 Wiki 补货，而不是镜像全库</h2>
+      <p>本地母版只读。每条主线优先凑齐 1 方法 + 1 实践 + 1 模板/清单，再扩量。</p>
+    </div>
+    <a class="button" href={withBase(`/library?domain=${meta.id}`)}>筛选本域</a>
+  </div>
+</section>

@@ -1,0 +1,64 @@
+---
+import '../styles/global.css';
+import { domainMeta, isContentPreview } from '../lib/content';
+
+interface Props { title?: string; description?: string; }
+const {
+  title = 'Will in Practice',
+  description = '把 AI、FDE、外贸业务、国际站与独立站一线实践，整理成能看懂、能照做、能复用的方法与工具。',
+} = Astro.props;
+const pageTitle = title === 'Will in Practice' ? title : `${title} | Will in Practice`;
+const base = import.meta.env.BASE_URL;
+---
+<!doctype html>
+<html lang="zh-CN" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="robots" content={isContentPreview ? 'noindex, nofollow' : 'index, follow'} />
+    <title>{pageTitle}</title>
+    <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到正文</a>
+    {isContentPreview && (
+      <div class="preview-bar">内部预览：当前为草稿环境，尚未正式公开发布。欢迎小范围试读反馈。</div>
+    )}
+    <header class="site-header">
+      <nav class="nav shell" aria-label="主导航">
+        <a class="brand" href={base}>
+          <span class="brand-mark" aria-hidden="true"></span>
+          Will in Practice
+        </a>
+        <button class="menu-button" type="button" aria-expanded="false" aria-controls="main-nav">菜单</button>
+        <div class="nav-links" id="main-nav">
+          {domainMeta.map((domain) => (
+            <a href={`${base}${domain.path.slice(1)}`}>{domain.name}</a>
+          ))}
+          <a href={`${base}library`}>实践库</a>
+          <a href={`${base}about`}>关于</a>
+          <a href={`${base}search`}>搜索</a>
+        </div>
+        <a class="nav-cta" href={`${base}library`}>浏览实践</a>
+      </nav>
+    </header>
+    <main id="main"><slot /></main>
+    <footer class="site-footer">
+      <div class="footer-row shell">
+        <span>Will in Practice</span>
+        <span>AI · FDE · 外贸业务 · 国际站 · 独立站</span>
+      </div>
+    </footer>
+    <script>
+      const button = document.querySelector('.menu-button');
+      const links = document.querySelector('#main-nav');
+      button?.addEventListener('click', () => {
+        const open = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', String(!open));
+        links?.classList.toggle('open', !open);
+      });
+    </script>
+  </body>
+</html>

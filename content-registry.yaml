@@ -1,0 +1,180 @@
+version: 1
+updated_at: 2026-07-14
+policy: docs/CONTENT_POLICY.md
+
+defaults:
+  publication_status: review_required
+  visibility: private
+  public_copy_exists: false
+
+entries:
+  - source_id: ai/ai-basics-one-page
+    domain: ai
+    proposed_title: AI 基础使用一页纸
+    content_type: guide
+    role: methodology
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/AI智能体/playbook-AI基础使用一页纸.md
+    source_visibility: unspecified
+    publication_status: review_required
+    visibility: private
+    maturity: reviewed
+    risk_notes:
+      - 来源未标 share，按 private 处理
+      - 需移除内部协作工具和团队知识页语境
+      - 需复核模型、工具和平台相关易变事实
+    rewrite_direction: 改写为公开读者可独立使用的 AI 任务判断与核验指南
+
+  - source_id: ai/agent-selection-by-task
+    domain: ai
+    proposed_title: 不按模型排名，按任务选择 AI 工作方式
+    content_type: article
+    role: practice
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/AI智能体/concept-AI智能体选型与应用.md
+    source_visibility: unspecified
+    publication_status: review_required
+    visibility: private
+    maturity: reviewed
+    risk_notes:
+      - 来源未标 share，按 private 处理
+      - 三层工具分工包含内部架构与产品替代名
+      - 需要改造成通用任务分流框架
+    rewrite_direction: 保留任务分层判断，删除内部工具和知识库架构细节
+
+  - source_id: ai/llm-practical-toolkit
+    domain: ai
+    proposed_title: LLM 实用工具与核验清单
+    content_type: checklist
+    role: template
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/AI智能体/concept-LLM实用工具与技巧.md
+    source_visibility: unspecified
+    publication_status: review_required
+    visibility: private
+    maturity: reviewed
+    risk_notes:
+      - 来源未标 share，按 private 处理
+      - 工具能力和界面可能已变化
+      - 需检查第三方来源引用边界
+    rewrite_direction: 提炼为任务前、执行中、输出后的三段式核验清单
+
+  - source_id: fde/customer-execution-diagnosis
+    domain: fde
+    proposed_title: 客户执行不动，先判断这四类卡点
+    content_type: playbook
+    role: methodology
+    source_project: 团队 FDE 知识库
+    source_ref: domains/projects/团队FDE-KB/保障体系/foundation-客户执行保障细化.md
+    source_visibility: team
+    publication_status: review_required
+    visibility: private
+    maturity: validated_internally
+    risk_notes:
+      - team 不等于 public
+      - 需去除 FDE、内部角色和团队沉淀语境
+      - 对客管理建议需要补适用边界
+    rewrite_direction: 改写为客户成功从业者通用的执行卡点诊断树
+
+  - source_id: fde/customer-rollout-plan
+    domain: fde
+    proposed_title: 把诊断结论变成可执行的客户陪跑计划
+    content_type: template
+    role: template
+    source_project: 团队 FDE 知识库
+    source_ref: domains/projects/团队FDE-KB/保障体系/foundation-客户落地方案与陪跑计划.md
+    source_visibility: team
+    publication_status: review_required
+    visibility: private
+    maturity: validated_internally
+    risk_notes:
+      - team 不等于 public
+      - 示例含内部产品名与业务链路
+      - 角色和周期需要改成可调整模板
+    rewrite_direction: 保留目标、任务、责任、节奏、验收、风险六要素，全面泛化示例
+
+  - source_id: fde/qbr-stage-review
+    domain: fde
+    proposed_title: QBR 不是贴数据：一份阶段复盘的标准结构
+    content_type: guide
+    role: practice
+    source_project: 团队 FDE 知识库
+    source_ref: domains/projects/团队FDE-KB/客户成功方法/foundation-QBR与阶段复盘初稿.md
+    source_visibility: team
+    publication_status: review_required
+    visibility: private
+    maturity: validated_internally
+    risk_notes:
+      - team 不等于 public
+      - 指标和经营象限来自内部服务体系
+      - 需避免把阶段性经验表述为通用标准
+    rewrite_direction: 改写为目标、动作、证据、判断、下一步五段式通用复盘指南
+
+  - source_id: trade/b2b-landing-page
+    domain: indie_site
+    proposed_title: B2B 独立站落地页优化 Playbook
+    content_type: playbook
+    role: methodology
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/独立站/playbook-B2B独立站落地页优化.md
+    source_visibility: unspecified
+    publication_status: review_required
+    visibility: private
+    public_copy_path: content/indie-site/b2b-landing-page.md
+    maturity: reviewed
+    risk_notes:
+      - 来源未标 share，按 private 处理
+      - 需核验 SEO、移动端和表单相关事实
+      - 需确认示例和引用均可公开
+    rewrite_direction: 保留六段式结构，补充完成标准与自检清单
+
+  - source_id: trade/export-process-sop
+    domain: trade_ops
+    proposed_title: 外贸业务流程 SOP
+    content_type: guide
+    role: practice
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/外贸业务/concept-外贸业务流程SOP.md
+    source_visibility: unspecified
+    publication_status: review_required
+    visibility: private
+    maturity: literature
+    risk_notes:
+      - 来源未标 share，按 private 处理
+      - 贸易、单证和合规事实需要官方复核
+      - 资料聚合内容需检查原创增量和版权边界
+    rewrite_direction: 缩小为可核验的流程地图与交接检查表，避免法律或合规保证
+
+  - source_id: trade/quotation-negotiation-checklist
+    domain: trade_ops
+    proposed_title: 外贸报价与谈判检查清单
+    content_type: checklist
+    role: template
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/外贸业务/concept-外贸谈判与报价.md
+    source_visibility: unspecified
+    publication_status: review_required
+    visibility: private
+    maturity: literature
+    risk_notes:
+      - 来源未标 share，按 private 处理
+      - 部分谈判判断过于绝对，需要证据或降级为经验
+      - 引用谈判理论时需控制版权和准确性
+    rewrite_direction: 删除绝对化比例与操纵性表达，改为准备、报价、让步、涨价、代理五段清单
+
+  - source_id: trade/global-platform-ops
+    domain: global_platform
+    proposed_title: 国际站运营与商机基础框架
+    content_type: guide
+    role: methodology
+    source_project: OKKI WIKI 知识库
+    source_ref: wiki/外贸行业/B2B平台/concept-渠道平台A运营与推广.md
+    source_visibility: unspecified
+    publication_status: review_required
+    visibility: private
+    maturity: reviewed
+    risk_notes:
+      - 来源未标 share，按 private 处理
+      - 需脱敏内部产品名与平台未公开规则
+      - 合规与广告规则需事实复核
+    rewrite_direction: 改写为国际站运营、商机、合规与日操四段公开框架

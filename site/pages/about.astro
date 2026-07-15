@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { domainMeta } from '../lib/content';
+
+const base = import.meta.env.BASE_URL;
+---
+<BaseLayout title="关于" description="Will in Practice 的定位、内容原则与公开边界。">
+  <header class="page-head shell">
+    <div class="eyebrow">关于</div>
+    <h1>把工作经验整理成可以复用的实践</h1>
+    <p>这个网站关注 AI 对客实践、FDE 服务方法，以及外贸业务、国际站与独立站一线问题。内容优先回答怎么判断、怎么执行、什么算完成。</p>
+  </header>
+
+  <section class="section shell">
+    <div class="domain-map">
+      <div class="section-heading">
+        <h2>五个主类目</h2>
+        <p>类目按访客工作场景切分，再从本地 Wiki / 飞书知识库按主线编译公开稿。</p>
+      </div>
+      <div class="domain-list">
+        {domainMeta.map((domain) => (
+          <div class="domain-row">
+            <strong>{domain.name}</strong>
+            <div>
+              <h3><a href={`${base}${domain.path.slice(1)}`}>{domain.tagline}</a></h3>
+              <p>{domain.summary}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section shell">
+    <div class="domain-map">
+      <div class="section-heading">
+        <h2>内容原则</h2>
+        <p>专业不等于堆概念。每篇内容都应该帮助读者采取下一步行动。</p>
+      </div>
+      <div class="domain-list">
+        <div class="domain-row">
+          <strong>真实</strong>
+          <div>
+            <h3>来自实际任务</h3>
+            <p>不为了填栏目制造内容，也不使用虚构指标和案例。</p>
+          </div>
+        </div>
+        <div class="domain-row">
+          <strong>可用</strong>
+          <div>
+            <h3>提供步骤和完成标准</h3>
+            <p>观点必须连接判断方法、执行动作或可复用工具。</p>
+          </div>
+        </div>
+        <div class="domain-row">
+          <strong>安全</strong>
+          <div>
+            <h3>公开稿经过独立审核</h3>
+            <p>团队内容不自动公开。FDE / 飞书 / Wiki 中的 team 与 private 材料默认不进入正式构建。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

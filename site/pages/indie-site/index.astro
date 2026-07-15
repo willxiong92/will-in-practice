@@ -1,0 +1,12 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import DomainShell from '../../components/DomainShell.astro';
+import { entriesByDomain, getDomainMeta, visibleEntries } from '../../lib/content';
+
+const meta = getDomainMeta('indie_site')!;
+const entries = entriesByDomain(visibleEntries(await getCollection('practice')), 'indie_site');
+---
+<BaseLayout title={meta.name} description={meta.summary}>
+  <DomainShell meta={meta} entries={entries} />
+</BaseLayout>

@@ -1,0 +1,76 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PracticeCard from '../components/PracticeCard.astro';
+import { domainNames, domains, typeNames, visibleEntries } from '../lib/content';
+
+const entries = visibleEntries(await getCollection('practice'));
+---
+<BaseLayout title="实践库" description="按任务、领域和内容形式浏览 AI、FDE、外贸业务、国际站与独立站实践。">
+  <header class="page-head shell">
+    <div class="eyebrow">实践库</div>
+    <h1>从工作任务进入知识</h1>
+    <p>筛选真实方法、Playbook 和指南。五个主类目共用同一批正文，不复制内容。</p>
+  </header>
+  <section class="shell">
+    <div class="filters" aria-label="内容筛选">
+      <div class="field">
+        <label for="domain-filter">领域</label>
+        <select id="domain-filter">
+          <option value="">全部领域</option>
+          {domains.map((domain) => <option value={domain}>{domainNames[domain]}</option>)}
+        </select>
+      </div>
+      <div class="field">
+        <label for="type-filter">内容形式</label>
+        <select id="type-filter">
+          <option value="">全部形式</option>
+          {Object.entries(typeNames).map(([value, label]) => <option value={value}>{label}</option>)}
+        </select>
+      </div>
+      <button class="button secondary" id="clear-filters" type="button">清除筛选</button>
+    </div>
+    <div class="library-grid" id="library-grid">
+      {entries.map((entry) => <PracticeCard entry={entry} />)}
+      <div class="empty" id="empty-state">
+        <h2>没有匹配的内容</h2>
+        <p>换一个领域或清除筛选后再试。空主线表示内容仍在从 Wiki 编译。</p>
+        <button class="button" id="empty-clear" type="button">查看全部</button>
+      </div>
+    </div>
+  </section>
+  <script is:inline>
+    const domain = document.querySelector('#domain-filter');
+    const type = document.querySelector('#type-filter');
+    const cards = [...document.querySelectorAll('.practice-card')];
+    const empty = document.querySelector('#empty-state');
+    const apply = () => {
+      let shown = 0;
+      cards.forEach((card) => {
+        const visible =
+          (!domain?.value || card.dataset.domain === domain.value) &&
+          (!type?.value || card.dataset.type === type.value);
+        card.hidden = !visible;
+        if (visible) shown++;
+      });
+      if (empty) empty.style.display = shown ? 'none' : 'block';
+      const params = new URLSearchParams();
+      if (domain?.value) params.set('domain', domain.value);
+      if (type?.value) params.set('type', type.value);
+      history.replaceState(null, '', params.size ? `?${params}` : location.pathname);
+    };
+    const clear = () => {
+      if (domain) domain.value = '';
+      if (type) type.value = '';
+      apply();
+    };
+    const params = new URLSearchParams(location.search);
+    if (domain) domain.value = params.get('domain') || '';
+    if (type) type.value = params.get('type') || '';
+    domain?.addEventListener('change', apply);
+    type?.addEventListener('change', apply);
+    document.querySelector('#clear-filters')?.addEventListener('click', clear);
+    document.querySelector('#empty-clear')?.addEventListener('click', clear);
+    apply();
+  </script>
+</BaseLayout>

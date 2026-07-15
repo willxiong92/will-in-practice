@@ -1,0 +1,57 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PracticeCard from '../components/PracticeCard.astro';
+import { visibleEntries } from '../lib/content';
+
+const entries = visibleEntries(await getCollection('practice'));
+const base = import.meta.env.BASE_URL;
+---
+<BaseLayout title="搜索">
+  <header class="page-head shell">
+    <div class="eyebrow">搜索</div>
+    <h1>跨领域找到可执行的方法</h1>
+    <p>输入任务、问题或主题。当前搜索覆盖站内已接入内容。</p>
+  </header>
+  <section class="shell">
+    <div class="search-box">
+      <label class="field">
+        <span>搜索内容</span>
+        <input id="search-input" type="search" placeholder="例如：客户执行、AI 核验、落地页、国际站" />
+      </label>
+      <button class="button" id="search-button" type="button">搜索</button>
+    </div>
+    <p id="search-status" aria-live="polite"></p>
+    <div class="library-grid" id="search-results">
+      {entries.map((entry) => <PracticeCard entry={entry} />)}
+      <div class="empty" id="search-empty">
+        <h2>没有找到结果</h2>
+        <p>尝试使用更短的关键词，或返回实践库浏览全部内容。</p>
+        <a class="button" href={`${base}library`}>浏览实践库</a>
+      </div>
+    </div>
+  </section>
+  <script is:inline>
+    const input = document.querySelector('#search-input');
+    const cards = [...document.querySelectorAll('.practice-card')];
+    const empty = document.querySelector('#search-empty');
+    const status = document.querySelector('#search-status');
+    const run = () => {
+      const query = (input && 'value' in input ? input.value : '').trim().toLowerCase();
+      let shown = 0;
+      cards.forEach((card) => {
+        const visible = !query || (card.textContent || '').toLowerCase().includes(query);
+        card.hidden = !visible;
+        if (visible) shown++;
+      });
+      if (empty) empty.style.display = shown ? 'none' : 'block';
+      if (status) status.textContent = query ? `找到 ${shown} 篇相关内容` : `当前共有 ${cards.length} 篇内容`;
+    };
+    document.querySelector('#search-button')?.addEventListener('click', run);
+    input?.addEventListener('input', run);
+    if (input && 'value' in input) {
+      input.value = new URLSearchParams(location.search).get('q') || '';
+    }
+    run();
+  </script>
+</BaseLayout>
