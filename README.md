@@ -10,7 +10,7 @@
 
 ## 当前阶段
 
-阶段 3 内容加深：生产已上线，Git 自动部署已接通。
+阶段 3 内容加深：生产已上线，Git 自动部署已接通；团队与管理员受控入口已发布并完成线上验收。
 
 - 五主类目 + 首页总览卡 + 领域货架分组
 - **78 篇** `approved + public` 实践正文
@@ -28,6 +28,7 @@
 ├── content/                 # 公开发布稿
 ├── docs/
 │   ├── CLOUDFLARE_PAGES.md  # CF Pages 操作说明
+│   ├── ACCESS_ARCHITECTURE.md # 公开站与受控入口边界
 │   ├── CONTENT_POLICY.md
 │   ├── DECISIONS.md
 │   ├── DESIGN_SYSTEM.md
@@ -43,7 +44,9 @@
 - 正式线上构建只收录 `publication_status: approved|published` 且 `visibility: public`。
 - `team` / `private` / `review_required` 不得进入 `dist`。
 - `PUBLIC_CONTENT_PREVIEW=true` 仅用于本地草稿预览，禁止用于 GitHub/Cloudflare 生产构建。
-- 不自动同步全量知识库；不引入登录、数据库、评论或 AI 聊天。
+- 不自动同步全量知识库；不引入数据库、评论或 AI 聊天。
+- 公开内容始终可直接访问；登录只保护 `/team/` 与 `/admin/`，不能替代内容门禁。
+- `team`、`private` 与 `review_required` 正文不会因为登录入口而进入正式构建。
 
 ## 构建命令
 
@@ -56,6 +59,7 @@
 | `npm run guard:content` | frontmatter / 敏感模式检查 |
 | `npm run guard:dist` | 非公开内容与泄漏检查 |
 | `npm run guard:links` | 站内链接检查 |
+| `npm run test:access` | 团队与管理员权限边界测试 |
 
 生产构建默认 `PUBLIC_SITE_URL=https://will-in-practice.pages.dev`（可被环境变量覆盖）：
 

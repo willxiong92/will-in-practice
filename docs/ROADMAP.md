@@ -10,6 +10,7 @@
 - GitHub Pages 回退（正式构建，无草稿）
 - Cloudflare Pages 生产：https://will-in-practice.pages.dev
 - **Git 已连接**：`main` push 触发生产构建
+- 公开站 + 团队/管理员受控入口已发布并完成线上验收
 
 ## 阶段 0：内容盘点与门禁
 
@@ -35,6 +36,9 @@
 - [x] 项目 `will-in-practice` 生产部署
 - [x] 生产默认 `PUBLIC_SITE_URL` / canonical
 - [x] Git 连接实现 `main` 自动部署
+- [x] 保持公开站开放，新增 `/team/` 与 `/admin/` 独立权限入口
+- [x] 团队/管理员会话、安全失败与访问边界自动化测试
+- [x] Cloudflare Production 配置四项权限 Secret 并完成线上验收
 - [ ] 真实用户任务测试（3 人）
 - [ ] 轻量分析（需确认）
 

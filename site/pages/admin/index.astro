@@ -1,0 +1,90 @@
+---
+import { getCollection } from 'astro:content';
+import '../../styles/access.css';
+import { entriesByDomain, visibleEntries } from '../../lib/content';
+import { withBase } from '../../lib/paths';
+
+const all = visibleEntries(await getCollection('practice'));
+const fdeCount = entriesByDomain(all, 'fde').length;
+const generatedAt = new Intl.DateTimeFormat('zh-CN', { dateStyle: 'medium' }).format(new Date());
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="description" content="Will in Practice 权限与公开发布状态。" />
+    <title>访问与发布状态 | Will in Practice</title>
+    <link rel="icon" href={withBase('favicon.svg')} type="image/svg+xml" />
+  </head>
+  <body class="protected-body">
+    <header class="protected-header">
+      <a class="protected-brand" href={withBase()}><span aria-hidden="true"></span>Will in Practice</a>
+      <nav aria-label="管理员导航">
+        <a href={withBase('/team')}>团队入口</a>
+        <a href={withBase('/')}>公开网站</a>
+        <span class="protected-role" data-session-label>管理员</span>
+        <button type="button" data-logout>退出</button>
+      </nav>
+    </header>
+
+    <main class="protected-main admin-main">
+      <section class="admin-heading">
+        <div>
+          <p class="protected-kicker">管理员状态页</p>
+          <h1>权限配置与公开构建状态</h1>
+          <p>这里用于确认访问层和公开内容门禁，不提供在线改稿、审批或密码修改功能。</p>
+        </div>
+        <button type="button" class="protected-button" id="admin-refresh">刷新状态</button>
+      </section>
+
+      <section class="admin-status-grid" aria-label="站点状态">
+        <article><span>公开内容</span><strong>{all.length} 篇</strong><small>approved + public</small></article>
+        <article><span>FDE 公开内容</span><strong>{fdeCount} 篇</strong><small>不包含团队原文</small></article>
+        <article><span>团队权限</span><strong id="team-access-status">读取中</strong><small>Cloudflare Secret</small></article>
+        <article><span>管理员权限</span><strong id="admin-access-status">读取中</strong><small>独立账号</small></article>
+      </section>
+
+      <section class="admin-card">
+        <div class="admin-card-heading">
+          <div><h2>权限运行状态</h2><p>服务端只返回是否完成配置，不返回任何口令或会话密钥。</p></div>
+          <span>构建日期 {generatedAt}</span>
+        </div>
+        <dl class="admin-detail-list">
+          <div><dt>登录会话</dt><dd id="session-hours">读取中</dd></div>
+          <div><dt>失败限制</dt><dd id="rate-limit">读取中</dd></div>
+          <div><dt>访问审计</dt><dd id="audit-status">读取中</dd></div>
+          <div><dt>审计保留</dt><dd id="audit-retention">读取中</dd></div>
+        </dl>
+        <p class="admin-error" id="admin-load-error" role="alert" hidden></p>
+      </section>
+
+      <section class="admin-card">
+        <div class="admin-card-heading">
+          <div><h2>公开发布边界</h2><p>权限是协作入口，内容门禁仍是防泄漏的第一道控制。</p></div>
+        </div>
+        <div class="admin-boundary-grid">
+          <article><strong>允许公开</strong><p>`approved|published` 且 `visibility: public`，并已完成独立审核。</p></article>
+          <article><strong>禁止构建</strong><p>`team`、`private`、未标可见性和 `review_required` 内容。</p></article>
+          <article><strong>客户资料</strong><p>P1-P4 原始材料、摸底表、KP 信息和客户数据默认不进入网站。</p></article>
+        </div>
+      </section>
+
+      <section class="admin-card">
+        <div class="admin-card-heading">
+          <div><h2>近期访问记录</h2><p>只有绑定可选 KV 后才保存脱敏事件，不记录密码。</p></div>
+          <span id="audit-count">0 条</span>
+        </div>
+        <div class="admin-table-wrap">
+          <table>
+            <thead><tr><th>时间</th><th>身份</th><th>动作</th><th>结果</th><th>来源网段</th></tr></thead>
+            <tbody id="audit-rows"><tr><td colspan="5" class="admin-empty">正在读取访问状态</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+    <script is:inline src={withBase('protected-session.js')} defer></script>
+    <script is:inline src={withBase('admin-access.js')} defer></script>
+  </body>
+</html>

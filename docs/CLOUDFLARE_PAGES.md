@@ -1,6 +1,6 @@
 # Cloudflare Pages 部署说明
 
-> 状态：**生产已上线，Git 已连接**  
+> 状态：**生产已上线，Git 已连接，团队与管理员权限已启用**
 > 生产地址：https://will-in-practice.pages.dev  
 > 不要使用 Quick Tunnel；生产使用固定 `*.pages.dev`。
 
@@ -36,6 +36,23 @@ Production：
 | `PUBLIC_CONTENT_PREVIEW` | `false` |
 | `PUBLIC_SITE_URL` | `https://will-in-practice.pages.dev` |
 | `NODE_VERSION` | `22` |
+
+Production Secrets（只在 Cloudflare 控制台配置，不写入 GitHub）：
+
+| Name | 用途 |
+|---|---|
+| `TEAM_PASSWORD` | 团队成员共享访问口令 |
+| `ADMIN_USER` | 管理员账号 |
+| `ADMIN_PASSWORD` | 管理员密码 |
+| `SESSION_SECRET` | HMAC 会话签名密钥，建议使用至少 32 字节随机值 |
+
+可选绑定：
+
+| Binding | 类型 | 用途 |
+|---|---|---|
+| `WIP_ACCESS_AUDIT` | KV | 保存 30 天脱敏登录与退出记录；未绑定不影响权限运行 |
+
+`public/_worker.js` 会随构建进入 `dist/_worker.js`，使 Cloudflare Pages 使用 Advanced Mode。公开内容仍免登录；只有 `/team/` 与 `/admin/` 受控。GitHub Pages 不运行 Worker，所以这些页面只允许包含公开安全信息。
 
 Preview（可选）：
 
@@ -83,6 +100,9 @@ npm run build
 
 # GitHub Pages 回退路径构建
 npm run build:github
+
+# 权限边界测试（不需要真实口令）
+npm run test:access
 ```
 
 ## 与 GitHub Pages 的关系
