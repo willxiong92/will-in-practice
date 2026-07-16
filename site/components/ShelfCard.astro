@@ -9,9 +9,24 @@ interface Props {
 
 const { entry } = Astro.props;
 const typeLabel = typeNames[entry.data.content_type] ?? entry.data.content_type;
+const title = entry.data.title;
+const summary = entry.data.summary;
 ---
-<a class="shelf-card" href={withBase(`/practice/${entry.data.slug}`)} data-domain={entry.data.domain} data-type={entry.data.content_type}>
+<a
+  class="shelf-card"
+  href={withBase(`/practice/${entry.data.slug}`)}
+  data-domain={entry.data.domain}
+  data-type={entry.data.content_type}
+  data-title={title}
+  data-summary={summary}
+>
   <span class="shelf-card-type">{typeLabel}</span>
-  <h3>{entry.data.title}</h3>
-  <p>{entry.data.summary}</p>
+  <h3>{title}</h3>
+  <p>{summary}</p>
+  <span class="card-foot">
+    阅读原文
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
+  </span>
 </a>

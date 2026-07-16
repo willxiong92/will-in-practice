@@ -1,0 +1,98 @@
+---
+import { getCollection } from 'astro:content';
+import '../../styles/access.css';
+import { entriesByDomain, visibleEntries } from '../../lib/content';
+import { withBase } from '../../lib/paths';
+
+const all = visibleEntries(await getCollection('practice'));
+const fdeEntries = entriesByDomain(all, 'fde');
+const featuredSlugs = [
+  'service-system-map',
+  'customer-execution-diagnosis',
+  'customer-rollout-plan',
+  'qbr-stage-review',
+  'skill-routing',
+  'customer-health-signals',
+];
+const featured = featuredSlugs
+  .map((slug) => fdeEntries.find((entry) => entry.data.slug === slug))
+  .filter((entry): entry is NonNullable<typeof entry> => Boolean(entry));
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="description" content="Will in Practice FDE 团队协作入口。" />
+    <title>FDE 团队入口 | Will in Practice</title>
+    <link rel="icon" href={withBase('favicon.svg')} type="image/svg+xml" />
+  </head>
+  <body class="protected-body">
+    <header class="protected-header">
+      <a class="protected-brand" href={withBase()}><span aria-hidden="true"></span>Will in Practice</a>
+      <nav aria-label="团队入口导航">
+        <a href={withBase('/fde')}>公开 FDE</a>
+        <a href={withBase('/library?domain=fde')}>FDE 实践库</a>
+        <span class="protected-role" data-session-label>团队成员</span>
+        <button type="button" data-logout>退出</button>
+      </nav>
+    </header>
+
+    <main class="protected-main">
+      <section class="protected-hero">
+        <div>
+          <p class="protected-kicker">团队协作入口</p>
+          <h1>围绕公开 FDE 实践，建立统一的阅读与复用路径。</h1>
+          <p>首版只提供公开安全的内容入口和协作边界。内部稿、客户资料和 FY27 原始物料仍保留在各自 canonical 项目中。</p>
+        </div>
+        <dl class="protected-metrics">
+          <div><dt>公开 FDE 实践</dt><dd>{fdeEntries.length}</dd></div>
+          <div><dt>公开内容总量</dt><dd>{all.length}</dd></div>
+          <div><dt>内部正文</dt><dd>不打包</dd></div>
+        </dl>
+      </section>
+
+      <section class="protected-section">
+        <div class="protected-section-heading">
+          <h2>建议协作路径</h2>
+          <p>团队入口帮助找到公开母题，不替代内部知识库与客户项目。</p>
+        </div>
+        <div class="protected-path-grid">
+          <article><strong>统一框架</strong><p>先看服务体系总图、经营判断和能力矩阵。</p></article>
+          <article><strong>带入任务</strong><p>按诊断、陪跑、复盘或复用选择对应实践。</p></article>
+          <article><strong>回到母版</strong><p>需要内部规则或客户材料时，回到 canonical 项目处理。</p></article>
+        </div>
+      </section>
+
+      <section class="protected-section">
+        <div class="protected-section-heading">
+          <h2>FDE 公开实践入口</h2>
+          <p>以下内容均来自正式公开构建，不包含团队或客户私有信息。</p>
+        </div>
+        <div class="protected-practice-grid">
+          {featured.map((entry) => (
+            <a href={withBase(`/practice/${entry.data.slug}`)}>
+              <span>{entry.data.content_type}</span>
+              <strong>{entry.data.title}</strong>
+              <p>{entry.data.summary}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section class="protected-boundary">
+        <div>
+          <h2>首版权限边界</h2>
+          <p>登录功能只建立团队和管理员入口，不把非公开内容复制到生产站。</p>
+        </div>
+        <ul>
+          <li>`team`、`private`、`review_required` 不进入正式构建</li>
+          <li>P1-P4 原始工具、客户摸底表和 KP 信息不进入本页</li>
+          <li>内部改进建议回到对应 canonical 项目处理</li>
+        </ul>
+      </section>
+    </main>
+    <script is:inline src={withBase('protected-session.js')} defer></script>
+  </body>
+</html>

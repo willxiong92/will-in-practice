@@ -1,0 +1,112 @@
+---
+import '../../styles/access.css';
+import { withBase } from '../../lib/paths';
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="description" content="Will in Practice 团队与管理员访问验证。" />
+    <title>访问验证 | Will in Practice</title>
+    <link rel="icon" href={withBase('favicon.svg')} type="image/svg+xml" />
+  </head>
+  <body class="access-body">
+    <a class="access-skip" href="#access-panel">跳到登录表单</a>
+    <main class="access-shell">
+      <section class="access-context" aria-labelledby="access-title">
+        <a class="access-brand" href={withBase()}>
+          <span aria-hidden="true"></span>
+          Will in Practice
+        </a>
+        <div class="access-copy">
+          <p class="access-kicker">FDE 团队协作入口</p>
+          <h1 id="access-title">公开内容保持开放，团队协作按身份进入。</h1>
+          <p>
+            公开站只发布经过批准的实践内容。团队入口用于承接受控协作，管理员入口用于查看权限和发布状态。
+          </p>
+        </div>
+        <dl class="access-facts" aria-label="访问边界">
+          <div><dt>公开内容</dt><dd>无需登录</dd></div>
+          <div><dt>团队入口</dt><dd>共享口令</dd></div>
+          <div><dt>管理员</dt><dd>独立账号</dd></div>
+        </dl>
+        <p class="access-boundary">
+          P1-P4 客户材料、摸底信息和内部制度不会因为登录功能自动进入公开构建。
+        </p>
+      </section>
+
+      <section class="access-panel" id="access-panel" aria-label="访问验证">
+        <div class="access-panel-inner">
+          <div class="access-panel-heading">
+            <p>身份验证</p>
+            <h2>选择访问方式</h2>
+            <span>Cloudflare 主站启用服务端权限，GitHub 回退站只提供公开内容。</span>
+          </div>
+
+          <div class="access-tabs" role="tablist" aria-label="访问方式">
+            <button type="button" class="access-tab is-active" id="team-tab" role="tab" aria-selected="true" aria-controls="team-panel">团队访问</button>
+            <button type="button" class="access-tab" id="admin-tab" role="tab" aria-selected="false" aria-controls="admin-panel">管理员登录</button>
+          </div>
+
+          <div class="access-session" id="session-card" hidden>
+            <p>身份已验证</p>
+            <h3 id="session-title">欢迎回来</h3>
+            <span id="session-text">当前会话仍然有效。</span>
+            <a class="access-primary" id="continue-link" href="/team/">继续进入</a>
+            <button type="button" class="access-text-button" id="access-logout">退出当前身份</button>
+          </div>
+
+          <div id="access-forms">
+            <section class="access-tab-panel is-active" id="team-panel" role="tabpanel" aria-labelledby="team-tab">
+              <div class="access-role-note">
+                <strong>适用于团队成员</strong>
+                <span>进入 FDE 协作入口，查看公开实践路线和协作边界。</span>
+              </div>
+              <form id="team-form" novalidate>
+                <label class="access-field" for="team-password">
+                  <span>团队访问口令</span>
+                  <span class="access-password-field">
+                    <input id="team-password" name="password" type="password" autocomplete="current-password" required />
+                    <button type="button" class="access-password-toggle" data-target="team-password">显示</button>
+                  </span>
+                </label>
+                <p class="access-error" id="team-error" role="alert" hidden></p>
+                <button type="submit" class="access-primary">验证并进入</button>
+              </form>
+            </section>
+
+            <section class="access-tab-panel" id="admin-panel" role="tabpanel" aria-labelledby="admin-tab" hidden>
+              <div class="access-role-note">
+                <strong>适用于网站管理员</strong>
+                <span>查看权限配置、公开内容统计和发布边界。</span>
+              </div>
+              <form id="admin-form" novalidate>
+                <label class="access-field" for="admin-username">
+                  <span>管理员账号</span>
+                  <input id="admin-username" name="username" type="text" autocomplete="username" required />
+                </label>
+                <label class="access-field" for="admin-password">
+                  <span>管理员密码</span>
+                  <span class="access-password-field">
+                    <input id="admin-password" name="password" type="password" autocomplete="current-password" required />
+                    <button type="button" class="access-password-toggle" data-target="admin-password">显示</button>
+                  </span>
+                </label>
+                <p class="access-error" id="admin-error" role="alert" hidden></p>
+                <button type="submit" class="access-primary">安全登录</button>
+              </form>
+            </section>
+          </div>
+
+          <div class="access-note">
+            <strong>安全说明</strong>
+            <p>连续输入错误会暂时限制登录。口令与会话密钥只配置在 Cloudflare，不写入网页源码或 GitHub。</p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script is:inline src={withBase('access.js')} defer></script>
+  </body>
+</html>

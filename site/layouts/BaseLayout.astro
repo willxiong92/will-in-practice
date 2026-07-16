@@ -40,6 +40,12 @@ const jsonLd = {
     url: new URL(withBase('about'), Astro.site).href,
   },
 };
+
+const currentPath = (Astro.url.pathname.replace(/\/$/, '') || '/');
+const isNavActive = (path: string) => {
+  const target = (withBase(path).replace(/\/$/, '') || '/');
+  return currentPath === target;
+};
 ---
 <!doctype html>
 <html lang="zh-CN">
@@ -67,7 +73,7 @@ const jsonLd = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
     <a class="skip-link" href="#main">跳到正文</a>
@@ -83,11 +89,35 @@ const jsonLd = {
         <button class="menu-button" type="button" aria-expanded="false" aria-controls="main-nav">菜单</button>
         <div class="nav-links" id="main-nav">
           {domainMeta.map((domain) => (
-            <a href={withBase(domain.path)}>{domain.name}</a>
+            <a
+              href={withBase(domain.path)}
+              class:list={[{ 'is-active': isNavActive(domain.path) }]}
+              aria-current={isNavActive(domain.path) ? 'page' : undefined}
+            >
+              {domain.name}
+            </a>
           ))}
-          <a href={withBase('/library')}>实践库</a>
-          <a href={withBase('/about')}>关于</a>
-          <a href={withBase('/search')}>搜索</a>
+          <a
+            href={withBase('/library')}
+            class:list={[{ 'is-active': isNavActive('/library') }]}
+            aria-current={isNavActive('/library') ? 'page' : undefined}
+          >
+            实践库
+          </a>
+          <a
+            href={withBase('/about')}
+            class:list={[{ 'is-active': isNavActive('/about') }]}
+            aria-current={isNavActive('/about') ? 'page' : undefined}
+          >
+            关于
+          </a>
+          <a
+            href={withBase('/search')}
+            class:list={[{ 'is-active': isNavActive('/search') }]}
+            aria-current={isNavActive('/search') ? 'page' : undefined}
+          >
+            搜索
+          </a>
         </div>
         <a class="nav-cta" href={withBase('/library')}>浏览实践</a>
       </nav>
@@ -102,6 +132,7 @@ const jsonLd = {
         <div class="footer-links">
           <a href={withBase('/about')}>关于与边界</a>
           <a href={withBase('/library')}>实践库</a>
+          <a href={withBase('/access')}>团队入口</a>
           <a href="mailto:will@willinpractice.com?subject=网站反馈">反馈</a>
         </div>
       </div>

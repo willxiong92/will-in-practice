@@ -63,6 +63,12 @@ export type ShelfGroup = {
   slugs: string[];
 };
 
+/** 领域页右侧「建议阅读路径」步骤 */
+export type ReadingStep = {
+  title: string;
+  body: string;
+};
+
 export type DomainMeta = {
   id: DomainId;
   name: string;
@@ -76,10 +82,25 @@ export type DomainMeta = {
   source: string;
   /** 首页该板块热门 1 篇 */
   hotSlug: string;
-  /** 领域页推荐阅读路径 */
+  /** 领域页推荐阅读路径（线性文案，兼容） */
   readingPath: string;
+  /** 领域页路径面板（优先） */
+  readingSteps?: ReadingStep[];
   shelves: ShelfGroup[];
 };
+
+/** 解析领域阅读步骤：优先 readingSteps，否则从 readingPath 拆分 */
+export function resolveReadingSteps(meta: DomainMeta): ReadingStep[] {
+  if (meta.readingSteps?.length) return meta.readingSteps;
+  const parts = meta.readingPath
+    .split(/\s*→\s*/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+  if (!parts.length) {
+    return [{ title: '按货架顺序阅读', body: '先选分组，再进文章。' }];
+  }
+  return parts.map((title) => ({ title, body: '' }));
+}
 
 export const domainMeta: DomainMeta[] = [
   {
@@ -94,6 +115,11 @@ export const domainMeta: DomainMeta[] = [
     source: '飞书 AI 知识库 + OKKI WIKI AI智能体',
     hotSlug: 'ai-basics-one-page',
     readingPath: '基础 → 分工/学习路径 → 派工工具 → 场景 → 工作台 → 核验',
+    readingSteps: [
+      { title: '先共享语言', body: '概念链 · 三层分工 · 一页纸判断' },
+      { title: '再固定打法', body: '派工模板 · 场景卡 · 工具栈选用' },
+      { title: '对客前过闸门', body: '输出核验 · 禁编造案例与数据' },
+    ],
     shelves: [
       {
         id: 'ai-basics',
@@ -159,6 +185,11 @@ export const domainMeta: DomainMeta[] = [
     source: '飞书 FDE 知识库 + OKKI WIKI 客户成功',
     hotSlug: 'service-system-map',
     readingPath: '总图 → 线索/转化 → 销售过程 → 沟通与管理方法 → 交付',
+    readingSteps: [
+      { title: '先看总图', body: '服务体系 · 产品矩阵 · Skill 路由' },
+      { title: '再抓经营', body: '线索 · 转化 · 销售过程与复盘' },
+      { title: '交付沉淀', body: '沟通 · 管理方法 · 陪跑与 QBR' },
+    ],
     shelves: [
       {
         id: 'fde-map',
@@ -235,6 +266,11 @@ export const domainMeta: DomainMeta[] = [
     source: 'OKKI WIKI 外贸业务',
     hotSlug: 'export-process-map',
     readingPath: '流程 → 开发/社媒/画像 → 样品 → 报价 → 风险 → 展会/SOHO',
+    readingSteps: [
+      { title: '先看流程全景', body: '从开发到出货的阶段地图与交接' },
+      { title: '再跑开发成交', body: '开发 · 跟进 · 样品 · 报价谈判' },
+      { title: '控风险与场景', body: '付款履约 · 展会 · SOHO 启动' },
+    ],
     shelves: [
       {
         id: 'trade-process',
@@ -306,6 +342,11 @@ export const domainMeta: DomainMeta[] = [
     source: 'OKKI WIKI B2B平台',
     hotSlug: 'platform-ops-framework',
     readingPath: '运营框架 → 店铺质量 → 日操/指标 → 发品 → 商机 → 漏斗/履约 → 推广 → 合规',
+    readingSteps: [
+      { title: '先修运营底座', body: '运营框架 · 店铺质量 · 日操指标' },
+      { title: '再抓发品商机', body: '内容发品 · 询盘 RFQ · 买家分层' },
+      { title: '成交与合规', body: '漏斗履约 · 推广诊断 · 合规基础' },
+    ],
     shelves: [
       {
         id: 'gp-ops',
@@ -367,6 +408,11 @@ export const domainMeta: DomainMeta[] = [
     source: 'OKKI WIKI 独立站',
     hotSlug: 'inquiry-conversion-diagnosis',
     readingPath: '增长总图 → 建站运维 → SEO/技术 → 数据追踪 → 内容 EEAT/AEO → Ads → 转化',
+    readingSteps: [
+      { title: '先定增长闭环', body: '增长总图 · 建站运维基线' },
+      { title: '再做可发现', body: 'SEO 体系 · 数据追踪 · EEAT/AEO' },
+      { title: '付费与转化', body: 'Ads MQL · 询盘诊断 · 落地页' },
+    ],
     shelves: [
       {
         id: 'indie-growth',

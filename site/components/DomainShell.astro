@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import ShelfCard from './ShelfCard.astro';
-import { shelfEntries, type DomainMeta } from '../lib/content';
+import { resolveReadingSteps, shelfEntries, type DomainMeta } from '../lib/content';
 import { withBase } from '../lib/paths';
 
 interface Props {
@@ -19,58 +19,130 @@ const shelves = meta.shelves.map((shelf) => ({
 const linedSlugSet = new Set(shelves.flatMap((row) => row.items.map((item) => item.data.slug)));
 const unlined = entries.filter((entry) => !linedSlugSet.has(entry.data.slug));
 const readyGroups = shelves.filter((row) => row.items.length > 0).length;
+const readingSteps = resolveReadingSteps(meta);
+const totalVisible = entries.length;
+const filterPills = [
+  { id: 'all', label: '全部' },
+  ...shelves
+    .filter((row) => row.items.length > 0)
+    .map(({ shelf, items }) => ({ id: shelf.id, label: shelf.title, count: items.length })),
+  ...(unlined.length
+    ? [{ id: 'unlined', label: '其他', count: unlined.length }]
+    : []),
+];
 ---
-<header class="page-head shell domain-head">
-  <div class="eyebrow">{meta.name}</div>
-  <h1>{meta.tagline}</h1>
-  <p>{meta.summary}</p>
-  <div class="domain-stats">
-    <div class="stat-pill"><strong>{entries.length}</strong><span>篇实践</span></div>
-    <div class="stat-pill"><strong>{readyGroups}</strong><span>个分组</span></div>
+<header class="domain-hero shell">
+  <div class="domain-hero-copy">
+    <div class="eyebrow">领域 · {meta.name}</div>
+    <h1>{meta.tagline}</h1>
+    <p>{meta.summary}</p>
+    <div class="domain-stats">
+      <div class="stat-pill"><strong>{entries.length}</strong><span>篇实践</span></div>
+      <div class="stat-pill"><strong>{readyGroups}</strong><span>个分组</span></div>
+    </div>
+    <div class="meta domain-fit">
+      <span>适合：{meta.suited}</span>
+    </div>
+    <p class="domain-not-suited">不适合：{meta.notSuited}</p>
   </div>
-  <p class="reading-path"><strong>推荐路径</strong> {meta.readingPath}</p>
-  <div class="meta domain-fit">
-    <span>适合：{meta.suited}</span>
-  </div>
-  <p class="domain-not-suited">不适合：{meta.notSuited}</p>
+  <aside class="path-panel" aria-label="建议阅读路径">
+    <div class="path-panel-head">
+      <span>建议阅读路径</span>
+      <span class="path-panel-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+    </div>
+    <ol class="path-steps">
+      {readingSteps.map((step, index) => (
+        <li class="path-step">
+          <span class="path-num">{index + 1}</span>
+          <div>
+            <strong>{step.title}</strong>
+            {step.body ? <p>{step.body}</p> : null}
+          </div>
+        </li>
+      ))}
+    </ol>
+    {!meta.readingSteps?.length && meta.readingPath ? (
+      <p class="path-fallback-note">完整路径：{meta.readingPath}</p>
+    ) : null}
+  </aside>
 </header>
 
 <section class="section shell" id="shelves">
   <div class="section-heading">
     <h2>内容货架</h2>
-    <p>先选分组，再进文章。同组内容结构相近，避免长文混排。</p>
+    <p>按板块浏览；需要类型或关键词时，用下方筛选。</p>
   </div>
 
-  {shelves.map(({ shelf, items }) => (
-    <div class="shelf-block" id={shelf.id}>
-      <div class="shelf-head">
-        <h3>
-          {shelf.title}
-          <span class="shelf-count">({items.length})</span>
-        </h3>
-        <p>{shelf.desc}</p>
-      </div>
-      {items.length ? (
-        <div class="shelf-grid">
-          {items.map((entry) => <ShelfCard entry={entry} />)}
-        </div>
-      ) : (
-        <p class="arch-empty">本分组待补内容。</p>
-      )}
+  <div class="shelf-toolbar" data-shelf-toolbar>
+    <label class="shelf-search">
+      <span class="sr-only">搜索本域实践</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <input
+        type="search"
+        id="shelf-search"
+        placeholder="搜索标题或摘要…"
+        autocomplete="off"
+        data-shelf-search
+      />
+    </label>
+    <div class="pill-tabs" role="tablist" aria-label="按分组筛选">
+      {filterPills.map((pill, index) => (
+        <button
+          type="button"
+          class:list={['pill', { 'is-active': index === 0 }]}
+          data-shelf-pill={pill.id}
+          aria-pressed={index === 0 ? 'true' : 'false'}
+        >
+          {pill.label}
+        </button>
+      ))}
     </div>
-  ))}
+    <p class="result-count" data-shelf-count>
+      显示 <strong data-shelf-count-n>{totalVisible}</strong> 篇
+    </p>
+  </div>
 
-  {unlined.length > 0 && (
-    <div class="shelf-block">
-      <div class="shelf-head">
-        <h3>其他 <span class="shelf-count">({unlined.length})</span></h3>
-        <p>尚未归入上方分组的本域内容。</p>
+  <div data-shelf-root data-total={totalVisible}>
+    {shelves.map(({ shelf, items }) => (
+      <div class="shelf-block" id={shelf.id} data-shelf-block={shelf.id} data-count={items.length}>
+        <div class="shelf-head">
+          <h3>
+            {shelf.title}
+            <span class="shelf-count">({items.length})</span>
+          </h3>
+          <p>{shelf.desc}</p>
+        </div>
+        {items.length ? (
+          <div class="shelf-grid">
+            {items.map((entry) => <ShelfCard entry={entry} />)}
+          </div>
+        ) : (
+          <p class="arch-empty">本分组待补内容。</p>
+        )}
       </div>
-      <div class="shelf-grid">
-        {unlined.map((entry) => <ShelfCard entry={entry} />)}
+    ))}
+
+    {unlined.length > 0 && (
+      <div class="shelf-block" data-shelf-block="unlined" data-count={unlined.length}>
+        <div class="shelf-head">
+          <h3>其他 <span class="shelf-count">({unlined.length})</span></h3>
+          <p>尚未归入上方分组的本域内容。</p>
+        </div>
+        <div class="shelf-grid">
+          {unlined.map((entry) => <ShelfCard entry={entry} />)}
+        </div>
       </div>
+    )}
+
+    <div class="shelf-empty" data-shelf-empty hidden>
+      <strong>本域没有匹配内容</strong>
+      <p>换个关键词，或清除筛选后查看全部。</p>
+      <button type="button" class="button secondary" data-shelf-clear>清除筛选</button>
     </div>
-  )}
+  </div>
 </section>
 
 <section class="section shell">
@@ -82,3 +154,90 @@ const readyGroups = shelves.filter((row) => row.items.length > 0).length;
     <a class="button" href={withBase(`/library?domain=${meta.id}`)}>筛选本域</a>
   </div>
 </section>
+
+<script>
+  function initShelfToolbar(root: ParentNode = document) {
+    const toolbar = root.querySelector('[data-shelf-toolbar]');
+    const shelfRoot = root.querySelector('[data-shelf-root]');
+    if (!toolbar || !shelfRoot) return;
+
+    const search = toolbar.querySelector<HTMLInputElement>('[data-shelf-search]');
+    const pills = [...toolbar.querySelectorAll<HTMLButtonElement>('[data-shelf-pill]')];
+    const countEl = toolbar.querySelector<HTMLElement>('[data-shelf-count-n]');
+    const empty = shelfRoot.querySelector<HTMLElement>('[data-shelf-empty]');
+    const clearBtn = shelfRoot.querySelector<HTMLButtonElement>('[data-shelf-clear]');
+    const blocks = [...shelfRoot.querySelectorAll<HTMLElement>('[data-shelf-block]')];
+
+    let activeShelf = 'all';
+
+    const apply = () => {
+      const q = (search?.value || '').trim().toLowerCase();
+      let shown = 0;
+
+      blocks.forEach((block) => {
+        const blockId = block.dataset.shelfBlock || '';
+        const shelfMatch = activeShelf === 'all' || activeShelf === blockId;
+        const cards = [...block.querySelectorAll<HTMLElement>('.shelf-card')];
+        let blockShown = 0;
+
+        cards.forEach((card) => {
+          const title = (card.dataset.title || card.querySelector('h3')?.textContent || '').toLowerCase();
+          const summary = (card.dataset.summary || card.querySelector('p')?.textContent || '').toLowerCase();
+          const textMatch = !q || title.includes(q) || summary.includes(q);
+          const visible = shelfMatch && textMatch;
+          card.hidden = !visible;
+          card.classList.toggle('is-hidden', !visible);
+          if (visible) {
+            blockShown += 1;
+            shown += 1;
+          }
+        });
+
+        if (!shelfMatch) {
+          block.hidden = true;
+          return;
+        }
+        if (cards.length > 0) {
+          block.hidden = blockShown === 0;
+        } else {
+          // 空分组：仅在「全部」且无搜索时展示占位
+          block.hidden = activeShelf !== 'all' || Boolean(q);
+        }
+      });
+
+      if (countEl) countEl.textContent = String(shown);
+      if (empty) empty.hidden = shown > 0;
+    };
+
+    search?.addEventListener('input', apply);
+
+    pills.forEach((pill) => {
+      pill.addEventListener('click', () => {
+        activeShelf = pill.dataset.shelfPill || 'all';
+        pills.forEach((p) => {
+          const on = p === pill;
+          p.classList.toggle('is-active', on);
+          p.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        apply();
+      });
+    });
+
+    clearBtn?.addEventListener('click', () => {
+      if (search) search.value = '';
+      activeShelf = 'all';
+      pills.forEach((p) => {
+        const on = p.dataset.shelfPill === 'all';
+        p.classList.toggle('is-active', on);
+        p.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      apply();
+      search?.focus();
+    });
+
+    apply();
+  }
+
+  initShelfToolbar();
+  document.addEventListener('astro:page-load', () => initShelfToolbar());
+</script>

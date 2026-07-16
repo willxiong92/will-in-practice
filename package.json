@@ -12,6 +12,7 @@
     "guard:content": "node scripts/check-content.mjs",
     "guard:dist": "node scripts/check-dist.mjs",
     "guard:links": "node scripts/check-links.mjs",
+    "test:access": "node scripts/test-access-worker.mjs",
     "guard": "npm run guard:content",
     "build": "npm run guard:content && astro check && PUBLIC_CONTENT_PREVIEW=false astro build && npm run guard:dist && npm run guard:links",
     "build:github": "npm run guard:content && astro check && GITHUB_PAGES=true PUBLIC_CONTENT_PREVIEW=false PUBLIC_SITE_URL=https://willxiong92.github.io astro build && GITHUB_PAGES=true npm run guard:dist && GITHUB_PAGES=true npm run guard:links",
